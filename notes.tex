@@ -1,11 +1,12 @@
-\documentclass[10pt]{article}         %% What type of document you're writing.
+\documentclass[12pt]{amsart}         %% What type of document you're writing.
 
 %%%%% Preamble
 
 %% Packages to use
 
 \usepackage{amsmath,amsfonts,amssymb,amsthm,bbm}   %% AMS mathematics macros
-\usepackage{enumitem}
+\usepackage{enumerate}
+% \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{changepage}
 \usepackage[margin=1.0in]{geometry}
@@ -34,6 +35,7 @@
 \newcommand{\B}{\textbf{B}}
 \newcommand{\F}{\textbf{F}} 
 \newcommand{\N}{\mathbb{N}} 
+\newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\U}{\mathcal{U}}
@@ -50,9 +52,6 @@
 
 \title{APMA Summer Program Notes}
 \author{Ross Parker}
-%% \date{2 July 2004}           %% By default, LaTeX uses the current date
-
-%%%%% The Document
 
 \begin{document}
 
@@ -60,15 +59,14 @@
 
 \section*{Outline}
 \label{sec: introduction}
-These are the notes for the 2019 APMA Summer Workshop for incoming graduate students. These notes are based on the notes for the 2017 and 2018 workshops, which were led by Bjorn Sandstede.
+These are the notes for the 2019 summer workshop for incoming graduate students in applied mathematics at Brown University. These are based on the notes for the 2017 and 2018 workshops, which were led by Bj\"orn Sandstede. The original notes were typed by Rebecca Santorella and Patrick Liscio. Topics covered include:
 
 \begin{itemize}
     \item Metric spaces and compactness
     \item Compactness in $C([a,b])$ (Arzela-Ascoli theorem)
     \item Differentiation in Banach spaces
-    \item Banach's fixed-point theorem, implicit function theorem
-    \item Measure Theory and Lebesgue integration
-    \item Other topics dependent on student interest.
+    \item Banach's fixed-point theorem and the implicit function theorem
+    \item Introduction to measure Theory and Lebesgue integration
 \end{itemize}
 
 \section{Metric Spaces}
@@ -76,188 +74,200 @@ These are the notes for the 2019 APMA Summer Workshop for incoming graduate stud
 
 \subsection{Definitions}
 
+A metric space is a nonempty set, together with a function called a metric, which defines a distance between any pair of points in the set. One familiar metric space is $\R^2$, the set of points in the Cartesian plane, with the metric given by the Euclidean distance formula. The distance between points $p = (x_1, y_1)$ and $q = (x_2, y_2)$ is given by 
+\[
+d(p, q) = \sqrt{ (x_2 - x_1)^2 + (y_2 - y_1)^2 },
+\]
+and represents the ``straight-line distance'' between $p$ and $q$. An arbitrary metric space is defined as follows:
+
 \begin{definition}
-Let $X$ be an arbitrary set. A function $d : X \times X \rightarrow \mathbb{R}$ is a \textbf{metric} on $X$ if the following conditions hold for all $x, y, z \in X$
-\begin{enumerate}
-\item $d(x,y) \geq 0$
-\item $d(x,y) = 0$ iff $x = y$
-\item $d(x,y) = d(y,x)$. (symmetry)
-\item $d(x,y) \leq d(x,z) + d(z,y)$. (triangle inequality)
+Let $X$ be an arbitrary set. A function $d : X \times X \rightarrow \mathbb{R}$ is a \textbf{metric} on $X$ if the following conditions hold for all $x, y, z \in X$:
+\begin{enumerate}[(i)]
+\item $d(x,y) \geq 0$.
+\item $d(x,y) = 0$ if and only if $x = y$.
+\item $d(x,y) = d(y,x)$ (symmetry).
+\item $d(x,y) \leq d(x,z) + d(z,y)$ (triangle inequality).
 \end{enumerate}
-We call\ $(X, d)$ a \textbf{metric space}.
+We call the pair $(X, d)$ a \textbf{metric space}.
 \end{definition}
 
-Property (4) is called the triangle inequality, since it is the generalization of the familiar statement from geometry: ``The third side of a triangle must be less than or equal to the sum of the other two sides''. (If equality holds, it's not really a triangle anymore.) From the triangle inequality, we can derive the so-called ``reverse triangle inequality''
+Property (iv) is called the triangle inequality, since it generalizes the familiar statement from geometry: ``The length of a side of a triangle must be less than or equal to the sum of the lengths of the other two sides''. (If equality holds, the ``triangle'' has been squished down to a line segment, so it's not really a triangle anymore.) From the triangle inequality, we can derive the so-called ``reverse triangle inequality'',
 \[
 d(x,y) \geq  |d(x,z) - d(z, y)|
 \]
-which generalizes the statement from geometry: ``The third side of a triangle must be greater than or equal to the difference of the other two sides''. 
-
-From now on, we will assume we are working in a metric space $(X, d)$.
-
-A sequence $\{x_n\}$ converges to a limit $L$ if the sequence elements get arbitrarily close to $L$.
-
-\begin{definition}
-A sequence $\{x_n\}$ \emph{converges} to $L$, written $x_n \rightarrow L$, if $d(x_n, L) \rightarrow 0$.
-\end{definition}
+which generalizes the statement from geometry: ``The length of a side of a triangle must be greater than or equal to the difference of the lengths of the other two sides''. From now on, we will assume we are working in a metric space $(X, d)$.
 
 \subsection{Examples}
 
+Here are some examples of metrics and metric spaces.
+
 \begin{enumerate}
-\item The \emph{Euclidean distance} on $\R^n$
+\item The \emph{Euclidean distance} on $\R^n$ is defined by
 \[
-d(x,y) = |x-y|
+d(x,y) = |x-y|.
 \]
-\item The \emph{discrete metric} on any set $X$
+If $x = (x_1, \dots x_n)$ and $y = (y_1, \dots, y_n)$, then this is given by
+\[
+d(x,y) = \sqrt{ \sum_{k=1}^n (x_k - y_k)^2 }.
+\]
+\item The \emph{discrete metric} on any set $X$ is defined by
 \[
 d(x,y) = 
 \begin{cases} 
-    0 \text{ if } x=y \\
-    1 \text{ otherwise }
+    0 & \text{ if } x=y \\
+    1 & \text{ otherwise }.
 \end{cases}
 \]
-\item Compare three metrics on $\R^2$. $x = (x_1, x_2)$ and $y = (y_1, y_2)$.
+\item Compare three metrics on $\R^2$. For $x = (x_1, x_2)$ and $y = (y_1, y_2)$, we define
 \begin{enumerate}
-    \item Manhattan distance / taxicab metric
+    \item Manhattan distance / taxicab metric / $\ell^1$ metric:
     \[
-    d_1(x,y) = |x_1 - y_1| + |x_2 - y_2|
+    d_1(x,y) = |x_1 - y_1| + |x_2 - y_2|.
     \]
-    \item Euclidean distance
+    \item Euclidean distance / $\ell^2$ metric:
     \[
-    d_2(x,y) = \sqrt{ (x_1 - y_1)^2 + (x_2 - y_2)^2 }
+    d_2(x,y) = \sqrt{ (x_1 - y_1)^2 + (x_2 - y_2)^2 }.
     \]
-    \item Maximum distance / chessboard metric
+    \item Maximum distance / chessboard metric / $\ell^\infty$ metric:
     \[
-    d_\infty(x,y) = \max\{ |x_1 - y_1|,  |x_2 - y_2| \}
+    d_\infty(x,y) = \max\{ |x_1 - y_1|,  |x_2 - y_2| \}.
     \]
 \end{enumerate}
 
-\item Maximum (supremum) norm on $C([a, b])$, the space of continuous functions on $[a, b]$
+\item The maximum (supremum) metric on $C([a, b])$, the space of continuous, real-valued functions on the closed interval $[a, b]$, is defined by
 \[
-d(f, g) = \max_{x \in [a,b]}|f(x) - g(x)|
+d(f, g) = \max_{x \in [a,b]}|f(x) - g(x)|.
 \]
+Since a continuous function attains its maximum and minimum on a closed interval (extreme value theorem), this is well-defined.
 
-\item Information theory
+\item Information theory:
 \begin{enumerate}
     \item Distance between two strings of identical length (Hamming distance): number of positions at which the two strings are different.
     \item Distance between two arbitrary strings (Levenshtein distance): minimum number of single-character edits (insertions, deletions or substitutions) required to change one string into the other.
-    \item Damerau-Levenshtein distance: same as  Levenshtein distance, except swaps of adjacent characters are allowed. ``More than 80\% of all human misspellings can be expressed by a single error of one of the four types'' (Damerau, 1964).
+    \item Damerau-Levenshtein distance: same as  Levenshtein distance, except swaps of adjacent characters are also allowed operations. ``More than 80\% of all human misspellings can be expressed by a single error of one of the four types'' (Damerau, 1964).
 \end{enumerate}
     
-\item Geodesic distance for connected graphs: number of edges in a shortest path connecting two vertices. (May not be a unique shortest path, but geodesic distance is unique). Graph must be connected to avoid having infinite distances.
+\item Geodesic distance for connected graphs: number of edges in a shortest path connecting two vertices. (There may not be a unique shortest path, but the geodesic distance is unique). The graph must be connected to avoid having infinite distances.
 
 \end{enumerate}
 
 \subsection{Product metrics}
 
-Take a finite sequence of metric spaces $(X_1, d_1), \dots, (X_n, d_n)$. Then any of the following are metrics on $X_1 \times \dots \times X_n$.
-\begin{enumerate}
-    \item \[ d(x, y) = \sum_{k=1}^n d(x_k, y_k) \]
-    \item \[ d(x, y) = \sqrt{ \sum_{k=1}^n d(x_k, y_k)^2  }\]
-    \item \[ d(x,y) \max_{k = 1, \dots, n} d(x_k, y_k) \]
-\end{enumerate}
-
-If $f:[0, \infty) \rightarrow [0, \infty)$ is an increasing concave function such that $f(x)=0 \iff x=0$, then $f(d(x,y))$ is also a metric. Note that $f$ does not have to be smooth.
-
-Important examples:
-\begin{enumerate}
-    \item \[ f(x) = \min\{x, 1\} \]
-    \item \[ f(x) = \frac{x}{1+x} \]
-\end{enumerate}
-Note that both of these ``cut off'' the metric at 1. We can use these to create a metric for a countable product of metric spaces $(X_n, d_n)$.
+Recall that the (Cartesian) product of two sets $X$ and $Y$, denoted $X \times Y$, is the set of all ordered pairs $(x,y)$, where $x \in X$ and $y \in Y$. The product of a finite sequence of sets $X_1, \dots, X_n$ is the set of ordered $n$-tuples
 \[
-d(x,y) = \sum_{n = 1}^\infty \frac{1}{2^n} \frac{d_n(x_n, y_n)}{1+d_n(x_n, y_n}
+\prod_{k=1}^n X_k = X_1 \times \dots \times X_n := \{ (x_1, \dots, x_n)  : x_k \in X_k \}.
 \]
-Alternatively, we could use the cutoff metric $\min\{d_n(x_n, y_n), 1\}$. We can also replace $1/2^n$ with the terms from any convergent sequence of positive terms.
+Take a finite sequence of metric spaces $(X_1, d_1), \dots, (X_n, d_n)$. Note that each set can have a different metric if we like. Then any of the following are metrics on $X_1 \times \dots \times X_n$. We call these product metrics.
+\begin{enumerate}
+    \item $\begin{aligned}d(x, y) = \sum_{k=1}^n d(x_k, y_k) \end{aligned}$.
+    \item $\begin{aligned}d(x, y) = \sqrt{ \sum_{k=1}^n d(x_k, y_k)^2  } \end{aligned}$.
+    \item $\begin{aligned}d(x,y) \max_{k = 1, \dots, n} d(x_k, y_k) \end{aligned}$.
+\end{enumerate}
 
-\subsection{Cauchy Sequences}
+We can also construct metrics on \emph{countable} products of metric spaces. The countable product of sets $\{X_k\}$ is the set of all sequences
+\[
+\prod_{k=1}^\infty X_k := \Big\{ \{x_k\} : x_k \in X_k \Big\}.
+\]
+In order to define a metric on this countable product, we use the following trick, which allows us to construct metrics from other metrics. If $f:[0, \infty) \rightarrow [0, \infty)$ is an increasing concave function such that $f(x)=0$ if and only if $x=0$, then $f(d(x,y))$ is also a metric. Note that $f$ does not have to be smooth. Important examples are:
+\begin{enumerate}
+    \item $\begin{aligned}f(x) = \min\{x, 1\}\end{aligned}$.
+    \item $\begin{aligned}f(x) = \frac{x}{1+x}\end{aligned}$.
+\end{enumerate}
+Both of these functions ``cut off'' the metric at 1, so that the greatest possible distance between any two points is 1. We can use the second of these ``cutoff'' functions to define a metric for a countable product of metric spaces $\{(X_k, d_k)\}$:
+\[
+d(x,y) = \sum_{k = 1}^\infty \frac{1}{2^k} \frac{d_k(x_k, y_k)}{1+d_k(x_k, y_k)}.
+\]
+Alternatively, we could use the ``cutoff'' metric $\min\{d_k(x_k, y_k), 1\}$. We can also replace $1/2^k$ with the terms from any convergent series of positive terms.
 
-A sequence $\{x_n\}$ is a Cauchy sequence if its elements get arbitrarily close to each other.
+\subsection{Sequences}
 
+First, we define the convergence of a sequence in a metric space. Intuitively, a sequence $\{x_n\}$ converges to a limit $L$ if the elements of the sequence get arbitrarily close to $L$.
 \begin{definition}
-$\{x_n\}$ is a \textbf{Cauchy sequence} if for all $\epsilon >0$  there exists $N \in \N$ such that  $d(x_n, x_m) < \epsilon$ for all $n,m \geq N$.
+A sequence $\{x_n\}$ \emph{converges} to $L$, written $x_n \rightarrow L$, if $d(x_n, L) \rightarrow 0$.
+\end{definition}
+The condition $d(x_n, L) \rightarrow 0$ is the convergence of a real-valued sequence, which is defined in the standard way. We can also write this as follows: $x_n \rightarrow L$ if, for all $\epsilon > 0$, there exists $N \in \N$ such that $d(x_n, L) < \epsilon$ for all $n \geq N$. 
+
+Another important type of sequence in a metric space is a Cauchy sequence. Intuitively, a sequence $\{x_n\}$ is a Cauchy sequence if its elements get arbitrarily close to \emph{each other} (rather than approach a limit).
+\begin{definition}
+$\{x_n\}$ is a \textbf{Cauchy sequence} if for all $\epsilon > 0$, there exists $N \in \N$ such that $d(x_n, x_m) < \epsilon$ for all $n,m \geq N$.
+\end{definition}
+Since this is annoying to write, we can notate this as $d(x_m, x_n) \rightarrow 0$. Every convergent sequence is a Cauchy sequence (this follows from the triangle inequality). The converse is unfortunately not true in general. That being said, there are metric spaces in which every Cauchy sequence is convergent (even if we cannot determine what that limit is!) Since this property is so important, we have the following definition.
+
+\begin{definition}A metric space is \textbf{complete} if every Cauchy sequence is convergent.
 \end{definition}
 
-Since it is annoying to write this, we can notate this as $d(x_m, x_n) \rightarrow 0$.
-
-Every convergent sequence is Cauchy (follows from the triangle inequality). The converse is not true in general. But we really would like it to be true, so much so that we have a special name for the spaces where it is true.
-
-\subsubsection{Examples}
-
-\begin{enumerate}
-\item Not complete: $\mathbb{Q}$ with $d(x,y) = |x-y|$. Take sequence $\{x_n\}$ with $x_1 = 1$ and 
+An example of a metric space which is not complete is $\mathbb{Q}$ with $d(x,y) = |x-y|$. To see this, take the sequence $\{x_n\}$, with $x_1 = 1$ and 
 \[
-x_{n+1} = \frac{x_n}{2} + \frac{1}{x_n}
+x_{n+1} = \frac{x_n}{2} + \frac{1}{x_n}.
 \]
-Limit is $\sqrt{2} \notin \Q$.
-\item Complete: $\mathbb{R}$ (by construction of $\R$, essentially)
-\end{enumerate}
+This is a Cauchy sequence, but its limit is $\sqrt{2}$, which is not in $\Q$.
 
-Using the product metric on $\R^n$ (the maximum version of the metric is easiest here) and the completeness of $\R$, it follows that $\R^n$ is complete. Since $\C$ is isomorphic to $\R^2$, $\C^n$ is complete as well.
+An example of a complete metric space is $\R$ (the completeness of $\R$ follows from its construction). Using the product metric on $\R^n$ (the maximum version of the metric is easiest here) and the completeness of $\R$, it follows that $\R^n$ is complete. Since $\C$ is isomorphic to $\R^2$, $\C^n$ is complete as well.
 
-At this point we have two ways to show a sequence $\{x_n\}$ converges.
+At this point, we have two ways to show a sequence $\{x_n\}$ converges.
 \begin{enumerate}
-    \item Use the definition of convergence to show that $x_n \rightarrow L$. This means that we have to have a (hopefully clever) guess for $L$
-    \item Work in a complete metric space and show $\{x_n\}$ is a Cauchy sequence. This is often easier, but has the drawback of not giving us the actual limit.
+    \item Use the definition of convergence to show that $x_n \rightarrow L$. This means that we need a guess for what $L$.
+    \item Work in a complete metric space, and show $\{x_n\}$ is a Cauchy sequence. This is often easier, since we do not need a guess for the limit, but it has the drawback of not giving us the actual limit.
 \end{enumerate}
 
 \subsection{Limits and Continuity}
 
-First we define the limit of a function between metric spaces. 
+First we define the limit of a function between two metric spaces. 
 
 \begin{definition}Let $f: (X, d_1) \rightarrow (Y, d_2)$. Then $f(x) \rightarrow L$ as $x \rightarrow x_0$ if either of the following equivalent definitions holds:
 \begin{enumerate}
-\item For every $\epsilon > 0$ there exists $\delta > 0$ (dependent on $\epsilon$ and $x_0$) such that $d_2(x, x_0) < \delta$ implies $d_2(f(x), L) < \epsilon$.
+\item For every $\epsilon > 0$ there exists $\delta > 0$ (dependent on $\epsilon$ and $x_0$) such that if $d_2(x, x_0) < \delta$, $d_2(f(x), L) < \epsilon$.
 \item For every sequence $\{x_n\}$ with $x_n \rightarrow x_0$, $f(x_n) \rightarrow L$.
 \end{enumerate}
 \end{definition}
 
-We can now define continuity of a function.
+We can use this to define continuity of a function (we will call this the metric space definition of continuity).
 
 \begin{definition}
-$f : (X, d_1) \rightarrow (Y, d_2)$ is \textbf{continuous} if for all $x_0 \in X$, $f(x) \rightarrow f(x_0)$ as $x \rightarrow x_0$.
+$f : (X, d_1) \rightarrow (Y, d_2)$ is \textbf{continuous at $x_0$} if $f(x) \rightarrow f(x_0)$ as $x \rightarrow x_0$. $f$ is \textbf{continuous} if $f$ is continuous at $x_0$ for all $x_0 \in X$.
 \end{definition}
 
-Our goal is to show that $C([a,b])$ is a complete metric space with the maximum/supremum metric. To do that, first we show that the metric itself is a continuous function.
+We discussed above that $C([a,b])$ is a metric space with the maximum (supremum) metric. Our goal is to show that $C([a,b])$ is a complete metric space. To do that, first we show that the metric itself is a continuous function.
 
 \begin{proposition}
 The metric $d$ is a continuous function from $X \times X \rightarrow \R$.
 \begin{proof}
-Let $D((a,b),(x,y)) = d(a,x)+d(b,y)$ be the product metric on $X \times X$. Let $(x_n, y_n) \rightarrow (x, y)$ in $(X \times X, D)$. Then using the triangle inequality on $\R$ and the reverse triangle inequality on $X$,
+Let $D\left((a,b),(x,y)\right) = d(a,x)+d(b,y)$ be the product metric on $X \times X$. Let $(x_n, y_n) \rightarrow (x, y)$ in $(X \times X, D)$. We will show that $d(x_n,y_n) \rightarrow d(x,y)$, which is equivalent to showing that $|d(x_n, y_n) - d(x,y)| \rightarrow 0$. Using the triangle inequality on $\R$ and the reverse triangle inequality on $X$,
 \begin{align*}
     |d(x_n, y_n) - d(x,y)| &\leq |d(x_n, y_n) - d(x, y_n)| + |d(x, y_n) - d(x,y)| \\
     &= d(x_n, x) + d(y_n, y) \\
     &= D((x_n, y_n), (x, y)) \\
-    &\rightarrow 0
+    &\rightarrow 0.
 \end{align*}
 \end{proof}
 \end{proposition}
 
-Next, we have the following definitions of convergence.
+Next, we define the following two modes of convergence. (There are others, which you will study in courses in real analysis and probability). For simplicity, we will only consider real-valued functions here, but the codomain can be any metric space (with the appropriate adjustments).
 
 \begin{definition}
-Consider a sequence of functions $\{f_n\}$, $f_n:(X, d_1) \rightarrow \R$. (The codomain can be any metric space, but we will make it $\R$ for simplicity.)
+Consider a sequence of functions $\{f_n\}$, $f_n:(X, d) \rightarrow \R$. 
 \begin{enumerate}
-    \item $f_n \rightarrow f$ \emph{pointwise} if $|f_n(x) - f(x)| \rightarrow 0$ for all $x \in X$. In other words, you give me $x$ and $\epsilon$, and I can find $\delta = \delta(x, \epsilon)$ such that $|f_n(x) - f(x)| < \epsilon$
-    \item $f_n \rightarrow f$ \emph{uniformly} if the convergence does not depend on $x$. In other word, you give me $\epsilon$, and I can find $\delta = \delta(\epsilon)$ (independent of $x$) such that for all $x \in x$, $|f_n(x) - f(x)| < \epsilon$. In other words,
+    \item $f_n \rightarrow f$ \textbf{pointwise} if $|f_n(x) - f(x)| \rightarrow 0$ for all $x \in X$. In other words, if you give me $x$ and $\epsilon > 0$, I can find a natural number $N = N(x, \epsilon)$ such that $|f_n(x) - f(x)| < \epsilon$ whenever $n \geq N$.
+    \item $f_n \rightarrow f$ \textbf{uniformly} if the rate of convergence does not depend on $x$. In other words, if you give me $\epsilon > 0$, I can find a natural number $N = N(\epsilon)$ (independent of $x$) such that for all $x \in X$, $|f_n(x) - f(x)| < \epsilon$ whenever $n \geq N$. This is equivalent to
     \[
-    \sup_{x \in X}|f_n(x) - f(x)| \rightarrow 0
+    \sup_{x \in X}|f_n(x) - f(x)| \rightarrow 0.
     \]
 \end{enumerate}
 \end{definition}
 
-Recall that the uniform/maximum/supremum metric is defined by
+The supremum metric (also called the uniform metric) on the space of real-valued functions on $(X, d)$ is defined by
 \[
-D(f,g) = \sup_{x \in X}|f(x) - g(x)|
+D(f,g) = \sup_{x \in X}|f(x) - g(x)|.
 \]
-Uniform convergence is convergence with respect to this metric. The uniform metric does not work for every space of functions, but we showed that it is a metric on $C([a,b])$. Next, we prove the uniform limit theorem.
+Uniform convergence is convergence with respect to this metric. Next, we prove the uniform limit theorem, which says that the uniform limit of continuous functions is continuous.
 
 \begin{theorem}[Uniform Limit Theorem]
-If $f_n \rightarrow f$ uniformly and all the $f_n$ are continuous, then $f$ is continuous as well.
+Let $\{f_n\}$ be a sequence of continuous functions on a metric space $(X,d)$.
+If $f_n \rightarrow f$ uniformly, then $f$ is continuous as well.
 \begin{proof}
-We will show that $f$ is continuous at $x_0$. Choose any $\epsilon > 0$.
+We will show that $f$ is continuous at $x_0 \in X$. Choose any $\epsilon > 0$.
 \begin{enumerate}
-\item Since $f_n \rightarrow f$ uniformly, we can find $N$ such that $\sup_{x \in X}|f_n(x) - f(x)| < \epsilon$ for all $n \geq N$.
+\item Since $f_n \rightarrow f$ uniformly, we can find $N \in \N$ such that $\sup_{x \in X}|f_n(x) - f(x)| < \epsilon$ for all $n \geq N$.
 \item Since $f_N$ is continuous at $x_0$, we can find $\delta > 0$ such that if $d(x, x_0) < \delta$, $|f_N(x) - f_n(x_0)| < \epsilon$. 
 \item By the triangle inequality, as long as $d(x, x_0) < \delta$,
 \[
@@ -267,16 +277,16 @@ We will show that $f$ is continuous at $x_0$. Choose any $\epsilon > 0$.
 \end{proof}
 \end{theorem}
 
-Using all of this, we can show that $C([a,b])$ is complete.
+Using all of this, we can show that $C([a,b])$ is a complete metric space, i.e. every Cauchy sequence is convergent.
 
 \begin{theorem}
-$C([a,b])$ with the uniform metric is a complete metric space.
+The space $C([a,b])$ with the uniform metric is a complete metric space.
 \begin{proof}
-Let $\{ f_n(x) \}$ be a Cauchy sequence in $C([a,b])$. We need to find a function $f \in C([a,b])$ such that $f_n \rightarrow f$, i.e $\sup|f_n(x) - f(x)| \rightarrow 0$.
+Let $\{ f_n(x) \}$ be a Cauchy sequence in $C([a,b])$. Our goal is to find a function $f \in C([a,b])$ such that $f_n \rightarrow f$, i.e $\sup_{x \in X}|f_n(x) - f(x)| \rightarrow 0$.
 \begin{enumerate}
-    \item Since for all $x \in [a,b]$, $| f_n(x) - f_m(x)| \leq \sup| f_n(x) - f_m(x)| \rightarrow 0$, $\{ f_n(x) \}$ is a Cauchy sequence.
-    \item By completeness of $\R$, $f_n(x)$ converges to some limit in $\R$ for all $x \in [a,b]$. Call this limit $f(x)$.
-    \item Show $\sup| f_n(x) - f(x)| \rightarrow 0$. For $\epsilon > 0$, choose $N$ such that for all $x \in [a, b]$ and all $m, n \geq N$, $|f_n(x) - f_m(x)| < \epsilon$. Since the metric $d(a,b) = |a - b|$ (i.e. the absolute value on $\R$) is continuous, send $m \rightarrow \infty$ to get $|f_n(x) - f(x)| < \epsilon$. Since this is true for all $x \in [a,b]$, $\sup|f_n(x) - f(x)| < \epsilon$, i.e. $f_n \rightarrow f$ uniformly on $[a,b]$.
+    \item Since for all $x \in [a,b]$, $| f_n(x) - f_m(x)| \leq \sup| f_n(x) - f_m(x)| \rightarrow 0$, $\{ f_n(x) \}$ is a Cauchy sequence for each $x \in [a,b]$.
+    \item By the completeness of $\R$, for each $x \in [a,b]$, $f_n(x)$ converges to some limit in $\R$. Call this limit $f(x)$.
+    \item Next, we show that $f_n \rightarrow f$ uniformly, i.e. $\sup_{x \in X}| f_n(x) - f(x)| \rightarrow 0$. For any $\epsilon > 0$, choose $N \in \N$ such that for all $x \in [a, b]$ and all $m, n \geq N$, $|f_n(x) - f_m(x)| < \epsilon$. Since the metric $d(a,b) = |a - b|$ (i.e. the absolute value on $\R$) is continuous, send $m \rightarrow \infty$ to get $|f_n(x) - f(x)| < \epsilon$. Since this is true for all $x \in [a,b]$, $\sup_{x \in X}|f_n(x) - f(x)| < \epsilon$, i.e. $f_n \rightarrow f$ uniformly on $[a,b]$.
     \item $f(x)$ is continuous by the uniform limit theorem.
 \end{enumerate}
 \end{proof}
@@ -284,61 +294,61 @@ Let $\{ f_n(x) \}$ be a Cauchy sequence in $C([a,b])$. We need to find a functio
 
 \subsection{Open and Closed Sets}
 
-For this entire section, $(X, d)$ is metric space.
+In this section, we define open and closed sets of a metric space $(X,d)$.
 
 \begin{definition}
-The $\epsilon$-neighborhood or open $\epsilon-$ball of $x_0$ is the set
+The \textbf{$\epsilon$-neighborhood} or \textbf{open $\epsilon-$ball} of $x_0$ is the set
 \[
 B_\epsilon(x) = \{ x \in X : d(x,x_0) < \epsilon \}
 \]
-Some people write this as $B(x, \epsilon)$ or $U_\epsilon(x)$.
+You may see this notated as $B(x, \epsilon)$ or $U_\epsilon(x)$.
 \end{definition}
 
+We use this to define an open set in a metric space.
+
 \begin{definition}
-A subset $U \subset X$ is \emph{open} if for every $x \in U$ there exists $\epsilon > 0$ such that $B_\epsilon(x) \subset U$.
+A subset $U \subset X$ is \textbf{open} if for every $x \in U$ there exists $\epsilon > 0$ such that $B_\epsilon(x) \subset U$.
 \end{definition}
 
-This ``open ball property'' is so useful, that we give it a name.
+In other words, we can find an open ball around any point in $U$ which is entirely contained in $U$. This ``open ball property'' is so useful, that we can give it a name.
 
 \begin{definition}
-$x$ is an \emph{interior point} of $E$ there exists $\epsilon > 0$ such that $B_\epsilon(x) \subset U$.
+$x$ is an \textbf{interior point} of $E$ there exists $\epsilon > 0$ such that $B_\epsilon(x) \subset U$.
 \end{definition}
 
 We can then say that a set $U$ is open if it consists entirely of interior points. We also define a closed set.
 
 \begin{definition}
-A subset $K \subset X$ is \emph{closed} if whenever $\{x_n\} \subset K$ with $x_n \rightarrow x$, $x \in K$.
+A subset $K \subset X$ is \textbf{closed} if whenever $\{x_n\} \subset K$ with $x_n \rightarrow x$, $x \in K$.
 \end{definition}
 
-Sometimes you will see closed sets defined in terms of limit points.
+The half-open interval $(0,1]$ is not closed, since the sequence $\left\{ \frac{1}{2^k} \right\}$ converges to $0$, but $0 \notin (0,1]$. Sometimes you will see closed sets defined in terms of limit points.
 
 \begin{definition}
-$x$ is a \emph{limit point} of a set $E$ if for every $\epsilon > 0$, $B_\epsilon$ contains a point in $E$ which is not $x$. (Note that $x$ may or may not be in $E$).
+A point $x$ is a \textbf{limit point} of a set $E$ if for every $\epsilon > 0$, $B_\epsilon$ contains a point in $E$ which is not $x$. (Note that $x$ may or may not be in $E$).
 \end{definition}
 
-We then have the following alternate definition of a closed set.
+The point $0$ is a limit point of the half-open interval $(0,1]$, but $0 \notin (0,1]$. It follows from this definition that if $x$ is a limit point of $E$, there exists a sequence $\{x_n\} \subset E$ such that $x_n \rightarrow x$. We then have the following alternative definition of a closed set.
 
 \begin{definition}
-A subset $E \subset X$ is \emph{closed} if it contains all of its limit points.
+A subset $E \subset X$ is \textbf{closed} if it contains all of its limit points.
 \end{definition}
 
-It is not hard to show that if $K$ is closed, its complement $X\setminus K$ is open. In fact, topologists use this as the definition of a closed set, i.e. $K \subset X$ is closed if $X\setminus K$ is open.
-
-We have the following properties of open and closed sets.
+We can show that that if $K$ is closed, its complement $X\setminus K$ is open. In fact, topologists use this as the definition of a closed set, i.e. they say that $K \subset X$ is closed if $X\setminus K$ is open. We can also show the following properties of open and closed sets.
 
 \begin{enumerate}
     \item Arbitrary unions of open sets are open.
-    \item Finite intersections of closed sets are closed.
+    \item Finite intersections of open sets are open.
     \item Arbitrary intersections of closed sets are closed.
     \item Finite unions of closed sets are closed.
 \end{enumerate}
 
-Topologists use these to define open sets. A topology on a set $X$ is a family $\mathcal{T}$ of subsets of $X$ which contains $X$ and the empty set; is closed under arbitrary union; and is closed under finite intersection. The sets in $\mathcal{T}$ are called the open sets.
+Topologists actually use these properties to define open sets! A topology on a set $X$ is a family $\mathcal{T}$ of subsets of $X$ which contains $X$ and the empty set; is closed under arbitrary unions; and is closed under finite intersections. The sets in $\mathcal{T}$ are called then called the open sets. 
 
-We also have the following useful definitions.
+Finally, we define the closure, interior, and boundary of a set. For all of these, several equivalent definitions are given.
 
 \begin{definition}
-The \emph{closure} of a set $E$, denoted $\overline{E}$ is
+The \emph{closure} of a set $E$, denoted $\overline{E}$, is defined in any of the following ways:
 \begin{enumerate}
     \item All points in $E$ together with all limit points of $E$.
     \item The intersection of all closed sets containing $E$.
@@ -347,7 +357,7 @@ The \emph{closure} of a set $E$, denoted $\overline{E}$ is
 \end{definition}
 
 \begin{definition}
-The \emph{interior} of a set $E$, denoted $E^\mathrm{o}$ is
+The \emph{interior} of a set $E$, denoted $E^\mathrm{o}$, is defined in any of the following ways:
 \begin{enumerate}
     \item The set of all interior points of $E$.
     \item The union of all open sets contained in $E$.
@@ -356,7 +366,7 @@ The \emph{interior} of a set $E$, denoted $E^\mathrm{o}$ is
 \end{definition}
 
 \begin{definition}
-The \emph{boundary} of a set $E$, denoted $\partial E$, is
+The \emph{boundary} of a set $E$, denoted $\partial E$, is defined in any of the following ways:
 \begin{enumerate}
 \item The closure of $E$ without the interior of $E$: $\partial E = \overline{E}\setminus E^\mathrm{o}$.
 \item The set of points $x$ such that every ball $B_{\epsilon}(x)$ contains at least one point of $E$ and at least one point of $X\setminus E$.
@@ -371,66 +381,76 @@ We note that the boundary of a set is always closed.
 Sometimes it does not matter much what metric we use, i.e. different metrics give us the same convergent sequences and the same open sets. 
 
 \begin{definition}
-Two metrics $d_1$ and $d_2$ on $X$ are \emph{strongly equivalent} if there exist constants $C_1$ and $C_2$ such that for all $x, y \in X$,
+Two metrics $d_1$ and $d_2$ on $X$ are \textbf{strongly equivalent} if there exist constants $C_1$ and $C_2$ such that for all $x, y \in X$,
 \[
 C_1 d_1(x,y) \leq d_2(x,y) \leq C_2 d_1(x,y)
 \]
 \end{definition}
 
-If two metrics are strongly equivalent, the open sets and convergent sequences are the same; there may, however, be other differences between the spaces. For finite dimensional spaces such as $\R^n$, the Euclidean, taxicab, and maximum metrics are strongly equivalent. This is not hard to show. For example, for the maximum and taxicab metrics, we have
+If two metrics on $X$ are strongly equivalent, the open sets and convergent sequences of $X$ are the same; there may, however, be other differences between the spaces. For finite dimensional spaces such as $\R^n$, the Euclidean, taxicab, and maximum metrics are all strongly equivalent. For example, for the maximum and taxicab metrics, we have
 \[
 \max_{k=1, \dots, n}|x_k - y_k| \leq \sum_{k=1}^n |x_k - y_k| \leq n \max_{k=1, \dots, n}|x_k - y_k|
 \]
-so we satisfy the definition of strong equivalence with $C_1 = 1$, $C_2 = n$.
-
-It is a good exercise to draw the unit balls in the taxicab, Eucliedean, and maximum metric in $\R^2$. The take-home message is that it the shape of the open balls don't matter too much.
+so the definition of strong equivalence is satisfied with with $C_1 = 1$ and $C_2 = n$. It is a good exercise to draw the unit balls in the taxicab, Euclidean, and maximum metric in $\R^2$. The take-home message is that it the shape of the open balls usually don't matter too much.
 
 \subsection{Topological Definition of Continuity}
 
-It is sometimes easier to use the topological definition of continuity rather than the one specific to metric spaces which involves all those pesky $\epsilon$s and $\delta$s. Topologists define continuity as follows.
+It is sometimes easier to use the topological definition of continuity rather than the metric space definition. This way you can avoid all of those pesky $\epsilon$s and $\delta$s! Topologists define continuity as follows.
 
 \begin{definition}
-$f: X \rightarrow Y$ is continuous if $f^{-1}(U)$ is open in $X$ for each open set $U \subset Y$.
+A function $f: X \rightarrow Y$ is \textbf{continuous} if $f^{-1}(U)$ is open in $X$ for each open set $U \subset Y$.
 \end{definition}
 
 Fortunately, the metric space definition of continuity is equivalent to the topological definition of continuity. 
 
 \begin{theorem}
 $f: (X, d_1) \rightarrow (Y, d_2)$ is continuous $\iff$ $f^{-1}(U)$ is open in $X$ for each open set $U \subset Y$.
-\begin{proof}
-$(\implies)$ Suppose $f$ is continuous using metric space definition. Let $U \subset Y$ open. We need to show that $f^{-1}(U)$ is open. Let $x_0$ in $f^{-1}(U)$, so that $y_0 = f(x_0) \in U$. Since $U$ is open, $y_0 \in B_\epsilon(y_0) \subset U$. By continuity of $f$, there exists $\delta > 0$ such that $x \in B_\delta(x_0)$ implies $f(x) \in B_\epsilon(y_0)$. Since $B_\epsilon(y_0) \in U$, $x_0 \in B_\delta(x_0) \subset f^{-1}(U)$.\\
-$(\impliedby)$ Suppose $f$ is continuous using topological definition. Choose any $x_0$ and any $\epsilon > 0$, and let $y_0 = f(x_0)$. Let $U = B_\epsilon(y)$, which is open. Then $f^{-1}(U)$ is open and contains $x_0$, thus there exists $\delta > 0$ such that $x_0 \in B_\delta(x_0) \subset f^{-1}(U)$. By definition of $U$, $d(f(x), f(x_0)) < \epsilon$ whenever $d(x, x_0) < \delta$.
+\begin{proof}We prove this in both directions.
+
+\indent $(\implies)$ Suppose $f$ is continuous using the metric space definition. Let $U \subset Y$ be an open set. We need to show that $f^{-1}(U)$ is open. Let $x_0 \in f^{-1}(U)$, so that $y_0 = f(x_0) \in U$. Since $U$ is open, $y_0 \in B_\epsilon(y_0) \subset U$. By continuity of $f$, there exists $\delta > 0$ such that $x \in B_\delta(x_0)$ implies $f(x) \in B_\epsilon(y_0)$. Since $B_\epsilon(y_0) \in U$, $x_0 \in B_\delta(x_0) \subset f^{-1}(U)$.\\
+
+\indent $(\impliedby)$ Suppose $f$ is continuous using the topological definition. Choose any $x_0$ and any $\epsilon > 0$, and let $y_0 = f(x_0)$. Let $U = B_\epsilon(y)$, which is open. Then $f^{-1}(U)$ is open and contains $x_0$, thus there exists $\delta > 0$ such that $x_0 \in B_\delta(x_0) \subset f^{-1}(U)$. By definition of $U$, $d(f(x), f(x_0)) < \epsilon$ whenever $d(x, x_0) < \delta$.
 \end{proof}
 \end{theorem}
 
-Since the complement of a open set is a closed set, and since the inverse image operator commutes with all set operations, we also have the following equivalent statement: $f: X \rightarrow Y$ is continuous if $f^{-1}(K)$ is closed in $X$ for each closed set $K \subset Y$.
+Since the complement of a open set is a closed set, and since the inverse image commutes with all set operations, we also have the following equivalent statement: $f: X \rightarrow Y$ is continuous if $f^{-1}(K)$ is closed in $X$ for each closed set $K \subset Y$.
 
-\subsubsection{Connectedness}
+\subsection{Connectedness}
 
-Intuitively, a disconnected set has two (or more!) ``separate pieces''. We state this mathematically as follows. There are many different definition of connectedness. I like this one.
-
-\begin{definition}
-A subset $E$ is disconnected if we can find two disjoint, nonempty open sets $A$ and $B$ such that $E \subset A \cup B$ and both $E \cap A$ and $E \cap B$ are nonempty; $E$ is connected if this is not possible.
-\end{definition}
-
-Here is another common definition you will see (i.e. the one in Rudin and Munkres). The advantage of this one is that it defines a disconnected set as actually being split up into two pieces. 
+Intuitively, a disconnected set has two (or more!) ``separate pieces''. We state this mathematically as follows. There are many equivalent definition of connectedness. I like this one.
 
 \begin{definition}
-Two sets $A$ and $B$ are \emph{separated} if both $A \cap \overline{B}$ and $\overline{A}\cap B$ are empty. A subset $E$ of $X$ is \textbf{disconnected} if it is the union of two nonempty, separated sets. A subset $E$ of $X$ is \textbf{connected} if this is not possible.
+A subset $E$ is \textbf{disconnected} if we can find two disjoint, nonempty open sets $A$ and $B$ such that $E \subset A \cup B$ and both $E \cap A$ and $E \cap B$ are nonempty; $E$ is \textbf{connected} if this is not possible.
 \end{definition}
 
-In the case of the real line, we can say exactly what the connected subsets are.
+Here is another common definition you will see (i.e. the one in Rudin and Munkres). The advantage of this definition is that it defines a disconnected set as actually being split up into two separate pieces. 
+
+\begin{definition}
+Two sets $A$ and $B$ are \textbf{separated} if both $A \cap \overline{B}$ and $\overline{A}\cap B$ are empty. A subset $E$ of $X$ is \textbf{disconnected} if it is the union of two nonempty, separated sets. A subset $E$ of $X$ is \textbf{connected} if this is not possible.
+\end{definition}
+
+In the case of the real line, we can say exactly what the connected subsets are. Before we do that, we define an interval in the real line.
+
+\begin{definition}
+A subset $I \subset \R$ is an \textbf{interval} if, for all $x$ and $y$ in $I$, every real number between $x$ and $y$ is in $I$ as well.
+\end{definition}
+
+Examples of intervals include the open intervals $(a,b)$, the closed intervals $[a,b]$, and unbounded intervals such as $[a, \infty)$. We then have the following proposition.
 
 \begin{proposition}
 The connected subsets of $\R$ are intervals and points.
 \begin{proof}
-Let $E$ be a subset of $\R$.
-\begin{enumerate}
-    \item If $E$ is not an interval, then we can find $x < y < z$ with $x, z \in E$ and $y \notin E$. Then $E \subset (-\infty, y)\cup(y,\infty)$, therefore $E$ is not connected.
-    \item If $E$ is not connected, we can write $E = A \cap B$, where $A$ and $B$ are separated. Let $x \in A$, $y \in B$, and without loss of generality, take $x < y$. 
-    \item Let $z = \sup A \cap [x, y]$. Then $z \in \overline{A}$, so $z \notin B$, which implies $x \leq z < y$.
-    \item If $z \notin A$, $x < z < y$, so $E$ is not an interval.
-    \item If $z \in A$, then $z \notin \overline{B}$, thus we can find $w$ with $z < w < y$ which implies $x < w < y$, and so $E$ once again in not an interval.
+Let $E$ be a subset of $\R$. As an edge case, if $E$ contains a single point, then $E$ is connected. Therefore, we can assume that $E$ contains at least two points. We will show that $E$ is connected $\iff$ $E$ is an interval, by proving the two contrapositives.
+
+\indent $(\implies)$ Show that if $E$ is not an interval, than $E$ is not connected. Suppose $E$ is not an interval. Then we can find $x < y < z$ with $x, z \in E$ and $y \notin E$. Then $E \subset (-\infty, y)\cup(y,\infty)$, which implies that $E$ is not connected.\\
+
+\indent $(\impliedby)$ Show that if $E$ is not connected, then $E$ is not an interval.
+\begin{enumerate}    
+    \item Suppose $E$ is not connected. Then we can write $E = A \cup B$, where $A$ and $B$ are separated, i.e. both $A \cap \overline{B}$ and $\overline{A}\cap B$ are empty.
+    \item Let $x \in A$, $y \in B$, and without loss of generality, take $x < y$. 
+    \item Let $z = \sup \left(A \cap [x, y]\right)$. Then $z \in \overline{A}$. Since $A$ and $B$ are separated, $z \notin B$, which implies $x \leq z < y$. There are two possibilities to consider: $z \notin A$ and $z \in A$.
+    \item If $z \notin A$, then $x < z < y$ with $z \notin A\cup B = E$, so $E$ is not an interval.
+    \item If $z \in A$, then $z \notin \overline{B}$. Therefore we can find $w \in (z, y)$ such that $w \notin B$. (If this were not possible, then $z$ would be in $\overline{B}$). Since $w > z$, $w \notin A$ as well (by the definition of $z$ as the supremum). Since $x \leq z < w < y$ and $w \notin A\cup B = E$, $E$ is not an interval.
 \end{enumerate}
 \end{proof}
 \end{proposition}
@@ -440,16 +460,19 @@ Using this, we can completely characterize the open sets of $\R$.
 \begin{proposition}
 Any nonempty open set in $\R$ is the finite or countable union of disjoint open intervals.
 \begin{proof}
-Let $U$ open set in $\R$.
+Let $U$ be an open set in $\R$.
 \begin{enumerate}
-\item On the set $U$, define the equivalence relation $x \sim y$ if $x, y \in I \subset U$, where $I$ is connected. This partitions $U$ into disjoint equivalence classes, which are the connected components of $U$.
-\item Let $U_x$ be the connected component containing $x$ (which is the largest connected subset of $U$ which contains $x$). Then we can write
+\item On the set $U$, define the equivalence relation $x \sim y$ if $x, y \in I \subset U$, where $I$ is connected. This partitions $U$ into disjoint equivalence classes, which are the called the \textbf{connected components} of $U$.
+\item Let $U_x$ be the connected component containing $x$. This is the largest connected subset of $U$ which contains $x$. In other words, if $I$ is an interval containing $x$, then $I \subset U_x$.
+\item By the property of equivalence classes, we can write $U$ as the union of disjoint equivalence classes. In this case, that means we can find a subset $F \subset E$ such that 
 \[
-U = \bigcup_{x \in E}U_x
+U = \bigcup_{x \in F}U_x,
 \]
-which is a union of disjoint equivalence classes.
-\item Next, show each $U_x$ is an open interval. Since $U_x$ is connected, it is an interval. Let $y \in U_x$. Since $U$ is open, we can find $\epsilon > 0$ such that $(y-\epsilon, y+\epsilon) \subset U$. But we also have $(y-\epsilon, y+\epsilon) \subset U_y$ (by the definition of $U_y)$, and $U_y = U_x$ by the equivalence relation. Thus $U_x$ is open.
-\item Since $U$ is a union of disjoint open intervals, and we can find a distinct rational number inside each one, since $\Q$ is countable, $U$ is the disjoint union of at most countably many open intervals.
+and the elements in the union are all disjoint.
+\item Next, we show each $U_x$ is an open interval. Since $U_x$ is connected, it is an interval (by the previous proposition). Let $y \in U_x$. Since $U$ is open, we can find $\epsilon > 0$ such that $B_\epsilon(y) = (y-\epsilon, y+\epsilon) \subset U$. We will show that $B_\epsilon(y) \subset U_x$.
+\item We note that $B_\epsilon(y)$ and $U_y$ are both intervals containing $y$. Since $U_y$ is the largest interval containing $y$, $B_\epsilon(y) \subset U_y$.
+\item Since the element $y$ is shared by the equivalence classes $U_y$ and $U_x$, it follows that $U_x = U_y$. This implies that $B_\epsilon(y) \subset U_x$, therefore $U_x$ is open.
+\item We have shown that $U$ is the union of disjoint open intervals. Since the rational numbers $\Q$ are dense in $\R$, we can find a rational number inside each of these intervals; furthermore, these rational numbers are distinct, since the open intervals are disjoint. Since $\Q$ is countable, we conclude that $U$ is the disjoint union of at most countably many open intervals.
 \end{enumerate}
 \end{proof}
 \end{proposition}
@@ -458,37 +481,37 @@ Finally, we show that connectedness is a topological property, i.e. it is preser
 
 \begin{theorem}
 If $E \subset X$ is connected and $f:X\rightarrow Y$ is continuous, then $f(E)$ is connected.
-\begin{proof}
+\begin{proof} We employ proof by contradiction. Assume that $E$ is connected.
 \begin{enumerate}
-    \item Suppose this is not true, i.e. $f(E)$ is disconnected. Then $f(E) \subset A \cup B$, where $A$, $B$ are disjoint, nonempty open sets with $F(E) \cap A \neq \emptyset$ and $F(E) \cap B \neq \emptyset$. 
-    \item It follows that $E \subset f^{-1}(A) \cup f^{-1}(B)$, both of which are open by continuity of $f$.
+    \item Suppose the conclusion is not true, i.e. $f(E)$ is disconnected. Then, by the definition of a disconnected set, $f(E) \subset A \cup B$, where $A$, $B$ are disjoint, nonempty open sets with $F(E) \cap A \neq \emptyset$ and $F(E) \cap B \neq \emptyset$. 
+    \item It follows that $E \subset f^{-1}(A) \cup f^{-1}(B)$, both of which are open by the continuity of $f$.
     \item Since $F(E) \cap A \neq \emptyset$, $f^{-1}(A) \neq \emptyset$ and $f^{-1}(A) \cap E \neq \emptyset$. Similarly, $f^{-1}(B) \neq \emptyset$ and $f^{-1}(B) \cap E \neq \emptyset$.
-    \item Finally, by set theory, $f^{-1}(A) \cap f^{-1}(B) = f^{-1}(A \cap B) = \emptyset$.
+    \item Finally, since the inverse image commute with set operations, $f^{-1}(A) \cap f^{-1}(B) = f^{-1}(A \cap B) = \emptyset$.
     \item Thus $E$ is disconnected, which is not true.
 \end{enumerate}
 \end{proof}
 \end{theorem}
 
-The intermediate value theorem follows directly from this.
+The intermediate value theorem from calculus follows directly from this.
 
-\begin{corollary}[Intermediate Value Theorem (IVT)]Let $f$ continuous on $[a, b]$. Then for every $c$ (strictly) between $f(a)$ and $f(b)$ there exists $x \in (a, b)$ such that $f(x) = c$.
+\begin{corollary}[Intermediate Value Theorem (IVT)]Let $f$ be continuous on $[a, b]$. Then for every $c$ (strictly) between $f(a)$ and $f(b)$ there exists $x \in (a, b)$ such that $f(x) = c$.
 \end{corollary}
 
-What is curious (and really cool!) is that the derivative of a function also has the intermediate value property, regardless of whether it is continuous.
+What is curious (and really cool!) is that the derivative of a function also has the intermediate value property, regardless of whether the derivative itself is continuous.
 
 \begin{theorem}[Darboux]
 Suppose $f:\R \rightarrow \R$ is differentiable, and let $a < b$. Then for every $c$ (strictly) between $f'(a)$ and $f'(b)$, there exists $x \in [a, b]$ such that $f'(x) = c$.
-\begin{proof}
+\begin{proof} We proceed in the following steps.
 \begin{enumerate}
     \item Without loss of generality, take $f'(a) < c < f'(b)$ (otherwise replace $f$ with $-f$).
     \item Define $g(x) = f(x) - cx$. Since $g$ is continuous and $[a,b]$ is closed, $g$ must attain a minimum somewhere on $[a,b]$.
-    \item Show this minimum cannot be at $a$. If $g$ attains its minimum at $a$, then $g(x) - g(a) \geq 0$ on $[a, b]$, thus for $x in (a, b]$,
+    \item First, we show that this minimum cannot be at $a$. If $g$ attains its minimum at $a$, then $g(x) - g(a) \geq 0$ on $[a, b]$, thus for $x in (a, b]$,
     \[
-    \frac{g(x) - g(a)}{x-a} \geq 0
+    \frac{g(x) - g(a)}{x-a} \geq 0.
     \]
     This implies from the definition of the derivative that $g'(a) \geq 0$, which cannot be the case since 
     \[
-    g'(a) = f'(a) - c < 0
+    g'(a) = f'(a) - c < 0.
     \]
     \item Similarly, we show that this minimum cannot be at $b$.
     \item Therefore, the minimum is at a point $x \in (a,b)$. Since this is a local minimum, $g'(x) = 0$, which implies $f'(x) = c$.
@@ -496,35 +519,34 @@ Suppose $f:\R \rightarrow \R$ is differentiable, and let $a < b$. Then for every
 \end{proof}
 \end{theorem}
 
-\subsubsection{Compactness}
+\subsection{Compactness}
 
-Compactness generalizes the idea of a subset of $\R^n$ being closed and bounded. A rough overview of the development of the concept is as follows. The first important result was proved by Bolzano in 1817 (as a lemma to prove the IVT), and then rediscovered by Weierstrass 50 years later. The original result was proved on $\R$.
+Subsets of $\R^n$ that are closed and bounded (e.g. closed boxes) have nice properties. The concept of compactness generalizes this idea of ``closed and bounded'' to arbitrary spaces. A rough overview of the development of the mathematical concept of compactness is as follows. The first important result was proved by Bolzano in 1817 (as a lemma to prove the IVT), and then rediscovered by Weierstrass 50 years later. The theorem (which was originally proved on $\R$) bears both of their names.
 
 \begin{theorem}[Bolzano-Weierstrass]Every bounded sequence in $\R^n$ has a convergence subsequence.
 \begin{proof}
-Bolzano's proof uses the bisection method, a.k.a. ``slicey-dicey''. Let $\{ x_n \}$ be a bounded sequence in $\R^n$. Then $\{ x_n \}$ fits inside a closed box $B$. For convenience, we will prove it on $\R$, although the proof is the same for $\R^n$. Let $B = I_1 = [a,b] \subset \R$.
+Bolzano's proof uses the bisection method, a.k.a. ``slicey-dicey''. For convenience, we will prove the theorem on $\R$, although the proof works the same way for $\R^n$. Let $\{ x_n \}$ be a bounded sequence in $\R$. Then $\{ x_n \}$ fits inside a closed interval $I_1 = [a,b]$.
 \begin{enumerate}
-    \item First, suppose $\{ x_n \}$ has finite range $\{a_1, \dots, a_n \}$. Then one of these, say $a_k$, must appear infinitely many times, so the constant sequence consisting only of $a_k$ is a convergent subsequence.
-    \item With that out of the way, we may assume $\{ x_n \}$ has infinite range. Cut $I_1$ in half. Then (at least) one half must contain infinitely many terms of $\{ x_n \}$. Call that half $I_2$. Cut $I_2$ in half, and let $I_3$ be the half which contains infinitely many terms of $\{ x_n \}$. Keep doing this to get a sequence of closed, nested intervals $I_1 \supset I_2 \subset I_3 \supset \dots$ whose lengths go to 0 since each interval is half the length of the previous one.
-    \item We can show that the intersection of closed, nested intervals $I_k$ is nonempty (this is sometimes called the Nested Interval Theorem). Since the interval lengths go to 0, this intersection must be exactly one point $x^*$. It works in $\R^n$ for nested boxes.
-    \item It follows that $x^*$ is a limit point of $\{ x_n \}$.
-    \item From this, we can get a subsequence $x_{n_k}$ which converges to $x^*$.
+    \item First, suppose $\{ x_n \}$ has finite range $\{a_1, \dots, a_n \}$, i.e. there are only finitely many distinct terms in the sequence. Then one of these, say $a_k$, must appear infinitely many times. This implies that the constant subsequence consisting only of the element $a_k$ is a convergent subsequence.
+    \item With that out of the way, we may assume $\{ x_n \}$ has infinite range. Cut $I_1$ in half. Then (at least) one half must contain infinitely many terms of $\{ x_n \}$. Call that half $I_2$. Cut $I_2$ in half, and let $I_3$ be the half which contains infinitely many terms of $\{ x_n \}$. Keep doing this to get a sequence of closed, nested intervals $I_1 \supset I_2 \supset I_3 \supset \dots$. The lengths of these intervals go to 0, since each interval has half the length of the previous one.
+    \item We can show that the intersection of a sequence of closed, nested intervals $\{I_k\}$ is nonempty (this is sometimes called the Nested Intervals Theorem). Since the interval lengths go to 0, this intersection must be exactly one point $x^*$. (The same idea works in $\R^n$ for nested boxes).
+    \item It follows that $x^*$ is a limit point of $\{ x_n \}$. Since $x^*$ is a limit point of $\{ x_n \}$, we can find a subsequence $\{x_{n_k}\}$ of $\{ x_n \}$ which converges to $x^*$.
 \end{enumerate}
 \end{proof}
 \end{theorem}
 
-In the late 19th century, a similar idea was applied to spaces of functions, in particular $C([a,b])$. A teaser is the following theorem. We will define equicontinuity later.
+In the late 19th century, a similar idea was applied to spaces of functions, in particular $C([a,b])$. A teaser is the following theorem. We will define equicontinuity in the next section.
 
 \begin{theorem}[Arzela-Ascoli]Every sequence in $C([a,b])$ which is uniformly bounded and equicontinuous has a convergence subsequence.
 \end{theorem}
 
-The term \emph{compactness} was first used by Frechet in 1905 to describe a set for which every sequence has a convergent subsequence. Today, this property is usually called \emph{sequential compactness}.
+The term compactness was first used by Frechet in 1905 to describe a set for which every sequence has a convergent subsequence. Today, this property is usually called sequential compactness.
 
 \begin{definition}
-A subset $K$ of $X$ is \emph{sequentially compact} if every sequence in $K$ contains subsequence which converges to an element of $K$.
+A subset $K$ of $X$ is \textbf{sequentially compact} if every sequence in $K$ contains subsequence which converges to an element of $K$.
 \end{definition}
 
-The topological definition of compactness has its origins with Heine in 1870, who proved that every continuous function on $[a,b]$ is uniformly continuous. In the process, he proved that given a family of countably many open intervals which cover $[a, b]$, you can select a finite number of them which still cover $[a, b]$. This was generalized into the modern, topological definition of compactness.
+The topological definition of compactness has its origins with Heine in 1870, who proved that every continuous function on $[a,b]$ is uniformly continuous (we will define that shortly). In the process, he proved that, given a family of countably many open intervals which cover $[a, b]$, you can select a finite number of them which still cover $[a, b]$. This was generalized into the modern, topological definition of compactness.
 
 \begin{definition}
 A subset $K$ of $X$ is \textbf{compact} if any open cover of $K$ has a finite subcover. In other words, given any collection of open sets whose union contains $K$, you can select a finite number of them whose union still contains $K$.
@@ -533,17 +555,17 @@ A subset $K$ of $X$ is \textbf{compact} if any open cover of $K$ has a finite su
 It turns out that, in metric spaces, compactness and sequential compactness are equivalent. In fact, as we shall soon see, there are three equivalent criteria. Before we get to that, we need one more definition.
 
 \begin{definition}
-A subset $K$ of $X$ is \textbf{totally bounded} if for every $\epsilon > 0$ we can find a finite set of elements $\{ x_1, \dots, x_n \} \subset K$ such that 
+A subset $K$ of $X$ is \textbf{totally bounded} if, for every $\epsilon > 0$, we can find a finite set of elements $\{ x_1, \dots, x_n \} \subset K$ such that 
 \[
-K \subset \bigcup_{k=1}^n B_\epsilon(x_k)
+K \subset \bigcup_{k=1}^n B_\epsilon(x_k).
 \]
-In other words, $K$ can be covered by a finite number of $\epsilon-$balls
+In other words, for any $\epsilon > 0$, $K$ can be covered by a finite number of $\epsilon$-balls.
 \end{definition}
 
 We start with the following proposition, which is an interesting result in its own right.
 
 \begin{proposition}
-Suppose $\{x_n\}$ is Cauchy and contains a subsequence $\{x_{n_k} \}$ which converges to $x^*$. Then $x_n \rightarrow x^*$.
+Suppose $\{x_n\}$ is a Cauchy sequence, and contains a subsequence $\{x_{n_k} \}$ which converges to $x^*$. Then $x_n \rightarrow x^*$.
 \begin{proof}
 By the triangle inequality,
 \[
@@ -553,53 +575,63 @@ as $n, k \rightarrow \infty$.
 \end{proof}
 \end{proposition}
 
-We can now state the main theorem regarding compactness in metric spaces.
+We can now state the main equivalence theorem regarding compactness in metric spaces.
 
 \begin{theorem}[Compact Equivalence Theorem]
-Let $X$ be a metric space with $K \subset X$. Then the following are equivalent
-\begin{enumerate}[label=(\roman*)]
-\item $K$ is compact
-\item $K$ is sequentially compact
+Let $(X,d)$ be a metric space with $K \subset X$. Then the following are equivalent:
+\begin{enumerate}[(i)]
+\item $K$ is compact.
+\item $K$ is sequentially compact.
 \item $K$ is complete and totally bounded.
 \end{enumerate}
 
-\begin{proof}
-(i)$\implies$(ii): Let $\{x_n\}$ be a sequence in $K$ and assume that no subsequence converges to any element of $K$. Then for every $x \in K$ we can find a radius $\epsilon(x)$ such that $B_{\epsilon(x)}(x)$ contains only finitely many elements of $\{x_n\}$. Since the set of all $B_{\epsilon(x)}(x)$ is an open cover for $K$ and $K$ is compact, we can find $x_1, \dots, x_n \in K$ such that 
+\begin{proof} We will prove that (i)$\implies$(ii), (ii)$\implies$(iii), and (iii)$\implies$(i).
+
+(i)$\implies$(ii): Suppose $K$ is compact. We employ proof by contradiction. Let $\{x_n\}$ be a sequence in $K$, and assume (for a contradiction) that $\{x_n\}$ does not have a convergent subsequence, i.e. no subsequence converges to any element of $K$. Then for every $x \in K$, we can find a radius $\epsilon(x)$ such that $B_{\epsilon(x)}(x)$ contains only finitely many elements of $\{x_n\}$. Since the set of all open balls $B_{\epsilon(x)}(x)$ is an open cover for $K$, and $K$ is compact, we can find a finite subcover for $K$. In other words, we can find a finite set of points $x_1, \dots, x_n \in K$ such that 
 \[
-K \subset \bigcup_{k=1}^n B_{\epsilon(x_k)}(x_k)
+K \subset \bigcup_{k=1}^n B_{\epsilon(x_k)}(x_k).
 \]
-But this means that $K$ only contains finitely many elements of the sequence $\{x_n\}$, which is impossible.\\
+Since each $B_{\epsilon(x)}(x)$ contains finitely many elements of the sequence $\{x_n\}$, this implies that $K$ only contains finitely many elements of the sequence $\{x_n\}$, which is impossible.\\
 
-(ii)$\implies$(iii): Let $\{x_n\}$ be a Cauchy sequence in $K$. By sequential compactness, $\{x_n\}$ has a subsequence which converges to $x^* \in K$, thus $x_n \rightarrow x^*$, and so $K$ is complete.
-
-Suppose $K$ is not totally bounded. Then there exists $\epsilon > 0$ such that $K$ cannot be covered by finitely many $B_\epsilon(x_k)$. Define a sequence $\{x_n\}$ as follows. Choose any $x_1 \in K$. Then choose $x_2 \in K\setminus B_\epsilon(x_1)$, $x_3 \in K\setminus (B_\epsilon(x_1) \cup B_\epsilon(x_2))$, etc. In other words, each subsequent $x_k$ lies outside all of the previous $\epsilon-$balls. This process never terminates, otherwise $K$ could be covered by finitely many $\epsilon-$balls. By sequential compactness, $\{x_n\}$ has a convergent subsequence, but this is impossible since $d(x_j, x_k) \geq \epsilon$ for all $j \neq k$.
-
-(iii)$\implies$(i): Let $\{U_\alpha\}_{\alpha \in \mathcal{A}}$ be an open cover of $K$, and assume that there is no finite subcover. We construct the following sets.
+(ii)$\implies$(iii): Suppose that $K$ is sequentially compact.
 \begin{enumerate}
-\item For $\epsilon = 1/2$, since $K$ is totally bounded, we can find $y_1^1, \dots, y_{n(1)}^1$ such that
+\item First, we show that $K$ is complete, i.e. all Cauchy sequences converge. Let $\{x_n\}$ be a Cauchy sequence in $K$. By sequential compactness, $\{x_n\}$ has a subsequence which converges to $x^* \in K$. By the prior proposition, $x_n \rightarrow x^*$, and so $K$ is complete.
+\item We employ proof by contradiction. Suppose $K$ is not totally bounded. Then there exists $\epsilon > 0$ such that $K$ cannot be covered by finitely many open balls $B_\epsilon(x_k)$. Define a sequence $\{x_n\}$ as follows. Start by choosing any $x_1 \in K$. Then choose
+\begin{align*}
+x_2 &\in K\setminus B_\epsilon(x_1) \\
+x_3 &\in K\setminus \left(B_\epsilon(x_1) \cup B_\epsilon(x_2) \right) \\
+x_3 &\in K\setminus \left(B_\epsilon(x_1) \cup B_\epsilon(x_2)) \cup B_\epsilon(x_3)\right) \\
+&\vdots
+\end{align*}
+In other words, each element $x_k$ in the sequence lies outside all of the previous $\epsilon$-balls. This process never terminates, otherwise $K$ could in fact be covered by finitely many $\epsilon$-balls. By sequential compactness, $\{x_n\}$ has a convergent subsequence, but this is impossible since $d(x_j, x_k) \geq \epsilon$ for all $j \neq k$.
+\end{enumerate}
+
+(iii)$\implies$(i): Suppose $K$ is complete and totally bounded. Once again, we employ proof by contradiction. Let $\{U_\alpha\}_{\alpha \in \mathcal{A}}$ be an open cover of $K$, and assume that there is no finite subcover. We construct the following sequence of sets.
+\begin{enumerate}
+\item Take $\epsilon_1 = 1/2$. Since $K$ is totally bounded, we can find points $y_1^1, \dots, y_{n(1)}^1$ such that
 \[
-K \subset \bigcup_{k=1}^{n(1)} B_{1/2}(y_k^1)
+K \subset \bigcup_{k=1}^{n(1)} B_{1/2}(y_k^1).
 \]
-Since no finite subcover of $\{U_\alpha\}$ covers $K$, no finite subcover can cover at least one of the $B_{1/2}(y_k^1)$. Rearrange the $y_k^1$ so that the ``bad ball'' is $B_{1/2}(y_1^1)$. Let
+Since no finite subcover of $\{U_\alpha\}$ covers $K$, no finite subcover can cover at least one of the open balls $B_{1/2}(y_k^1)$ (otherwise the finite subcover would cover $K$). We will call this ``uncoverable'' open ball the ``bad ball''. Rearrange the $\{y_k^1\}$ to put the ``bad ball'' at the beginning, i.e. the ``bad ball'' is labeled $B_{1/2}(y_1^1)$. Let
 \[
-B_1 = B_{1/2}(y_1^1) \cap K 
+B_1 = B_{1/2}(y_1^1) \cap K.
 \]
-which cannot be covered by finitely many $U_\alpha$.
-\item Repeat this for $\epsilon = 1/2^2$. We can find $y_1^2, \dots, y_{n(2)}^2$ such that
+Note that $B_1$ cannot be covered by finitely many $U_\alpha$.
+\item Repeat this for $\epsilon_2 = 1/2^2$. Again, since $K$ is totally bounded, we can find points $y_1^2, \dots, y_{n(2)}^2$ such that
 \[
-K \subset \bigcup_{k=1}^{n(2)} B_{1/2^2}(y_k^2)
+K \subset \bigcup_{k=1}^{n(2)} B_{1/2^2}(y_k^2).
 \]
-Since $B_1$ cannot be covered by finitely many $U_\alpha$, no finite subcover can cover at least one of the sets $B_1 \cap B_{1/2^2}(y_k^2)$. Again, rearrange the $y_k^2$ so that $B_{1/2^2}(y_1^2)$ is the ``bad ball''. Let
+Since $B_1$ cannot be covered by finitely many $U_\alpha$, no finite subcover can cover at least one of the sets $B_1 \cap B_{1/2^2}(y_k^2)$. Again, rearrange the $\{y_k^2\}$ so that $B_{1/2^2}(y_1^2)$ is the ``bad ball'', and let
 \[
-B_2 = B_1 \cap B_{1/2^2}(y_1^2)
+B_2 = B_1 \cap B_{1/2^2}(y_1^2).
 \]
-which cannot be covered by finitely many $U_\alpha$.
-\item Repeat this to get a nested sequence of nonempty sets
+Again, $B_2$ cannot be covered by finitely many $U_\alpha$.
+\item Repeat this process with $\epsilon_n = 1/2^n$ to get a nested sequence of nonempty sets
 \[
-K \supset B_1 \supset B_2 \supset \dots
+K \supset B_1 \supset B_2 \supset B_3 \supset \dots
 \]
-such that $B_k \subset B_{1/2^k}(y_1^k)$ for some $y_1^k \in K$ and none of the $B_k$ can be covered by finitely many $U_\alpha$.
-\item Choose $x_n \in B_n$. Then $\{X_n\}$ is a Cauchy sequence, thus $x_n \rightarrow x^* \in K$ by completeness. Furthermore, $x^* \in B_n$ for all $n$.
+such that $B_n \subset B_{1/2^n}(y_1^n)$ for some $y_1^n \in K$, and none of the $B_n$ can be covered by finitely many $U_\alpha$. We note that each set $B_n$ is contained in a ball of radius $1/2^n$.
+\item For each $n \in \N$, choose $x_n \in B_n$. Since the sets $\{B_n\}$ are nested, and each $B_n$ is contained in a ball of radius $1/2^n$, $\{x_n\}$ is a Cauchy sequence. Since $K$ is complete, $x_n \rightarrow x^* \in K$. Furthermore, $x^* \in B_n$ for all $n \in \N$.
 \item Since $\{U_\alpha\}$ covers $K$, $x^* \in U_{\alpha_0}$ for some $\alpha_0$. Since $U_{\alpha_0}$ is open and the $B_n$ are nested, shrinking, and contain $x^*$, $B_n \subset U_{\alpha_0}$ for sufficiently large $n$, which contradicts the fact that no $B_n$ can be covered by finitely many $U_\alpha$.
 \end{enumerate}
 \end{proof}
@@ -608,10 +640,10 @@ such that $B_k \subset B_{1/2^k}(y_1^k)$ for some $y_1^k \in K$ and none of the 
 As a corollary, closed subsets of compact sets are compact. 
 
 \begin{corollary}
-Let $K$ be compact subset of a metric space $X$. If  $A \subset K$ is closed, then $A$ is compact.
+Let $K$ be a compact subset of a metric space $X$. If $A \subset K$ is closed, then $A$ is compact.
 \end{corollary}
 \begin{proof}
-Let $\{x_n\}$ be a sequence in $A$. Then there is a subsequence $x_{n_k} \rightarrow x^* \in K$ since $K$ is sequentially compact. Since $A$ is closed, $x^* \in A$, $A$ is sequentially compact, thus $A$ is compact.
+Let $\{x_n\}$ be a sequence in $A$. Then there is a subsequence $x_{n_k} \rightarrow x^* \in K$, since $K$ is sequentially compact. Since $A$ is closed, $x^* \in A$. It follows that $A$ is sequentially compact, thus $A$ is compact by the compact equivalence theorem.
 \end{proof}
 
 Next, we show that compact subsets of metric spaces are closed.
@@ -619,22 +651,23 @@ Next, we show that compact subsets of metric spaces are closed.
 \begin{proposition}
 Compact subsets of metric spaces are closed.
 \begin{proof}
-Let $K$ be a compact subset of metric space $X$. By the compact equivalence theorem, $K$ is complete, thus closed.\\
-Alternatively we can prove this direclty using the topological definition of compactness. We will show that $X\K$ is open. Choose any $x \neq K$. For all $y \in K$ let $r(y)$ be the distance $r(y) = \frac{1}{2}d(y, x) > 0$ since $y \neq x$. The collection of open balls $\{ B_{r(y)}(y) \}_{y \in K}$ is an open cover for $K$, and none of them contain $x$. By compactness, we have a finite subcover $\{ B_{r(y_1)}(y_1), \dots, B_{r(y_n)}(y_n)\}$ of $K$. Let $r = \min\{ r(y_1), \dots, r(y_n) \}$. Then $B_r(x) \subset X\setminus K$.
+Let $K$ be a compact subset of metric space $X$. We will show that $X\setminus K$ is open, which implies that $K$ is closed. Choose any $x \in X\setminus K$, i.e. $x \neq K$. For all $y \in K$, let $r(y)$ be the distance $r(y) = \frac{1}{2}d(y, x) > 0$, since $y \neq x$. The collection of open balls $\{ B_{r(y)}(y) \}_{y \in K}$ is an open cover for $K$, and none of them contain $x$ by our definition of $r(y)$. By compactness, we can find a finite subcover $\{ B_{r(y_1)}(y_1), \dots, B_{r(y_n)}(y_n)\}$ of $K$. Let $r = \min\{ r(y_1), \dots, r(y_n) \}$. Then $B_r(x)$ does not intersect this finite subcover, which means that $B_r(x)$ lies outside of $K$. It follows that $B_r(x) \subset X\setminus K$, from which we conclude that $X\setminus K$ is open.
 \end{proof}
 \end{proposition}
 
-Although it is nice to have three equivalent criteria for compactness in metric spaces, they are still annoying to check. Fortunately, we have a nice criterion for compactness in $\R^n$, which generalizes the idea that closed intervals are ``special''.
+Although it is nice to have three equivalent criteria for compactness in metric spaces, they are still annoying to check. Fortunately, we have a nice criterion for compactness in $\R^n$, which generalizes the idea that closed, bounded intervals are ``special''.
 
 \begin{theorem}[Heine-Borel]
  A subset $K \subset \R^n$ is compact $\iff$ $K$ is closed and bounded.
-\begin{proof}
-($\implies$) Since $\R^n$ is a metric space and $K$ is compact, $K$ is closed and totally bounded, thus bounded.
-($\impliedby$) Since $K$ is bounded, it fits inside a closed box $B$ in $\R^n$. Since $K$ is closed, it suffices to show that $B$ is compact. By Bolzano-Weierstrass, any sequence in $B$ is bounded, thus has a convergent subsequence whose limit must be in $B$ since $B$ is closed. Since $B$ is sequentially compact, it is compact.
+\begin{proof}We prove both directions.
+
+($\implies$) Since $\R^n$ is a metric space and $K$ is compact, $K$ is closed and totally bounded. Since a totally bounded set is bounded, $K$ is bounded.
+
+($\impliedby$) Since $K$ is bounded, it fits inside a closed box $B$ in $\R^n$. Since $K$ is closed, and closed subsets of compact sets are compact, it suffices to show that $B$ is compact. We will show that $B$ is sequentially compact. Since $B$ is bounded, it follows from the Bolzano-Weierstrass theorem that any sequence in $B$ has a convergent subsequence, whose limit must be in $B$ since $B$ is closed. Since $B$ is sequentially compact, it is compact by the compact equivalence theorem.
 \end{proof}
 \end{theorem}
 
-Next, we show that compactness is also a topological property, i.e. it is preserved by continuous functions. To do this, we will recall two relations involving $f$ and the inverse image operation $f^{-1}$:
+Next, we show that compactness is also a topological property, i.e. it is preserved by continuous functions. Before we do this, we recall two important relations involving $f$ and the inverse image operation $f^{-1}$.
 \begin{enumerate}
     \item $f(f^{-1}(E)) \subset E$, with equality if $f$ is surjective.
     \item $f^{-1}(f(E)) \supset E$, with equality if $f$ is injective.
@@ -645,9 +678,9 @@ Let $f: (X, d_1) \rightarrow (Y, d_2)$ be continuous, and $K$ compact in $X$. Th
 \begin{proof}
 Here, it makes sense to use the topological definition of compactness.
 \begin{enumerate}
-    \item Let $\{ U_\alpha \}_{\alpha in \mathcal{A}}$ be an open cover of $f(K)$. \item Since $f$ is continuous, $f^{-1}(U_\alpha)$ is open in $X$, thus $\{ f^{-1}(U_\alpha) \}_{\alpha in \mathcal{A}} \}$ is an open cover for $K$. 
+    \item Let $\{ U_\alpha \}_{\alpha \in \mathcal{A}}$ be an open cover of $f(K)$. \item Since $f$ is continuous, $f^{-1}(U_\alpha)$ is open in $X$, thus $\{ f^{-1}(U_\alpha) \}_{\alpha \in \mathcal{A}}$ is an open cover for $K$. 
     \item Since $K$ is compact, we can find a finite subcover $\{ f^{-1}(U_1), \dots, f^{-1}(U_n) \}$ for $K$. 
-    \item Sending the finite subcover through $f$, $\{ f(f^{-1}(U_1)), \dots, f(f^{-1}(U_n)) \}$ covers $K$. (These will not in general be open).
+    \item Sending the finite subcover back through $f$, $\{ f(f^{-1}(U_1)), \dots, f(f^{-1}(U_n)) \}$ covers $K$.
     \item Since $f(f^{-1}(U_k)) \subset U_k$, $\{ U_1, \dots, U_n \}$ is a finite subcover for $f(K)$.
 \end{enumerate}
 \end{proof}
@@ -665,46 +698,44 @@ Since $K$ is compact, $f(K) \subset \R$ is compact, thus closed and bounded by H
 Finally, we will prove a generalization of the theorem proved by Heine that continuity implies uniform continuity on a compact set. Uniform continuity is defined as follows.
 
 \begin{definition}
-A function $f: (X, d_1) \rightarrow (Y, d_2)$ is \emph{uniformly continuous} if for every $\epsilon > 0$ there exists $\delta > 0$ (dependent on $\epsilon$ but not on $x$) such that whenever $d_1(x, y) < \delta$, $d_2(f(x), f(y)) < \epsilon$.
+A function $f: (X, d_1) \rightarrow (Y, d_2)$ is \textbf{uniformly continuous} if, for every $\epsilon > 0$, there exists $\delta > 0$ (dependent on $\epsilon$, but not on $x$) such that whenever $d_1(x, y) < \delta$, $d_2(f(x), f(y)) < \epsilon$.
 \end{definition}
-The main difference between uniform continuity and continuity is that the same $\delta$ must work for all $x$. For simplicity, we will prove the uniform continuity theorem for real-valued functions, although it same proof works for any metric spaces.
+The main difference between uniform continuity and continuity is that, for a given $\epsilon > 0$, the same $\delta$ must work for all $x$, i.e. $\delta$ is independent of $x$. For simplicity, we will prove the uniform continuity theorem for real-valued functions, although it same result holds (with the same proof) for any pair of metric spaces.
 
 \begin{theorem}[Uniform Continuity Theorem]
 Let $f: (X, d) \rightarrow \R$ be continuous and let $K \subset X$ compact. Then $f$ is uniformly continuous on $K$.
 \begin{proof}
 We present two proofs here. The first is the standard constructive proof.
 \begin{enumerate}
-    \item Let $\epsilon > 0$. Since $f$ is continuous on $K$, for every $x_0 \in K$ we can find $\delta(x_0)$ such that $|f(x) - f(x_0)| < \epsilon$ whenever $d(x, x_0) < \delta(x_0)$.
-    \item The collection of open balls 
+    \item Let $\epsilon > 0$. Since $f$ is continuous on $K$, for every $x_0 \in K$ we can find $\delta(x_0)$ such that $|f(x) - f(x_0)| < \epsilon/2$ whenever $d(x, x_0) < \delta(x_0)$. In general, the $\delta(x_0)$ will be different.
+    \item The collection of open balls $\left\{ B_{\delta(x)/2}(x) \right\}_{x \in K}$ is an open cover for $K$. By compactness, we can find a finite subcover. In other words, we can find points $x_1, \dots, x_n \in K$ such that
     \[
-    \left\{ B_{\delta(x)/2}(x) \right\}_{x \in K}
+    K \subset B_{\delta(x_1)/2}(x_1) \cup \dots \cup B_{\delta(x_n)/2}(x_n).
     \]
-    is an open cover for $K$, thus by compactness we can find a finite subcover. In other words, we can find points $x_1, \dots, x_n \in K$ such that
-    \[
-    K \subset B_{\delta(x_1)/2}(x_1) \cup \dots \cup B_{\delta(x_n)/2}(x_n)
-    \]
-    \item Let $\delta = \min\{ \delta(x_1)/2, \dots, \delta(x_n)/2 \} > 0$. (We need this to be positive, which is why we need compactness to give us a finite subcover.)
-    \item Choose any $x, y \in K$ with $d(x, y) < \delta$. $x$ must be inside one of the open balls $B_{\delta(x_k)/2}(x_k)$ of the finite subcover, thus we have $d(x, x_k) < \delta(x_k)/2$ for some $k \in \{1, dots, n\}$.
+    \item Let $\delta = \min\{ \delta(x_1)/2, \dots, \delta(x_n)/2 \} > 0$. (We need this minimum to be well-defined and positive, which is why we need compactness to give us a finite subcover).
+    \item Choose any $x, y \in K$ with $d(x, y) < \delta$. We will show that $|f(x) - f(y)| < \epsilon$.
+    \item Because of the finite subcover, $x$ must be inside one of the finite set of open balls $B_{\delta(x_k)/2}(x_k)$. It follows that $d(x, x_k) < \delta(x_k)/2$ for some $k \in \{1, dots, n\}$.
     \item By the triangle inequality,
     \[
-    d(y, x_k) \leq d(y, x) + d(x, x_k) < \delta + \delta(x_k)/2 \leq \delta(x_k)
+    d(y, x_k) \leq d(y, x) + d(x, x_k) < \delta + \delta(x_k)/2 \leq \delta(x_k),
     \]
-    \item Finally, by the triangle inequality and continuity of $f$
+    since $\delta \leq \delta(x_k)/2$.
+    \item Finally, by the triangle inequality and the continuity of $f$,
     \[
     |f(y) - f(x)| \leq |f(y) - f(x_k)| + |f(x_k) - f(x)|
-    \leq 2 \epsilon
+    \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,
     \]
-    since both $y$ and $x$ are within $\delta(x_k)$ of $x_k$.
+    since both $y$ and $x$ are within a distance $\delta(x_k)$ of $x_k$.
 \end{enumerate}
 Alternatively, we may use proof by contradiction.
 \begin{enumerate}
-    \item Suppose this is not true. Then for a specific $\epsilon > 0$ we can find sequences $\{x_n\}, \{y_n\} \subset K$ such that $d(x_n, y_n) \rightarrow 0$ but $|f(x_n) - f(y_n)| \geq \epsilon$.
-    \item Since $K$ is compact, thus sequentially compact, $\{x_n\}$ has a convergent subsequence $x_{n_k} \rightarrow x^*$, where $x^* \in K$.
+    \item Suppose the conclusion is not true. Then for a specific $\epsilon > 0$, we can find sequences $\{x_n\}, \{y_n\} \subset K$ such that $d(x_n, y_n) \rightarrow 0$, but $|f(x_n) - f(y_n)| \geq \epsilon$.
+    \item Since $K$ is compact, thus sequentially compact, $\{x_n\}$ has a convergent subsequence $x_{n_k} \rightarrow x^*$, where $x^* \in K$, since $K$ is closed.
     \item Since $d(x_n, y_n) \rightarrow 0$, $y_{n_k} \rightarrow x^*$ as well.
-    \item Thus we have by the triangle inequality,
+    \item By the triangle inequality,
     \[
-    \epsilon < |f(x_{n_k} - f(y_{n_k})|
-    \leq \underbrace{|f(x_{n_k}) - f(x^*)| + |f(x^*) - f(y_{n_k})|}_{\text{both  }\rightarrow 0\text{ by continuity of }f} \rightarrow 0
+    0 < \epsilon \leq |f(x_{n_k}) - f(y_{n_k})|
+    \leq \underbrace{|f(x_{n_k}) - f(x^*)| + |f(x^*) - f(y_{n_k})|}_{\text{both  }\rightarrow\:0\text{ by continuity of }f} \rightarrow 0,
     \]
     which is a contradiction.
 \end{enumerate}
@@ -713,115 +744,107 @@ Alternatively, we may use proof by contradiction.
 
 \section{Arzela-Ascoli theorem}
 
-The Arzela-Ascoli theorem is the analogue to the Heine-Borel theorem for the metric space $C([a,b])$ in that it gives criteria for compactness that are (hopefully) easier to check. We will prove the theorem on the more general space of real-valued, continuous functions on $K \subset (X, d)$, where $K$ is compact. This space is denoted $C(K)$  (sometimes you will see $C^0(K)$ or $C(K, \R)$), and we use the supremum/maximum metric, defined by
+The Arzela-Ascoli theorem is the analogue of the Heine-Borel theorem for the metric space $C([a,b])$, the space of real-valued functions on $[a,b]$. It gives criteria for compactness that are (hopefully!) easier to check. We will prove the theorem on the more general space of real-valued, continuous functions on a compact subset $K$ of a metric space $(X,d)$. This space is denoted $C(K)$ (sometimes you will see $C^0(K)$ or $C(K, \R)$), and we use the supremum (maximum) metric, which is defined by
 \[
-d(f, g) = \max_{x \in K}|f(x) - g(x)|
+d(f, g) = \max_{x \in K}|f(x) - g(x)|.
 \]
-where the maximum is well defined by the Extreme Value Theorem. In addition, $C(K)$ is complete; the proof is identical to that for $C([a,b])$. 
-
-We have the following two definitions, which are needed in the statement of the theorem.
+Since $f$ and $g$ are continuous, and $K$ is compact, the maximum is well-defined by the Extreme Value Theorem. In addition, $C(K)$ is complete; the proof is identical to that for $C([a,b])$. Before we can state the theorem, we will need the following two definitions.
 
 \begin{definition}
-A subset $A \subset C(K)$ is \emph{uniformly bounded} if there exists $M \geq 0$ such that
+A subset $A \subset C(K)$ is \textbf{uniformly bounded} if there exists $M \geq 0$ such that
+$|f(x)| \leq M$ for all $f \in A$ and $x \in K$. This can also be written as
 \[
-\sup_{f \in A}|f(x)| \leq M
+\sup_{f \in A, x \in K} |f(x)| \leq M.
 \]
-for all $f \in A$.
 \end{definition}
 
 Next, we define equicontinuity of a set of functions. This is essentially the same as uniform continuity, except the same $\delta$ must work for every function in the set.
 
 \begin{definition}
-A subset $A \subset C(K)$ is \emph{equicontinuous} if for every $\epsilon > 0$, there exists $\delta > 0$ (independent of $x \in K$ and $f \in A$) such that whenever $d(x,y) < \delta$,  $|f(x) - f(y)| < \epsilon$ for all $f \in A$. Alternatively, we can write
+A subset $A \subset C(K)$ is \textbf{equicontinuous} if, for every $\epsilon > 0$, there exists $\delta > 0$ (dependent on $\epsilon$, but not on $f$ or $x$) such that whenever $d(x,y) < \delta$, $|f(x) - f(y)| < \epsilon$ for all $f \in A$. Alternatively, we can write this as
 \[
-\sup_{f\in A}|f(x) - f(y)| \rightarrow 0 \text{ as } |x - y| \rightarrow 0
+\sup_{f\in A}|f(x) - f(y)| \rightarrow 0 \text{ as } d(x,y) \rightarrow 0.
 \]
 \end{definition}
 
-Before we prove the theorem, we state a result which is interesting in its own right. You will see the concept of separability (which is unfortunately named!) again in real analysis.
+Before we can prove the theorem, we will need a result which is interesting in its own right. You will see the concept of separability (which is unfortunately named!) again in real analysis.
 
 \begin{definition}
-A metric space is \emph{separable} if it contains a countable dense subset.
+A metric space is \textbf{separable} if it contains a countable dense subset.
 \end{definition}
 
 Here are some examples of separable metric spaces.
 \begin{enumerate}
     \item $\R$ contains $\Q$ as countable dense subset. In general $\R^n$ contains $\Q^n$ as a countable dense subset.
-    \item $C([0,1])$ is separable. It follows from the Weierstrass Approximation Theorem that $\Q[x]$, the set of polynomials with rational coefficients, is a countable dense subset of $C([0,1])$.
+    \item $C([0,1])$ is separable. It follows from the Weierstrass Approximation Theorem and the fact that $\Q$ is countable that $\Q[x]$, the set of polynomials with rational coefficients, is a countable dense subset of $C([0,1])$.
 \end{enumerate}
 
 Next, we show that every compact metric space is separable.
 
 \begin{proposition}
-A compact metric space $K$ contains a countable dense subset $S$.
+Every compact metric space $K$ contains a countable dense subset $S$.
 \begin{proof}
-\begin{enumerate}
-    \item Choose any positive integer $n$. Then the collection of open balls $\{ b_{1/n}(x)\}_{x \in K}$ is an open cover for $K$. By compactness, we can find a finite collection of points $S_n = \{x_1^n, \dots, x_{k(n)}^n\} \subset K$ (which depends on $n$) such that
-    \[
-    K \subset \bigcup_{j = 1}^{k(n)}B_{1/n}(x_j^n)
-    \]
-    Then $S_n$ is a finite set of points in $K$, and every point in $K$ is ``$1/n$-close'' to a point in $S_n$.
-    \item Let
-    \[
-    S = \bigcup_{n=1}^\infty S_n
-    \]
-    $S$ is dense in $K$, and $S$ is countable, since it is the countable union of finite sets.
-\end{enumerate}
+Choose any positive integer $n$. Then the collection of open balls $\{ B_{1/n}(x)\}_{x \in K}$ with radius $1/n$ is an open cover for $K$. By compactness of $K$, we can find a finite collection of points $S_n = \{x_1^n, \dots, x_{k(n)}^n\} \subset K$, where $k(n)$ depends on $n$, such that
+\[
+K \subset \bigcup_{j = 1}^{k(n)}B_{1/n}(x_j^n).
+\]
+The set $S_n$ is a finite set of points in $K$, and every point in $K$ is ``$1/n$-close'' to a point in $S_n$. Perform this procedure for all $n \in N$, and take the union 
+\[
+S = \bigcup_{n=1}^\infty S_n.
+\]
+$S$ is dense in $K$, since, for any $\epsilon > 0$ and $x \in K$, every open ball $B_\epsilon(x)$ contains a point in $S$. $S$ is countable, since it is the countable union of finite sets.
 \end{proof}
 \end{proposition}
 
 We can now state and prove the Arzela-Ascoli theorem.
 
-\begin{theorem}[Arzela-Ascoli] Let $K$ be a compact subset of a metric space $(X, d)$. If a sequence $\{f_n\} \in C(K)$ is uniformly bounded and equicontinuous, it has a uniformly convergent subsequence. Thus if a subset $A \subset C(K)$ is closed, uniformly bounded, and equicontinuous, it is compact.
+\begin{theorem}[Arzela-Ascoli] Let $K$ be a compact subset of a metric space $(X, d)$. If a sequence of functions $\{f_n\} \in C(K)$ is uniformly bounded and equicontinuous, it has a uniformly convergent subsequence. Thus if a subset $A \subset C(K)$ is closed, uniformly bounded, and equicontinuous, it is compact.
 \begin{proof}
-Let $\{f_n\}$ be an equicontinuous and uniformly bounded, with bound $M$. Since $K$ is a compact metric space, it is separable by the above proposition, therefore we can find a countable dense subset $S = \{ x_n \} \subset K$. The first step is to use a diagonal argument to find a subsequence of $\f_n\}$ which converges pointwise on $S$. 
+Let $\{f_n\}$ be an equicontinuous and uniformly bounded, with uniform bound $M$. Since $K$ is a compact metric space, it is separable by the above proposition, therefore we can find a countable dense subset $S = \{ x_n \} \subset K$. The first step is to use a diagonal argument to find a subsequence of $\{f_n\}$ which converges pointwise on $S$. 
 \begin{enumerate}
-    \item We start by applying the functions to $x_1$. Consider first the sequence $\{ f_n(x_1) \} \in \R$. Since $|f_n(x_1)| \leq M$ for all $n$, $\{ f_n(x_1) \}$ contains a convergent subsequence by Bolzano-Weierstrass. We will denote this convergent subsequence by $\{ f_{1,n}(x_1) \}$.
-    \item Next, we apply the functions $\{ f_{1,n}(x) \}$ from the prior convergent subsequence to $x_2$ to form the sequence $\{ f_{1,n}(x_2) \}$. This sequence is also bounded by $M$, so contains a convergent subsequence $f_{2,n}(x_2) \}$. (This is a subsequence of a subsequence!) Note that the sequence of functions $f_{2,n}(x_2) \}$ converges at both $x_1$ and $x_2$.
-    \item Iterate this to get countable collection of subsequences of the original sequence $\{f_n\}$, which we can depict in the following grid.
+    \item We start by applying the sequence of functions $\{f_n\}$ to $x_1$. Consider the real-valued sequence $\{ f_n(x_1) \}$. Since $|f_n(x_1)| \leq M$ for all $n$, $\{ f_n(x_1) \}$ contains a convergent subsequence by Bolzano-Weierstrass. We will denote this convergent subsequence by $\{ f_{1,n}(x_1) \}$. The corresponding functions form a subsequence $\{ f_{1,n} \}$ of $\{f_n\}$.
+    \item Next, we apply the sequence of functions $\{ f_{1,n} \}$ from the previous step to $x_2$, and form the real-valued sequence $\{ f_{1,n}(x_2) \}$. This sequence is also bounded by $M$, so it contains a convergent subsequence, which we will denote $\{ f_{2,n}(x_2) \}$. The corresponding functions $\{ f_{2,n} \}$ converge at both $x_1$ and $x_2$. (We note that $\{ f_{2,n} \}$is a subsequence of $\{ f_{1,n} \}$, which is in turn a subsequence of the original sequence $\{f_n\}$, i.e we have constructed a subsequence of a subsequence!) 
+    \item Iterate this procedure to get a countable collection of subsequences of the original sequence $\{f_n\}$, which we can depict in the following grid.
     \begin{table}[H]
         \centering
         \begin{tabular}{cccc}
-             f_{1,1} & f_{1,2} & f_{1,3} & \dots  \\
-             f_{2,1} & f_{2,2} & f_{2,3} & \dots  \\
-             f_{3,1} & f_{3,2} & f_{3,3} & \dots  \\
-             \vdots & \vdots & \vdots & \vdots
+             $f_{1,1}$ & $f_{1,2}$ & $f_{1,3}$ & $\dots$  \\
+             $f_{2,1}$ & $f_{2,2}$ & $f_{2,3}$ & $\dots$  \\
+             $f_{3,1}$ & $f_{3,2}$ & $f_{3,3}$ & $\dots$ \\
+             $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$
         \end{tabular}
     \end{table}
-    By construction, each row is a subsequence of the previous row, and the sequence of functions in row $n$ converges at $x_1, \dots x_n$.
-    \item Take the diagonal sequence $\{ g_n\} = \{ f_{n,n} \}$. This sequence is a subsequence of the original sequence $\{f_n\}$, and it converges at every point $x_n \in S$. (It turns out that we don't care what this limit is.)
+    By construction, each row in the grid is a subsequence of the previous row, and the sequence of functions in row $n$ converges at the points $x_1, \dots x_n$.
+    \item Take the diagonal sequence $\{ g_n \} = \{ f_{n,n} \}$. This sequence is a subsequence of the original sequence $\{f_n\}$, and it converges at every point $x_n \in S$. (It turns out that we don't care what these limits actually are).
 \end{enumerate}
-We have constructed a subsequence $\{g_n\}$ which converges on a dense subset of $K$. The last step is to show that $\{g_n\}$ converges uniformly on $K$.
+We have constructed a subsequence $\{g_n\}$ of $\{f_n\}$ which converges on a dense subset of $K$. The last step is to show that $\{g_n\}$ converges uniformly on $K$.
 \begin{enumerate}
-    \item Let $\epsilon > 0$. Then by the definition of equicontinuity, we can find $\delta > 0$ such that whenever $d(x,y) < \delta$, $|g_n(x) - g_n(y)| < \epsilon$ for all $n$.
-    \item Since $S = \{ x_n \}$ is dense in $K$, every point $x \in K$ lies inside $B_\delta(x_n)$ for some $x_n$. Thus the collection open balls $\{ B_\delta(x_n) \}_{x_n \in S}$ is an open cover for $K$. By compactness of $K$, we can find a finite subcover, i.e. there exists a positive integer $n_0$ such that
+    \item Let $\epsilon > 0$. By the definition of equicontinuity, we can find $\delta > 0$ such that whenever $d(x,y) < \delta$, $|g_n(x) - g_n(y)| < \epsilon$ for all $n \in \N$.
+    \item Since $S = \{ x_n \}$ is dense in $K$, every point $x \in K$ lies inside $B_\delta(x_n)$ for some $x_n$. Thus the collection of open balls $\{ B_\delta(x_n) \}_{x_n \in S}$ is an open cover for $K$. Since $K$ is compact, we can find a finite subcover, i.e. there exists a positive integer $n_0$ such that
     \[
-    K \subset \bigcup_{k = 1}^{n_0} B_\delta(x_k)
+    K \subset \bigcup_{k = 1}^{n_0} B_\delta(x_k).
     \]
-    For convenience, let $S_0 = \{ x_1, \dots, x_{n_0} \}$. Then for every $x \in K$, $d(x, x_k) < \delta$ for some $x_k \in S_0$. (Alternatively, we can construt $S_0$ directly by choosing $n$ such that $1/n < \delta$, covering $K$ with $(1/n)-$balls at each point, extracting a finite subcover, and letting $S_0$ be the set of the centers of the balls of the finite subcover.)
-    \item Since the sequence of functions $\{ g_n \}$ converges at the \emph{finite} set of points $S_0$, we can find a positive integer $N$ such that for all $m, n \geq N$,
-    \begin{align*}
-    |g_m(x_k) - g_n(x_k)| &\leq \epsilon && x_k \in S_0
-    \end{align*}
-    which holds since convergent sequences are Cauchy.
-    \item Let $x \in K$, and choose $x_k \in S_0$ such that $d(x, x_k) < \delta$. For $m, n \geq N$, by the triangle inequality,
+    Let $S_0 = \{ x_1, \dots, x_{n_0} \}$. Then for every $x \in K$, $d(x, x_k) < \delta$ for some $x_k \in S_0$. (Alternatively, we can construct $S_0$ directly by choosing $n$ such that $1/n < \delta$, covering $K$ with $(1/n)-$balls at each point, extracting a finite subcover, and letting $S_0$ be the set of the centers of the balls in the finite subcover).
+    \item The sequence of functions $\{ g_n \}$ converges at the \emph{finite} set of points $S_0$. This means that each real-valued sequence $\{ g_n(x_k) \}$, for $k = 1, \dots n_0$, is convergent, and therefore is a Cauchy sequence. Since this is a finite set of sequences, we can find a positive integer $N$ such that for all $m, n \geq N$, $|g_m(x_k) - g_n(x_k)| <\epsilon$ for all $x_k \in S_0$.
+
+    \item Choose any $x \in K$, and select $x_k \in S_0$ such that $d(x, x_k) < \delta$ according to step (2). For $m, n \geq N$, by the triangle inequality,
     \begin{align*}
     |g_n(x) - g_m(x)| &\leq |g_n(x) - g_n(x_k)| +
-    |g_n(x_k) - g_m(x_k)| + |g_m(x_k) - g_m(x)| < 3\epsilon
+    |g_n(x_k) - g_m(x_k)| + |g_m(x_k) - g_m(x)| < 3\epsilon,
     \end{align*}
-    where the first and third terms on the RHS are less than $\epsilon$ by equicontinuity.
-    \item Since $\{g_n(x)\}$ is Cauchy for all $x$, by the completenss of $\R$, $g_n(x) \rightarrow g(x)$ for all $x \in K$. Taking $m \rightarrow \infty$ above, we have for all $x \in K$,
+    where the first and third terms on the RHS are less than $\epsilon$ by equicontinuity, and the second term is less than $\epsilon$ by step (3). This implies that $\{g_n(x)\}$ is a (real-valued) Cauchy sequence for all $x$.
+    \item Since $\{g_n(x)\}$ is a Cauchy sequence for all $x$, it follows from the completeness of $\R$ that $g_n(x) \rightarrow g(x)$ for all $x \in K$. Taking $m \rightarrow \infty$ above, we have
     \[
     |g_n(x) - g(x)| \leq 3\epsilon
     \]
-    Since this is independent of $x$, the convergence is uniform.
+    for all $x \in K$ and $n \geq N$. Since this is independent of $x$, the convergence is uniform.
     \end{enumerate}
-Let $A \subset C(K)$ be closed, uniformly bounded, and equicontinuous. By what we have already proved, any sequence $\{f_n\}\subset A$ must contain a convergent subsequence $f_{n_k} \rightarrow f$. Since $A$ is closed, $f \in A$, so $A$ is sequentially compact, thus compact.
+We have successfully found a subsequence $\{g_n\}$ of $\{f_n(x)\}$ which converges uniformly on $K$. To prove the second statement of the theorem, let $A \subset C(K)$ be closed, uniformly bounded, and equicontinuous. By what we have already proved, any sequence $\{f_n\}\subset A$ must contain a convergent subsequence $f_{n_k} \rightarrow f$. Since $A$ is closed, the limit $f \in A$, so $A$ is sequentially compact. It follows that $A$ is compact by the compact equivalence theorem.
 \end{proof}
 \end{theorem}
 
 We also have a converse to the Arzela-Ascoli theorem.
-\begin{theorem} Let $K \subset (X, d)$ compact. Then if $A \subset C(K)$ is totally bounded, it is bounded and equicontinuous.
+\begin{theorem} Let $K \subset (X, d)$ be compact. Then if $A \subset C(K)$ is totally bounded, it is bounded and equicontinuous.
 \begin{proof}
 \begin{enumerate}
 \item Let $\epsilon > 0$. Then using the definition of totally bounded, there exists a finite collection of functions $f_1^{\epsilon}, \dots, f_{n(\epsilon)}^{\epsilon} \in A$ such that 
@@ -880,7 +903,7 @@ Let $\epsilon > 0$, and choose $\delta = \epsilon/2L$. Then for all $x, y \in K$
 \end{proof}
 \end{lemma}
 
-The same result holds for H\"{o}lder continuous functions. H\"{o}lder continuity is a weaker condition than Lipschitz continuity, and it primarily shows up in the study of PDEs.
+The same result holds for H\"{o}lder continuous functions. H\"{o}lder continuity is a weaker condition than Lipschitz continuity, and it shows up in the study of PDEs.
 
 \begin{definition}
 A function $f: \R^d \rightarrow \R$ is \emph{H\"{o}lder continuous} with exponent $\alpha \in (0, 1]$ (sometimes this is called $\alpha$-H\"{o}lder continuous) if there exists a positive constant $C > 0$ such that for all $x, y \in X$,
@@ -893,12 +916,12 @@ The case $\alpha = 1$ is Lipschitz continuity. We exclude $\alpha > 1$ because i
 
 We mentioned above that the mean value theorem implies that if $f: [a, b] \rightarrow \R$ is continuously differentiable, $f$ is Lipschitz with Lipschitz constant $\max_{x\in [a,b]}|f'(x)|$.  Unfortunately, this does not work in higher dimensions, since there is no $n-$dimensional analogue to the mean value theorem.  We can obtain a similar result, however, if $f$ is continuously differentiable on a compact, convex set.
 
-\begin{defintion}
+\begin{definition}
 A set $E$ in $\R^d$ is convex if for all $x, y \in E$, the line segment joining them is also in $E$. In other words, for all $x, y \in E$,
 \begin{align*}
 tx + (1 - t)y &\in E && t \in [0, 1]
 \end{align*}
-\end{defintion}
+\end{definition}
 
 \begin{lemma}
 Let $K \subset \R^d$ convex and compact, and $K \subset U \subset \R^d$, where $U$ is open. Let $f: U \rightarrow \R$ be continuously differentiable  with $\max_{x \in K} ||Df(x)|| \leq L$. Then $f: K \rightarrow \R$ is Lipschitz with constant $L$.
@@ -924,7 +947,7 @@ where the second line follows from the multivariable chain rule. Taking absolute
 
 \section{Application to Existence of Solutions to ODEs}
 
-In this section, we will use the Arzela-Ascoli theorem to prove the existence of solution to ODEs. Before we get too theoretical, we will look at several examples of ODEs on $\R$.
+In this section, we will use the Arzela-Ascoli theorem to prove the existence of solution to ODEs. Before we get too theoretical, let's look at several examples of ODEs on $\R$.
 
 \begin{enumerate}
 \item Exponential growth/decay:
@@ -1151,22 +1174,10 @@ which is independent of $t$. (To get the second line, we use the fact that $g(s)
 We can use the Gronwall inequality to prove uniqueness of solutions to initial value problems.
 
 \begin{theorem}[Local Uniqueness of Solutions]
+\begin{proof}
 Suppose that two functions $u_1(t)$ and $u_2(t)$ are
 local solutions to the initial value problem
-\begin{align*}
-\frac{du}{dt} &= f(t, u) \\
-u(0) &= u_0
-\end{align*}
-for $t \in [-T, T]$. If $f(t, u)$ is Lipschitz with Lipschitz constant $L$ independent of $t$, i.e.
-\begin{align*}
-|f(t, u) − f(t, v)| &\leq L|u-v| && t \in [-T, T]
-\end{align*}
-then $u_1(t) = u_2(t)$ on $[-T,T]$, i.e. the initial value problem has a unique solution on $[-T,T]$.
-\begin{proof}
-The goal is to set up a Gronwall argument with $C = 0$. For $t \in [-T, T]$, let
-\[
-u(t) = |u_1(t) - u_2(t)|
-\]
+
 Then since both $u_1$ and $u_2$ are solutions to the integrated form of the problem, 
 \begin{align*}
 |u(t)| &= \left| \left( u_0 + \int_0^t f(s, u_1(s))ds \right) - \left( u_0 + \int_0^t f(s, u_2(s))ds \right)  \right| \\
@@ -2168,7 +2179,7 @@ Notice that I intentionally left the domain of $\mu$ vague. We would like the do
 \begin{definition}A collection $\mathcal{M}$ of subsets of $X$ is a \emph{$\sigma$-algebra} if 
 \begin{enumerate}[(i)]
 	\item $\varnothing \in \mathcal{M}$ 
-	\item $\mathcal{M}$ is closed under complement, i.e. $E \in \mathcal{M} \implies $X\setminus E$ \in \mathcal{M}$
+	\item $\mathcal{M}$ is closed under complement, i.e. $E \in \mathcal{M} \implies X\setminus E \in \mathcal{M}$
 	\item $\mathcal{M}$ is closed under countable unions, i.e. 
 	\[
 	\{E_k\}_{k \in \N} \subset \mathcal{M} \implies \bigcup_{k=1}^\infty E_k \in \mathcal{M} 
@@ -2512,7 +2523,7 @@ Let $\phi$ and $\psi$ be simple functions $(X, \mathcal{M}, \mu) \rightarrow \R$
 \item $\int (\phi + \psi) = \int \phi + \int \psi$
 \item If $c \geq 0$, then $\int c \phi = c \int \phi$
 \item If $0 \leq \phi \leq \psi$, then $\int \phi \leq \int \psi$
-\int Define $\rho$ on $\mathcal{M}$ by 
+\item Define $\rho$ on $\mathcal{M}$ by 
 \[
 \rho(E) = \int_E \phi d\mu
 \]
