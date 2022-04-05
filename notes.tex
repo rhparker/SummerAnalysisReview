@@ -962,7 +962,7 @@ where the second line follows from the multivariable chain rule, and the dot rep
 
 \subsection{Application to Existence of Solutions to ODEs}
 
-In this section, we will use the Arzela-Ascoli theorem to prove the existence of solution to ODEs. Before we get too theoretical, let's look at several examples of ODEs on $\R$.
+In this section, we will use the Arzela-Ascoli theorem to prove the existence of solution to first order ODEs. Before we get too theoretical, let's look at several examples of initial value problems on $\R$.
 
 \begin{enumerate}
 \item Exponential growth/decay:
@@ -970,237 +970,230 @@ In this section, we will use the Arzela-Ascoli theorem to prove the existence of
 \frac{du}{dt} &= k u \\
 u(0) &= u_0 
 \end{align*}
-By separation of variables, this has solution
-\[
-u(t) = u_0 e^{kt}
-\]
-which exists for all time $t$.
+By separation of variables, this has a solution $u(t) = u_0 e^{kt}$, which exists for all time $t$.
 
 \item ``Superexponential'' growth:
 \begin{align*}
 \frac{du}{dt} &= u^2 \\
 u(0) &= 1
 \end{align*}
-By separation of variables, this has solution
-\[
-u(t) = \frac{1}{1 - t}
-\]
-Since we start at $t = 0$, $u(t) \rightarrow \infty$ as $t \rightarrow 1$. In other words, the solution blows up in finite time.
+By separation of variables, this has solution $u(t) = \frac{1}{1 - t}$. Since we start at $t = 0$, $u(t) \rightarrow \infty$ as $t \rightarrow 1$ from below. In other words, the solution blows up to infinity in finite time. (This is not good!)
 
 \item Non-uniqueness:
 \begin{align*}
 \frac{du}{dt} &= u^{1/3} \\
 u(0) &= 0
 \end{align*}
-We can see by inspection that $u(t) = 0$ is a solution. By separation of variable, we can also find another solution.
+We can see by inspection that $u(t) = 0$ is a solution. By separation of variable, we can also find another solution:
 \begin{align*}
-u(t) &= \left( \frac{2t}{3} \right)^{3/2} && t \geq 0
+u(t) &= \left( \frac{2t}{3} \right)^{3/2} && t \geq 0.
 \end{align*}
-We actually have an infinite family of solutions, given piecewise by
+We actually have an infinite family of solutions, which can be written piecewise as
 \[
 u(t) = \begin{cases}
 0 & t \leq T \\
-\left( \frac{2(t-T)}{3} \right)^{3/2} & t > T
+\left( \frac{2(t-T)}{3} \right)^{3/2} & t > T,
 \end{cases}
 \]
-where $T \geq 0$. In other words, we start at the zero solution and at time $T$ we start following the nonzero solution. (This piecewise function is continuously differentiable but not smooth).
+where $T \geq 0$. In other words, we start at the zero solution, and at time $T$, we start following the nonzero solution. (This piecewise function is continuously differentiable but not smooth).
 \end{enumerate}
 
-With these examples in hand, we can discuss existence of solutions to ODEs. From the second example, we will in general only be able to show local existence, i.e. existence in an interval around the starting point. The most basic result is due to Peano, where only continuity is assumed. 
+With these examples in hand, we can discuss existence of solutions to ODEs. From the second example, we will in general only be able to show local existence, i.e. existence in an interval around the starting point. The most basic result is due to Peano, where only continuity is assumed. The proof uses a compactness argument featuring the Arzela-Ascoli theorem. We note that while the procedure is relatively straightforward, some of the estimates in the proof are quite cumbersome.
 
 \begin{theorem}[Cauchy-Peano Existence Theorem]
 Consider the initial value problem on $\R^n$
 \begin{align*}
 \frac{du}{dt} &= f(t, u) \\
-u(t_0) &= u_0
+u(t_0) &= u_0.
 \end{align*}
 If $f$ is continuous in a neighborhood of $(t_0, u_0)$, then there exists at least one solution $u(t)$ defined in a neighborhood of $t_0$. There is no guarantee of uniqueness.
 \begin{proof}
-For simplicity, we will only consider $f: \R \rightarrow \R$. For convenience and without loss of generality (since we can always translate the function), we will take $t_0 = 0$ and $u_0 = 0$. The strategy of the proof is:
+For simplicity, we will only consider functions $f: \R \rightarrow \R$, although the proof is the same for functions on $\R^n$. For convenience and without loss of generality (since we can always translate the function via a change of variables), we will take $t_0 = 0$ and $u_0 = 0$. The strategy of the proof is:
 \begin{enumerate}
     \item Rewrite the problem in integral form.
 	\item Construct a sequence of approximate solutions $\{ u_n(t) \}$ using the forward Euler method, where the mesh size $h \rightarrow 0$ as $n \rightarrow \infty$.
 	\item Show this sequence $\{ u_n(t) \}$ is uniformly bounded and equicontinuous.
-	\item By Arzela-Ascoli, $\{ u_n(t) \}$ must have a subsequence which converges to $u(t)$.
-	\item Show that the limit $u(t)$ is what we want.
+	\item By Arzela-Ascoli, $\{ u_n(t) \}$ must have a subsequence which converges to a function $u(t)$.
+	\item Show that the limit $u(t)$ is what we want, i.e. it solves the initial value problem.
 \end{enumerate}
 We proceed as follows.
 \begin{enumerate}
-    \item Since $f$ is continuous in a neighborhood 0, $f$ is continuous on a box $B = [-R, R] \times [-R, R]$ for $R > 0$. Since $f$ is continuous, $|f(t, u)| \leq M$ on $B$ for some $M \geq 1$.
-    \item Next, we rewrite the problem in integral form. This is necessary because we will use piecewise linear functions as approximate solutions, and these are not differentiable at the points where the pieces join together. It is not hard to show that $u(t)$ satisfies the original initial value problem if and only if $u(t)$ satisfies the integral equation
+    \item Since $f$ is continuous in a neighborhood of $(0,0)$, $f$ is continuous on a box $B = [-R, R] \times [-R, R]$, for some $R > 0$. Since $f$ is continuous, $f$ is bounded on $B$, thus we can find a constant $M \geq 1$ such that $|f(t, u)| \leq M$ on $B$. 
+    \item Next, we rewrite the problem in integral form. This is necessary because we will use piecewise linear functions as approximate solutions, and these are not differentiable at the points where the pieces join together. We can show that $u(t)$ satisfies the original initial value problem if and only if $u(t)$ satisfies the integral equation
     \[
-    u(t) = u_0 + \int_{t_0}^t f(s, u(s))ds
+    u(t) = u_0 + \int_{t_0}^t f(s, u(s))ds.
     \]
-    Since we take $t_0 = 0$ and $u_0 = 0$, this becomes
+    (To see this, differentiate this expression with respect to $t$). Since we are taking $t_0 = 0$ and $u_0 = 0$, this becomes
     \[
-    u(t) = \int_0^t f(s, u(s))ds
+    u(t) = \int_0^t f(s, u(s))ds.
     \]
-    \item Let $T = R/M$, and consider the sequence of Euler approximations $u_n(t)$ on $[-T, T]$, which are defined as follows. Rather than write formulas for the $u_n(t)$, which is annoying, we will give the procedure used to construct them.
+    \item Let $T = R/M$, and consider the sequence of forward Euler approximations $u_n(t)$ on $[-T, T]$, which are defined as follows. Rather than write formulas for the approximations $u_n(t)$, which is annoying, we will give the procedure used to construct them.
     \begin{enumerate}
-        \item Take $h_n = T/n$ be the grid mesh size, so that the grid for $t$ is given by
-        \[
-        [-t_n^n, -t_{n-1}^n, \dots, -t_1^n, 0, t_1^n, t_2^n, \dots, t_n^n] = [-n h_n, -(n-1)h_n, \dots, -h_n, 0, h_n, 2 h_n, \dots, n h_n ] 
-        \]
-        which contains $2n + 1$ grid points, and $n h_n = T$.
-        \item We start with initial condition $u_0^n = 0$, then compute $u_n$ on the rest of the grid using the forward Euler method.
+        \item Choose any $n \in \N$, and let $h_n = T/n$ be the mesh size for the time grid, so that the grid for $t$ is given by
+        \begin{align*}
+        [-t_n^n, -t_{n-1}^n, &\dots, -t_1^n, 0, t_1^n, t_2^n, \dots, t_n^n] \\
+         &= [-n h_n, -(n-1)h_n, \dots, -h_n, 0, h_n, 2 h_n, \dots, n h_n ].
+        \end{align*}
+        The time grid contains $2n + 1$ grid points, and $n h_n = T$.
+        \item We start with the initial condition $u_0^n = 0$, and then we compute $u_n$ on the rest of the grid using the forward Euler method:
         \begin{align*}
             u_0^n &= 0 \\
             u_1^n &=  0 + f(0, 0) h_n \\
             u_2^n &=  u_1^n + f(t_1^n, u_1^n) h_n \\
             & \vdots \\
-            u_{m+1}^n &= u_m^n + f(t_m^n, u_m^n) h_n
+            u_{m+1}^n &= u_m^n + f(t_m^n, u_m^n) h_n \\
+            & \vdots
         \end{align*}
-        and similarly for going backwards. 
-        \item $u_n(t)$ is the piecewise linear interpolation of these grid values. Since $u_n(t)$ is piecewise linear, $u_n(t)$ is differentiable on the interval $[t_m^n, t_{m+1}^n]$ with
+        and similarly for going backwards in $t$. (Is going backwards in $t$ a form of time travel?)
+        \item Define $u_n(t)$ to be the piecewise linear interpolation of these grid values, i.e. ``connect the dots'' by joining the points $(t_m^n,u_m^n)$ with line segments. Since $u_n(t)$ is piecewise linear, $u_n(t)$ is differentiable on the open intervals $(t_m^n, t_{m+1}^n)$, with the derivative given by
         \[
-        u_n'(t) = f(t_m^n, u_m^n)
+        u_n'(t) = f(t_m^n, u_m^n).
         \]
-        thus on each interval, $|u_n'(t)| \leq M$.
+        It follows from the bound on $f$ that $|u_n'(t)| \leq M$ (where this is defined).
     \end{enumerate}
     
-    \item Next, we show that the sequence $\{ u_n(t) \}$ is uniformly bounded and equicontinuous. For uniform boundedness, we note that for each Euler step, we have the bound
+    \item Next, we show that the sequence $\{ u_n(t) \}$ is uniformly bounded and equicontinuous. For uniform boundedness, we note that, for each Euler step, we have the bound
     \[
-    |u_{m+1}^n - u_m^n| \leq M h_n
+    |u_{m+1}^n - u_m^n| \leq M h_n.
     \]
-    Since $u_n(t)$ involves $n$ steps Euler in each direction, and $u_n(t)$ is linear between steps, we have the bound
+    Since the function $u_n(t)$ involves (at most) $n$ Euler steps in each direction, and $u_n(t)$ is linear between these steps, we have the uniform bound
     \[
-    |u_n(t)| \leq n M h_n = M T
+    |u_n(t)| \leq n M h_n = M T.
     \]
-    For equicontinuity, since $u_n(t)$ is differentiable everywhere except at a finite number of grid points, we have
+    For equicontinuity, since $u_n(t)$ is differentiable everywhere except at a finite number of grid points, we have for $-T \leq s,t \leq T$,
     \begin{align*}
-        |u_n(t) - u_n(s)| &\leq \int_s^t |u_n'(r)| dr \\
-        &\leq \int_s^t M dr = M|t-s|
+        |u_n(t) - u_n(s)| &\leq \int_s^t |u_n'(r)| dr
+        \leq \int_s^t M dr = M|t-s|,
     \end{align*}
-    where we evaluate the integral by splitting it up into pieces at the grid points. Since $\{u_n(t) \}$ are Lipschitz with the same Liptshitz constant $M$, the sequence $\{ u_n(t) \}$ is equicontinuous. 
+    where we evaluate the integral by splitting it up into pieces at the grid points. Since the functions $\{u_n(t)\}$ are Lipschitz continuous with the same Lipschitz constant $M$, the sequence $\{ u_n(t) \}$ is equicontinuous.
     
-    \item By Arzela-Ascoli, $\{u_n(t) \}$ has a uniformly convergent subsequence, which we will denote $\{ v_k(t) = u_{n_k}(t) \}$. Let $v_k(t) \rightarrow u(t)$ uniformly. 
+    \item By the Arzela-Ascoli theorem, $\{u_n(t) \}$ has a uniformly convergent subsequence, which we will denote by $\{ v_k(t) \} = \{ u_{n_k}(t) \}$, so that $v_k(t) \rightarrow u(t)$ uniformly. 
     
-    \item The only thing left is to show that $u(t)$ is a solution to the integrated form of the ODE. Using the triangle inequality
+    \item The only thing left is to show that $u(t)$ is a solution to the integrated form of the ODE. This is the really technical part. Using the triangle inequality
     \begin{align*}
-    &\left| u(t) - \int_0^t f(s, u(s))ds \right| \\
-    &\,\leq |u(t) - v_k(t)| + \left| \int_0^t f(s, v_k(s))ds - \int_0^t f(s, u(s))ds \right| + \left| v_k(t) - \int_0^t f(s, v_k(s))ds \right|
+    &\quad\left| u(t) - \int_0^t f(s, u(s))ds \right| \\
+    &\qquad \leq |u(t) - v_k(t)| + \left| \int_0^t f(s, v_k(s))ds - \int_0^t f(s, u(s))ds \right| + \left| v_k(t) - \int_0^t f(s, v_k(s))ds \right|.
     \end{align*}
-    The first term on the RHS $\rightarrow 0$ by uniform convergence of $\{ u_n(t) \}$ from Arzela-Ascoli. For the second term on the RHS,
+    \item The first term on the RHS $\rightarrow 0$ by the uniform convergence of $\{ u_n(t) \}$ from the Arzela-Ascoli theorem. For the second term on the RHS,
     \[
     \left| \int_0^t f(s, v_k(s))ds - \int_0^t f(s, u(s))ds \right|  
-    \leq \int_0^t | f(s, v_k(s))ds - f(s, u(s))| ds
+    \leq \int_0^t | f(s, v_k(s))ds - f(s, u(s))| ds,
     \]
-    which also $\rightarrow 0$ by uniform convergence of $v_k(t)$ and uniform continuity of $f$ on the closed interval $[-T, T]$.
+    which also $\rightarrow 0$ by the uniform convergence of $v_k(t)$, together with the uniform continuity of $f$ on the closed interval $[-T, T]$.
     
-    \item All that remains is to show the third term on the RHS $\rightarrow 0$. This is unfortunately really annoying to do, since it quickly becomes a subscript nightmare. The idea is as follows. Since we only care about the subsequence $\{v_k(t)\}$, we will always have $n = n_k$, so for convenience we will denote the grid points by $t_j^k$, where $t_j^k = t_j^{n_k}$. Let $t \in [0, T]$. Then $t$ is between two grid points, so $t \in [t_m^k, t_{m+1}^k]$ for some $m$. (If $t$ is actually one of the grid points, take $t = t_{m+1}^k$). 
+    \item All that remains is to show the third term on the RHS $\rightarrow 0$. This is unfortunately really annoying to do, since it quickly becomes a subscript nightmare. The idea is as follows. Since we only care about the subsequence $\{ v_k(t) \} = \{ u_{n_k}(t) \}$, we will always have $n = n_k$. For convenience, we will denote the grid points by $t_j^k$, where $t_j^k = t_j^{n_k}$. Let $t \in [0, T]$. Then $t$ is always between two grid points, i.e. $t \in [t_m^k, t_{m+1}^k]$ for some $m$. (If $t$ is actually one of the grid points, we will take $t = t_{m+1}^k$). 
     
-    \item Let $v_j^k$ be the values of $v_k(t)$ on the grid $t_j^k$. Then we can write $v_k(t)$ as a telescoping sum involving grid points
+    \item Let $v_j^k$ be the values of $v_k(t)$ on the grid $t_j^k$, i.e. $v_j^k = v_k(t_j^k)$. Then we can write $v_k(t)$ as the following telescoping sum involving grid points:
     \[
-    v_k(t) = \sum_{j=0}^{m-1} (v_{j+1}^k - v_j^k) + (v_k(t) - v_m^k)
+    v_k(t) = \sum_{j=0}^{m-1} (v_{j+1}^k - v_j^k) + (v_k(t) - v_m^k),
     \]
-    where we recall that $v_k(0) = 0$. Substituting this in, splitting the integral up along the grid, and using the FTC, this becomes
+    where we recall that $v_k(0) = 0$. Substituting this into the 3rd term on the RHS of part (6), splitting the integral up at the grid points, and using the fundamental theorem of calculus, this becomes
     \begin{align*}
-    v_k(t) &- \int_0^t f(s, v_k(s))ds \\
+    v_k&(t) - \int_0^t f(s, v_k(s))ds \\
     &= \sum_{j=0}^{m-1} (v_{j+1}^k - v_j^k) - \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} f(s, v_k(s))ds + (v_k(t) - v_m^k) - \int_{t_m^k}^t f(s, v_k(s))ds \\
     &= \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} v_k'(s, v_k(s))ds - \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} f(s, v_k(s))ds + \int_{t_m^k}^t v_k'(s, v_k(s))ds - \int_{t_m^k}^t f(s, v_k(s))ds \\
-    &= \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} ( f(t_j^k, v_j^k) - f(s, v_k(s))) ds + \int_{t_m^k}^t f(t_m^k, v_m^k) - f(s, v_k(s)))ds
+    &= \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} ( f(t_j^k, v_j^k) - f(s, v_k(s))) ds + \int_{t_m^k}^t f(t_m^k, v_m^k) - f(s, v_k(s)))ds.
     \end{align*}
-    Taking absolute values, we get
+    Taking absolute values, we obtain
     \begin{align*}
     & \left| v_k(t) - \int_0^t f(s, v_k(s))ds \right| \\
     &\leq \sum_{j=0}^{m-1} \int_{t_j^k}^{t_{j+1}^k} | f(t_j^k, v_j^k) - f(s, v_k(s))| ds + \int_{t_m^k}^t |f(t_m^k, v_m^k) - f(s, v_k(s))|ds \\
-    &\leq \sum_{j=0}^{m} \int_{t_j^k}^{t_{j+1}^k} | f(t_j^k, v_j^k) - f(s, v_k(s))| ds
+    &\leq \sum_{j=0}^{m} \int_{t_j^k}^{t_{j+1}^k} | f(t_j^k, v_j^k) - f(s, v_k(s))| ds.
     \end{align*}
-    \item To estimate this nasty integral, we use the uniform continuity of $f$ on $B$. Let $\epsilon > 0$. Then we can find $\delta > 0$ such that if $\max(|s - t|, |u - v|) < \delta$, $|f(s, u) - f(t, v)| < \epsilon$. Since as $n$ increases we are refining the grid, choose $k$ sufficiently large so that $h_{n_k} < \delta / M$. Then we have for all $s \in [t_m^k, t_{m+1}^k]$,
+    \item All that remains is to estimate this nasty integral! To to this, we use the uniform continuity of $f$ on $B$. Let $\epsilon > 0$. Then we can find $\delta > 0$ such that if $\max(|s - t|, |u - v|) < \delta$, $|f(s, u) - f(t, v)| < \epsilon$. Since as $n$ increases we are refining the grid, choose $k$ sufficiently large so that $h_{n_k} < \delta / M$. Then, for all $s \in [t_m^k, t_{m+1}^k]$,
     \[
-    |s - t_m^k| \leq |t_{m+1}^k - t_m^k| < \delta
+    |s - t_m^k| \leq |t_{m+1}^k - t_m^k| < \delta,
     \]
     and
     \[
-    |v_k(s) - v_m^k| \leq  |v_{m+1}^k - v_m^k| \leq M h_{n_k} < \delta
+    |v_k(s) - v_m^k| \leq  |v_{m+1}^k - v_m^k| \leq M h_{n_k} < \delta,
     \]
-    since $v_k(s)$ is a piecewise interpolation between $v_k^k$ and $v_{m+1}^k$. Then for all the integrands involved in the sum, we have the bound
+    since $v_k(s)$ is a piecewise interpolation between $v_k^k$ and $v_{m+1}^k$. For all the integrands involved in the sum, we have the bound
     \[
-    | f(t_j^k, v_j^k) - f(s, v_k(s)) | \leq \epsilon
+    | f(t_j^k, v_j^k) - f(s, v_k(s)) | \leq \epsilon.
     \]
     Putting all of this together, we have
     \begin{align*}
-    \left| v_k(t) - \int_0^t f(s, v_k(s))ds \right| 
-    &\leq \sum_{j=0}^{m} \int_{t_j^k}^{t_{j+1}^k} \epsilon ds \\
-    &\leq \epsilon \sum_{j=0}^m (t_{j+1}^j - t_j^k) ds \\
-    &\leq \epsilon \sum_{j=0}^m h_{n_k} \epsilon ds \\
-    &\leq \epsilon (m+1) h_{n_k} \\
-    &\leq \epsilon n_k \frac{T}{n_k} \\
-    &= \epsilon T
+    &\left| v_k(t) - \int_0^t f(s, v_k(s))ds \right|
+    \leq \sum_{j=0}^{m} \int_{t_j^k}^{t_{j+1}^k} \epsilon ds \\
+    &\qquad \leq \epsilon \sum_{j=0}^m (t_{j+1}^j - t_j^k) ds
+    \leq \epsilon \sum_{j=0}^m h_{n_k} \epsilon ds \\
+    &\qquad \leq \epsilon (m+1) h_{n_k}
+    \leq \epsilon n_k \frac{T}{n_k}
+    = \epsilon T,
     \end{align*}
     since $m$ is at most $n_k - 1$.
 \end{enumerate}
-Since the solution we obtained is only guaranteed to exist on $[-T, T]$, we call $u(t)$ a local solution to the initial value problem.
 \end{proof}
 \end{theorem}
 
+Since the solution we obtained is only guaranteed to exist on $[-T, T]$, we call $u(t)$ a local solution to the initial value problem. We can extend this result to uniqueness by adding the condition that the function $f$ is Lipschitz. In order to do this, we need a very useful (but technical) result known as the Gronwall inequality. There are seemingly hundreds of versions of the Gronwall inequality. (I think there is a whole book on them). Here is one version.
 
-We can extend this result to uniqueness by adding the condition that the function $f$ is Lipschitz. In order to do this, we need a very useful but technical result known as the Gronwall inequality. At first glance, this inequality appears to be the most useless result; why are we bounding a function by something which is growing exponentially? Taking a closer look, here is essentially what we are doing. We are taking a function $u(t)$ which is bounded by an exponential involving itself and obtaining a bound which involves an exponential independent of itself. There are seemingly hundreds of versions of the Gronwall inequality. (I think there is a whole book on them.) Here is one version.
-
-\begin{lemma}[Gronwall Inequality]
-Let $u(t), g(t)$ be non-negative, real-valued functions defined on $t \in [t_0, t_1]$. Let $C \geq 0$ be a constant so that
+\begin{theorem}[Gronwall Inequality]
+Let $u(t)$ and $g(t)$ be non-negative, real-valued functions defined on $t \in [t_0, t_1]$. Let $C \geq 0$ be a constant so that
 \begin{align*}
-u(t) \leq C + \int_{t_0}^t g(s) u(s) ds && t \in [t_0, t_1]
+u(t) \leq C + \int_{t_0}^t g(s) u(s) ds && t \in [t_0, t_1].
 \end{align*}
 Then
 \begin{align*}
-u(t) &\leq C \exp \left( \int_{t_0}^t g(s) ds \right) && t \in [t_0, t_1]
+u(t) &\leq C \exp \left( \int_{t_0}^t g(s) ds \right) && t \in [t_0, t_1].
 \end{align*}
 It follows that if $C = 0$, $u = 0$ for $t \in [t_0, t_1]$.
 \begin{proof}
-\begin{enumerate}
-\item We first consider the case where $C > 0$. Let
+We first consider the case where $C > 0$. Let
 \[
-v(t) = C + \int_{t_0}^t g(s) u(s) ds
+v(t) = C + \int_{t_0}^t g(s) u(s) ds.
 \]
-Then $u(t) \leq v(t)$ on $[t_0, t_1]$ (by assumption), and $v(t) \geq C > 0$ on $[t_0, t_1]$ (since $g, u \geq 0$). Differentiating $v$ with respect to $t$, we have
+Then $u(t) \leq v(t)$ on $[t_0, t_1]$ (by assumption), and $v(t) \geq C > 0$ on $[t_0, t_1]$ (since $g, u \geq 0$). Differentiating $v$ with respect to $t$, we obtain
 \[
-v'(t) = g(t) u(t) \leq g(t)v(t)
+v'(t) = g(t) u(t) \leq g(t)v(t).
 \] 
-Since $v(t) > 0$ on $[t_0, t_1]$, we can divide by it to get
+Since $v(t) > 0$ on $[t_0, t_1]$, we can divide by $v(t)$ to obtain
 \begin{align*}
-\dfrac{v'(t)}{v(t)} &\leq g(t) && t \in [t_0, t_1]
+\dfrac{v'(t)}{v(t)} &\leq g(t) && t \in [t_0, t_1].
 \end{align*}
-Now, we integrate $g(s)$.
+Next, we integrate the function $g$ to obtain
 \begin{align*}
-\int_{t_0}^t g(s) ds &\geq \int_{t_0}^t \dfrac{v'(s)}{v(s)} ds \\
-&= \int_{t_0}^t \frac{d}{ds}\left( \log {v(s)} \right) ds \\
-&= \log\dfrac{v(t)}{v(t_0)}\\
-&= \log\dfrac{v(t)}{C}
+\int_{t_0}^t g(s) ds &\geq \int_{t_0}^t \dfrac{v'(s)}{v(s)} ds
+= \int_{t_0}^t \frac{d}{ds}\left( \log {v(s)} \right) ds
+= \log\dfrac{v(t)}{v(t_0)}
+= \log\dfrac{v(t)}{C}.
 \end{align*}
-Exponentiate both sides and multiply by $C$ to get
+Finally, we exponentiate both sides and multiply by $C$ to get
 \begin{align*}
-u(t) &\leq v(t) \leq C \exp \left( \int_{t_0}^t g(s) ds \right) && t \in [t_0, t_1]
+u(t) &\leq v(t) \leq C \exp \left( \int_{t_0}^t g(s) ds \right) && t \in [t_0, t_1],
 \end{align*}
-\item If $C = 0$, then for any $\epsilon > 0$,
+which is the bound in the statement of the theorem.
+If $C = 0$, then for any $\epsilon > 0$,
 \begin{align*}
 u(t) \leq \epsilon + \int_{t_0}^t g(s) u(s) ds && t \in [t_0, t_1]
 \end{align*}
-By step 1, for $t \in [t_0, t_1]$ 
+By the first result (taking $C = \epsilon$), we have for $t \in [t_0, t_1]$
 \begin{align*}
-u(t) &\leq \epsilon \exp \left( \int_{t_0}^t g(s) ds \right) \\&\leq \epsilon \exp \left( \int_{t_0}^{t_1} g(s) ds \right) \\
-&\leq M \epsilon
+u(t) &\leq \epsilon \exp \left( \int_{t_0}^t g(s) ds \right) \leq \epsilon \exp \left( \int_{t_0}^{t_1} g(s) ds \right) \leq M \epsilon,
 \end{align*}
 which is independent of $t$. (To get the second line, we use the fact that $g(s)$ is nonnegative). Since $\epsilon$ is arbitrary, we conclude that $u = 0$ on $[t_0, t_1]$.
-\end{enumerate}
 \end{proof}
-\end{lemma}
+\end{theorem}
 
-We can use the Gronwall inequality to prove uniqueness of solutions to initial value problems.
+At first glance, this inequality appears to a useless result: why are we bounding a function by something which is growing exponentially? Let's take a closer look. We are taking a function $u(t)$ which is bounded by an exponential involving $u$ itself and obtaining a bound which involves an exponential \emph{independent} of $u$. Essentially, this says that $u(t)$ can grow at most exponentially fast. We can use the Gronwall inequality to prove the uniqueness of solutions to the initial value problem $\frac{du}{dt} = f(t, u)$ in the case where the function $f$ is Lipschitz continuous.
 
 \begin{theorem}[Local Uniqueness of Solutions]
+Consider the initial value problem on $\R^n$
+\begin{align*}
+\frac{du}{dt} &= f(t, u) \\
+u(t_0) &= u_0
+\end{align*}
+Suppose that $f$ is Lipschitz continuous in $u$ in a neighborhood of $(t_0, u_0)$, with Lipschitz constant $L$ which is independent of $t$. Then then there exists a \emph{unique} solution $u(t)$ defined in a neighborhood of $t_0$.
 \begin{proof}
-Suppose that two functions $u_1(t)$ and $u_2(t)$ are
-local solutions to the initial value problem
-
-Then since both $u_1$ and $u_2$ are solutions to the integrated form of the problem, 
+As in the proof of the Cauchy-Peano existence theorem, we can without loss of generality take $t_0 = 0$. Local existence follows from the Cauchy-Peano existence theorem. For uniqueness, suppose that two functions $u_1(t)$ and $u_2(t)$ are local solutions to the initial value problem, both of which exist on a time interval $[-T,T]$. If necessary, shrink $T$ so that the Lipschitz condition holds on all of $[-T,T]$. We will show that $u_1(t) = u_2(t)$ on $[-T,T]$. Let $u(t) = u_1(t) - u_2(t)$. Since both $u_1$ and $u_2$ solve the integrated form of the problem,
 \begin{align*}
 |u(t)| &= \left| \left( u_0 + \int_0^t f(s, u_1(s))ds \right) - \left( u_0 + \int_0^t f(s, u_2(s))ds \right)  \right| \\
-&= \int_0^t | f(s, u_1(s)) - f(s, u_2(s)) | ds \\
-&\leq \int_0^t L |u_1(s) - u_2(s)| ds \\
+&= \int_0^t | f(s, u_1(s)) - f(s, u_2(s)) | ds
+\leq \int_0^t L |u_1(s) - u_2(s)| ds \\
 &= 0 + \int_0^t L u(s) ds
 \end{align*}
-We have satisfied the conditions of the Gronwall inequality with $g(t) = L$ and $C = 0$. It follows that $u(t) = 0$ for $t \in [0, T]$, from which we conclude that $u_1(t) = u_2(t)$ for $t \in [0, T]$. We can similarly obtain the result for $t \in [-T,0]$.
+We have satisfied the conditions of the Gronwall inequality with $g(t) = L$ and $C = 0$. It follows that $u(t) = 0$ for $t \in [0,T]$, from which we conclude that $u_1(t) = u_2(t)$ for $t \in [0,T]$. We can similarly obtain the result for $t \in [-T,0]$.
 \end{proof}
 \end{theorem}
 
