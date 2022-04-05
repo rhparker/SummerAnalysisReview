@@ -57,17 +57,9 @@
 
 \maketitle
 
-\section*{Outline}
-\label{sec: introduction}
-These are the notes for the 2019 summer workshop for incoming graduate students in applied mathematics at Brown University. These are based on the notes for the 2017 and 2018 workshops, which were led by Bj\"orn Sandstede. The original notes were typed by Rebecca Santorella and Patrick Liscio. Topics covered include:
+These are the notes for the 2019 summer workshop for incoming graduate students in applied mathematics at Brown University. These are based on the notes for the 2017 and 2018 workshops, which were led by Bj\"orn Sandstede. The original notes were typed by Rebecca Santorella and Patrick Liscio.
 
-\begin{itemize}
-    \item Metric spaces and compactness
-    \item Compactness in $C([a,b])$ (Arzela-Ascoli theorem)
-    \item Differentiation in Banach spaces
-    \item Banach's fixed-point theorem and the implicit function theorem
-    \item Introduction to measure Theory and Lebesgue integration
-\end{itemize}
+\tableofcontents
 
 \section{Metric Spaces}
 \label{sec: metric_spaces}
@@ -901,7 +893,7 @@ Choose any distinct points $x$ and $y$ in $\R$. Then by the mean value theorem, 
 \]
 Taking absolute values and rearranging, this becomes
 \[
-|f(x)-f(y)| = |f'(c)||x-y| \leq L |x-y|,
+|f(x)-f(y)| = |f'(c)\|x-y| \leq L |x-y|,
 \]
 which is the desired result.
 \end{proof}
@@ -939,7 +931,7 @@ tx + (1 - t)y &\in E && t \in [0, 1].
 We then have the following lemma.
 
 \begin{lemma}
-Let $K \subset \R^d$ convex and compact, and $K \subset U \subset \R^d$, where $U$ is open. Let $f: U \rightarrow \R$ be continuously differentiable, and let $\sup_{x \in K} ||Df(x)|| = L$. Then $f: K \rightarrow \R$ is Lipschitz with constant $L$.
+Let $K \subset \R^d$ convex and compact, and $K \subset U \subset \R^d$, where $U$ is open. Let $f: U \rightarrow \R$ be continuously differentiable, and let $\sup_{x \in K} \|Df(x)\| = L$. Then $f: K \rightarrow \R$ is Lipschitz with constant $L$.
 \end{lemma}
 
 \begin{proof}
@@ -954,7 +946,7 @@ where the second line follows from the multivariable chain rule, and the dot rep
 
 \begin{align*}        
 |f(x)- f(y)| &\leq \left| \int_0^1 Df(tx + (1-t)y) dt \right| |x-y| \\
-&\leq \left( \int_0^1 \underbrace{ || Df(tx + (1-t)y) || }_{\leq\:L \text{ since } tx + (1 - t)y\:\in\:K } dt \right) |x-y| \\
+&\leq \left( \int_0^1 \underbrace{ \| Df(tx + (1-t)y) \| }_{\leq\:L \text{ since } tx + (1 - t)y\:\in\:K } dt \right) |x-y| \\
 &\leq L |x-y|.
 \end{align*}
     
@@ -1201,84 +1193,82 @@ We have successfully obtained conditions for local existence and local uniquenes
 
 \section{Normed Vector Spaces and Banach Spaces}
 
-First, we review the definition of a normed vector space.
+\subsection{Definitions}
+
+A norm on a vector space is a function which measures the ``length'' of a vector.
 
 \begin{definition}
-A \emph{norm} on a vector space $V$ is a function $|| \cdot || : V \rightarrow \R$ with the following properties:
+A \textbf{norm} on a vector space $V$ is a function $\| \cdot \| : V \rightarrow \R$ with the following properties:
 \begin{enumerate}
-\item $|| x || \geq 0$
-\item $||x|| = 0 \iff x = 0$
-\item $||\lambda x|| = |\lambda|  ||x||$ for all scalars $\lambda$
-\item $||x+y|| \leq ||x|| + ||y||$ (triangle inequality)
+\item $\| x \| \geq 0$
+\item $\|x\| = 0 \iff x = 0$
+\item $\|\lambda x\| = |\lambda|  \|x\|$ for all scalars $\lambda$
+\item $\|x+y\| \leq \|x\| + \|y\|$ (triangle inequality)
 \end{enumerate}
-A vector space paired with a norm is a \emph{normed vector space}.
+A vector space paired with a norm is a \textbf{normed vector space}.
 \end{definition}
 
 Every normed vector space is a metric space, since a norm induces a metric, which is given by
 \[
-d(x,y) = ||x-y||
+d(x,y) = \|x-y\|.
 \]
-The converse, however, is not true. There are vector spaces (such as $C(\R)$) on which there is a metric, but no norm can be found.
-
-Next, we define a bounded linear map between normed vector spaces. This is different from the usual concept of a bounded function that we use in, say, the Bolzano-Weierstrass theorem.
+The converse, however, is not true. There are vector spaces on which there is a metric, but no norm can be found. Next, we define a bounded linear map between normed vector spaces. This is different from the concept of a bounded function that we use in, say, the Bolzano-Weierstrass theorem.
 
 \begin{definition}
-Let $X, Y$ be normed vector spaces with norms $||\cdot||_X$, $||\cdot||_Y$, respectively. Let $L: X \rightarrow Y$ be a linear map. Then $L$ is \textbf{bounded} if there exists a constant $C \geq 0$ such that for all $u \in X$,
+Let $X$ and $Y$ be normed vector spaces, with norms $\|\cdot\|_X$ and $\|\cdot\|_Y$, respectively. Let $L: X \rightarrow Y$ be a linear map. Then $L$ is \textbf{bounded} if there exists a constant $C \geq 0$ such that for all $u \in X$,
 \[
-||Lu||_Y \leq C ||u||_X
+\|Lu\|_Y \leq C \|u\|_X.
 \]
 \end{definition}
 
 In a normed vector space, boundedness and continuity of linear operators is equivalent, which we show in the next proposition.
 
 \begin{proposition}
-Let $X, Y$ normed vector spaces. Then a linear operator $L: X \rightarrow Y$ is bounded if and only if $L$ is continuous.
+Let $X$ and $Y$ be normed vector space, with norms $\|\cdot\|_X$ and $\|\cdot\|_Y$, respectively. A linear operator $L: X \rightarrow Y$ is bounded if and only if $L$ is continuous.
 \begin{proof}
 If $L$ is bounded, then 
 \[
-||Lu - Lv|| = ||L(u - v)|| \leq L ||u - v||
+\|Lu - Lv\|_Y = \|L(u - v)\|_Y \leq L \|u - v\|_X,
 \]
-ans so $L$ is Lipschitz, thus continuous. For the other direction, assume $L$ is continuous. Then since $L$ is continuous at 0, taking $\epsilon = 1$, we can find $\delta > 0$ such that for all $u$ with $||u||_X < \delta$
+and so $L$ is Lipschitz, thus continuous. For the other direction, assume $L$ is continuous. Taking $\epsilon = 1$, since $L$ is continuous at 0, we can find $\delta > 0$ such that, for all $u \in X$ with $\|u\|_X \leq \delta$, $\|Lu\|_Y \leq 1$. Let $x \in X$ with $x \neq 0$. Then 
 \[
-||Lu||_Y \leq 1
-\]
-Thus for all $u$ with $||u||_X \leq 1$. Let $x \neq 0 \in X$. Then 
-\[
-\left|\left| \frac{\delta}{||x||}x \right|\right|_X \leq \delta
+\left|\left| \frac{\delta}{\|x\|}x \right|\right|_X = 
+\delta \left|\left| \frac{x}{\|x\|} \right|\right|_X = \delta,
 \]
 from which it follows that 
 \[
-\left|\left| L\left( \frac{\delta}{||x||}x \right) \right|\right|_Y \leq 1
+\left|\left| L\left( \frac{\delta}{\|x\|}x \right) \right|\right|_Y \leq 1.
 \]
-Using the properties of the norm and the linearity $L$, we can rearrange this to get
+Using the properties of the norm and the linearity of $L$, we can rearrange this to get
 \[
-||L x||_Y \leq \frac{1}{\delta} ||x||_X
+\|L x\|_Y \leq \frac{1}{\delta} \|x\|_X,
 \]
+thus $L$ is a bounded linear operator with bound $C = 1/\delta$.
 \end{proof}
 \end{proposition}
 
-Let $\mathcal{L}(X, Y)$ be the space of bounded linear maps from $X$ to $Y$. If $X = Y$, we usually denote this $\mathcal{L}(X)$. Then we define the operator norm of $L \in \mathcal{L}$ as follows.
+Let $\mathcal{L}(X, Y)$ be the space of bounded linear maps from $X$ to $Y$. If $X = Y$, we usually denote this $\mathcal{L}(X)$. We define the operator norm of $L \in \mathcal{L}$ as follows.
 
 \begin{definition}
-Let $L: X \rightarrow Y$ be a bounded linear operator. Then the \emph{operator norm} of $L$ is defined as one of the following, all of which are equivalent.
+Let $L: X \rightarrow Y$ be a bounded linear operator. Then the \textbf{operator norm} of $L$ is defined as one of the following, all of which are equivalent.
 \begin{enumerate}
 \item 
 \[
-||L|| = \sup_{u \neq 0, ||u||_X \leq 1} ||Lu||_Y 
+\|L\| = \sup_{u \neq 0, \:\|u\|_X \leq 1} \|Lu\|_Y 
 \]
 \item 
 \[
-||L|| = \sup_{||u||_X = 1} ||Lu||_Y 
+\|L\| = \sup_{\|u\|_X = 1} \|Lu\|_Y 
 \]
 \item
 \[
-||L|| = \inf\{ C \geq 0: ||Lu||_Y \leq C ||u||_X \text{ for all } u \in X \}
+\|L\| = \inf\{ C \geq 0: \|Lu\|_Y \leq C \|u\|_X \text{ for all } u \in X \}
 \]
 \end{enumerate}
 \end{definition}
 
 \begin{definition}
-A \emph{Banach space} is a complete normed vector space, where completeness is with respect to the metric induced by the norm.
+A \textbf{Banach space} is a complete normed vector space, where completeness is with respect to the metric induced by the norm.
 \end{definition}
 
 We can show that the space $\mathcal{L}(X, Y)$ is a normed vector space using the operator norm. In addition, as long as $Y$ is a Banach space, $\mathcal{L}(X, Y)$ is a Banach space.
@@ -1290,10 +1280,10 @@ The proof is left as an exercise. To show $\mathcal{L}(X, Y)$ is complete, recal
 \end{proof}
 \end{proposition}
 
-The next lemma is incredibly useful and gives a criterion for a certain linear operator on a Banach space to be invertible with bounded inverse. I use this all the time in my research (no joke!)
+The next lemma is incredibly useful and gives a criterion for a specific linear operator on a Banach space to be invertible with bounded inverse. I use this all the time in my research (no joke!)
 
 \begin{lemma}[Neumann Series]
-Let $X$ be a Banach space, and let $S \in \mathcal{L}(X)$ with $||S|| < 1$. Then $I - S$ is invertible, and $(I - S)^{-1} \in L(X)$, where $I$ is the identity operator on $X$.
+Let $X$ be a Banach space, and let $S \in \mathcal{L}(X)$ with $\|S\| < 1$. Then $I - S$ is invertible, and $(I - S)^{-1} \in L(X)$, where $I$ is the identity operator on $X$.
 \end{lemma}
 
 \begin{proof}
@@ -1301,19 +1291,19 @@ Define the \emph{Neumann series} for $S$ as
 \[
 L = \sum_{n=0}^{\infty} S^n = I + S + S^2 + ... 
 \]
-which is the operator analogue of the normal geometric series. To show that this is well-defined, we note that the sequence of partial sums of $L$ is a Cauchy sequence, thus the sum converges since $X$ is complete. In addition, $L$ is bounded,
+which is the operator analogue of the ordinary geometric series. To show that this is well-defined, we note that the sequence of partial sums of $L$ is a Cauchy sequence, thus the sum converges since $X$ is complete. In addition, $L$ is bounded,
 with
 \[
-||L|| \leq \sum_{n=0}^\infty ||S||^n \leq \frac{1}{1 - ||S||}
+\|L\| \leq \sum_{n=0}^\infty \|S\|^n \leq \frac{1}{1 - \|S\|}.
 \]
 Finally, since
-\[(I - S)L = \underbrace{(I - S) \sum_{n=0}^{N} S^n}_{\rightarrow (I-S)L} = \sum_{n=0}^N (S^n - S^{n+1}) = 
-\underbrace{I - S^{N+1}}_{\rightarrow I}
+\[(I - S)L = \underbrace{(I - S) \sum_{n=0}^{N} S^n}_{\rightarrow \: (I-S)L} = \sum_{n=0}^N (S^n - S^{n+1}) = 
+\underbrace{I - S^{N+1}}_{\rightarrow \: I},
 \]
 $(I-S)L = I$. Similarly, $L(I - S) = I$.
 \end{proof}
 
-\section{Differentiation in Banach Spaces}
+\subsection{Differentiation in Banach Spaces}
 
 In this section, we extend the concept of differentiation to general Banach spaces. To do that, we will look at derivatives of functions on $\R$ in a different way.
 
@@ -1351,7 +1341,7 @@ Finally, we extend this definition to Banach spaces.
 \begin{definition}
 Let $X, Y$ be Banach spaces, $U \subset X$ open, and $f \colon U \rightarrow Y$. Then $f$ is \textbf{differentiable} at $u \in U$ if there exists $L \in \mathcal{L}(X, Y)$ such that
 \[
-\lim_{h \rightarrow 0} \frac{ ||f(u + h) - f(u) - Lh ||_Y}{||h||_X} = 0.
+\lim_{h \rightarrow 0} \frac{ \|f(u + h) - f(u) - Lh \|_Y}{\|h\|_X} = 0.
 \]
 This is sometimes called the Fr\'{e}chet derivative. If f is differentiable at $u_0 \in U$, we use the notation $Df(u_0)$ or $f_u(u_0)$.
 \end{definition}
@@ -1390,18 +1380,18 @@ g(x) = x - \frac{f(x)}{f'(x)}
 
 If $x$ is a fixed point of $g$, i.e. $g(x) = x$, then (as long as $f'(x) \neq 0$), $f(x) = 0$, which is what we want. We would like to show that a fixed point of $g$ exists, and that Newton's Method converges to it. It turns out that criterion we will need for this to work is that the map $g$ is a contraction.
 
-\begin{definition}Let $D$ be a subset of a normed vector space $(X, ||\cdot||)$. Then $F: D \rightarrow D$ is a \emph{contraction} if there exists a constant $L$ with $0 < L < 1$ such that 
+\begin{definition}Let $D$ be a subset of a normed vector space $(X, \|\cdot\|)$. Then $F: D \rightarrow D$ is a \emph{contraction} if there exists a constant $L$ with $0 < L < 1$ such that 
 \[
-||F(x) - F(y)|| \leq L ||x - y||
+\|F(x) - F(y)\| \leq L \|x - y\|
 \]
 for all $x, y \in D$. In other words, $F$ is Lipschitz with Lipschitz constant $L < 1$.
 \end{definition}
 
 We can now state the Banach Fixed Point Theorem, which is also called the Contraction Mapping Principle. This theorem not only gives criteria for the existence of a unique fixed point, but also tells that that we can find it using successive iteration, just as in Newton's method. 
 
-\begin{theorem}[Banach Fixed Point Theorem] Let $(X, ||\cdot||)$ be a Banach space, and $D \subset X$ a closed, nonempty subset of $X$. Suppose that the map $F: D \rightarrow D$ is a contraction, i.e. there exists a positive constant $L < 1$ such that for all $u, v \in D$,
+\begin{theorem}[Banach Fixed Point Theorem] Let $(X, \|\cdot\|)$ be a Banach space, and $D \subset X$ a closed, nonempty subset of $X$. Suppose that the map $F: D \rightarrow D$ is a contraction, i.e. there exists a positive constant $L < 1$ such that for all $u, v \in D$,
 \[
-||F(u) - F(v)|| \leq L||u - v||
+\|F(u) - F(v)\| \leq L\|u - v\|
 \]
 Then $F$ has a unique fixed point $u^*$ in $D$, i.e. there exists a unique $u^* \in D$ such that $F(u^*) = u^*$.
 
@@ -1413,25 +1403,25 @@ As with many proofs involving complete metric spaces, the idea is to construct a
 	
 	\item Since $F$ is a contraction,
 	\begin{align*}
-	||F(u_1) - F(u_0)|| &\leq L ||u_1 - u_0|| \\
-	||F(u_2) - F(u_1)|| &\leq L ||u_2 - u_1|| = L||F(u_1) - F(u_0)|| \leq L^2 ||u_1 - u_0||
+	\|F(u_1) - F(u_0)\| &\leq L \|u_1 - u_0\| \\
+	\|F(u_2) - F(u_1)\| &\leq L \|u_2 - u_1\| = L\|F(u_1) - F(u_0)\| \leq L^2 \|u_1 - u_0\|
 	\end{align*}
 	Repeating this, we get a sequence $\{u_n\}$ with
 	\[
-	||F(u_n) - F(u_{n-1})|| \leq L^n ||u_1 - u_0||
+	\|F(u_n) - F(u_{n-1})\| \leq L^n \|u_1 - u_0\|
 	\]
 	Using the definition of $F$, this becomes
 	\[
-	||u_{n+1} - u_n || \leq L^n ||u_1 - u_0||
+	\|u_{n+1} - u_n \| \leq L^n \|u_1 - u_0\|
 	\]
 	
 	\item Show that $\{ u_n \}$ is a Cauchy sequence. For arbitrary $n, k \geq 1$, using the triangle inequality, we have
 	\begin{align*}
-	||u_{n+k} - u_n|| &\leq \sum_{j=0}^{k-1} || u_{n+j+1} - u_{n+j}|| \\
-	&\leq \sum_{j=0}^{k-1} L^{n+j} ||u_1 - u_0|| \\
-	&= ||u_1 - u_0|| L^n \sum_{j=0}^{k-1} L^j \\
-	&\leq ||u_1 - u_0|| L^n \sum_{j=0}^{\infty} L^j \\
-	&= ||u_1 - u_0|| \frac{L^n}{1 - L} \\
+	\|u_{n+k} - u_n\| &\leq \sum_{j=0}^{k-1} \| u_{n+j+1} - u_{n+j}\| \\
+	&\leq \sum_{j=0}^{k-1} L^{n+j} \|u_1 - u_0\| \\
+	&= \|u_1 - u_0\| L^n \sum_{j=0}^{k-1} L^j \\
+	&\leq \|u_1 - u_0\| L^n \sum_{j=0}^{\infty} L^j \\
+	&= \|u_1 - u_0\| \frac{L^n}{1 - L} \\
 	&\rightarrow 0 \text{ as }n \rightarrow \infty
 	\end{align*}
 	where, since $0 < L < 1$, we used the sum of the infinite geometric series.
@@ -1514,9 +1504,9 @@ DG(y) &= DF(G(y))^{-1}
 \begin{proof}
 For convenience, take $x_0 = 0$. An outline of the proof is as follows.
 \begin{enumerate}
-    \item Since $DF(0)^{-1} DF(x)$ is continuous at $x = 0$ and $DF(0)^{-1} DF(0) = I$, we can find $\delta > 0$ such that for all $||x|| \leq \delta$,
+    \item Since $DF(0)^{-1} DF(x)$ is continuous at $x = 0$ and $DF(0)^{-1} DF(0) = I$, we can find $\delta > 0$ such that for all $\|x\| \leq \delta$,
     \begin{enumerate}
-    \item $||I - DF(0)^{-1} DF(x)|| \leq \frac{1}{2}$
+    \item $\|I - DF(0)^{-1} DF(x)\| \leq \frac{1}{2}$
     \item $DF(x)$ is nonsingular
     \end{enumerate}
     Let $B = \overline{ B_\delta(0) }$ (closed ball of radius $\delta$ about 0).
@@ -1543,26 +1533,26 @@ For convenience, take $x_0 = 0$. An outline of the proof is as follows.
 The next theorem we will prove is the Uniform Contraction Mapping Principle. The idea here is that we have a family of contraction maps $F(x; \mu)$ indexed by a parameter $\mu$. For each value of the parameter $\mu$, $F(\cdot; \mu)$ has a unique fixed point by the Banach Fixed Point Theorem. Let $G(\mu)$ map each $\mu$ to that unique fixed point. The Uniform Contraction Mapping Principle says that the map $G$ is as smooth as the original map $F$. The proof incorporates elements from Humpherys, Jarvis, and Evans, \emph{Foundations of Applied Mathematics, Volume 1: Mathematical Analysis} (2017). We will first need one technical result involving operator norm bounds on derivatives of Lipschitz functions. 
 
 \begin{proposition}
-Let $X$, $Y$ Banach spaces, $U$ an open subset of $X$, and $F: U \subset X \rightarrow Y$ differentiable. If $F$ is Lipschitz with constant $L$, then for all $x \in U$ the operator norm of $DF(x)$ has bound $||DF(x)|| \leq L$.
+Let $X$, $Y$ Banach spaces, $U$ an open subset of $X$, and $F: U \subset X \rightarrow Y$ differentiable. If $F$ is Lipschitz with constant $L$, then for all $x \in U$ the operator norm of $DF(x)$ has bound $\|DF(x)\| \leq L$.
 \begin{proof}
-Let $\epsilon > 0$ and $x \in U$. Since $F$ is differentiable at $x$, we can find $\delta > 0$ such that whenever $||h||_X < \delta$,
+Let $\epsilon > 0$ and $x \in U$. Since $F$ is differentiable at $x$, we can find $\delta > 0$ such that whenever $\|h\|_X < \delta$,
 \[
-\frac{||F(x+h) - F(x) - DF(x)h||_Y}{||h||_X} < \epsilon
+\frac{\|F(x+h) - F(x) - DF(x)h\|_Y}{\|h\|_X} < \epsilon
 \]
 We use the ``supremum of unit vectors'' definition of the operator norm (definiton 2 above). Let $u \in U$ be a unit vector, and let
 \[
 h = \frac{\delta}{2}u
 \]
-Then since $u = h/||h||$, we have from the triangle inequality
+Then since $u = h/\|h\|$, we have from the triangle inequality
 \begin{align*}
-||DF(x)u|| &= \frac{||DF(x)h||}{||h||_X} \\
-&\leq \frac{||DF(x)h - (F(x+h) - F(x))||_Y + ||F(x+h) - F(x)||_Y }{||h||_X} \\
-&= \frac{||F(x+h) - F(x) - DF(x)h||_Y }{||h||_X} + \frac{||F(x+h) - F(x)||_Y }{||h||_X} \\
-&\leq \epsilon + \frac{L||x + h - x||_X}{||h||_X} \\
-&= \epsilon + \frac{L||h||_X}{||h||_X} \\
+\|DF(x)u\| &= \frac{\|DF(x)h\|}{\|h\|_X} \\
+&\leq \frac{\|DF(x)h - (F(x+h) - F(x))\|_Y + \|F(x+h) - F(x)\|_Y }{\|h\|_X} \\
+&= \frac{\|F(x+h) - F(x) - DF(x)h\|_Y }{\|h\|_X} + \frac{\|F(x+h) - F(x)\|_Y }{\|h\|_X} \\
+&\leq \epsilon + \frac{L\|x + h - x\|_X}{\|h\|_X} \\
+&= \epsilon + \frac{L\|h\|_X}{\|h\|_X} \\
 &= \epsilon + L
 \end{align*}
-Since $\epsilon$ is arbitrary and this is independent of $u$, we conclude that $||DF(x)|| \leq L$ for all $x \in U$.
+Since $\epsilon$ is arbitrary and this is independent of $u$, we conclude that $\|DF(x)\| \leq L$ for all $x \in U$.
 \end{proof}
 \end{proposition}
 
@@ -1631,7 +1621,7 @@ The map $\Phi$ is a uniform contraction, since for $A_1, A_2 \in \mathcal{L}(B, 
 |\Phi(&A_1; \mu) - \Phi(A_2; \mu)| \\
 &= | D_X F(G(\mu), \mu) A_1 + D_B F(G(\mu), \mu) - (D_X F(G(\mu), \mu) A_2 + D_B F(G(\mu), \mu)) | \\
 &= | D_X F(G(\mu), \mu) (A_1 - A_2) | \\
-&\leq ||D_X F(G(\mu), \mu) ||\:|A_1 - A_2| \\
+&\leq \|D_X F(G(\mu), \mu) \|\:|A_1 - A_2| \\
 &\leq L |A_1 - A_2|
 \end{align*}
 where the last line follows from the previous proposition and the fact that $F(\cdot; \mu)$ is Lipschitz with constant $L$.
@@ -1684,27 +1674,27 @@ In particular, $DG_X(x_0, y_0) = 0$.
 
 \item First, we control $DG_X(x, y)$ near $(x_0, y_0)$. Since $DG_X(x, y)$ is continuous and $DG_X(x_0, y_0) = 0$, we can find open balls $U_0 = B_\delta(x_0)$ and $V_0 = B_\epsilon(y_0)$ such that for $(x, y) \in \overline{U_0} \times V_0$,
 \[
-||DG_X(x, y)|| < \frac{1}{2} 
+\|DG_X(x, y)\| < \frac{1}{2} 
 \]
 Since 
 \[
 [D_X(x_0, y_0)]^{-1} DF_X(x, y) = I - DG_X(x, y)
 \]
-and $||DG_X(x, y)|| < \frac{1}{2}$ on $\overline{U_0} \times V_0$, it follows from the Neumann series that $DF_X(x, y)$ is invertible for $(x, y) \in \overline{U_0} \times V_0$.
+and $\|DG_X(x, y)\| < \frac{1}{2}$ on $\overline{U_0} \times V_0$, it follows from the Neumann series that $DF_X(x, y)$ is invertible for $(x, y) \in \overline{U_0} \times V_0$.
 
 \item Next, we control $F(x_0, y)$ near $(x_0, y_0)$. For convenience, let $L = [D_X(x_0, y_0)]^{-1}$. Since  the map $y \mapsto F(x_0, y)$ is continuous in $y$ and $F(x_0, y_0) = 0$, we can (if needed) decrease $\epsilon$ so that for $y \in V_0$
 \[
-|F(x_0, y)| \leq \frac{\delta}{2 ||L||}
+|F(x_0, y)| \leq \frac{\delta}{2 \|L\|}
 \]
 
-\item Next, we show that $G: \overline{U_0} \times V_0 \rightarrow \overline{U_0}$. To do this we will use the following result. If $f: X \rightarrow Y$ is continuously differentiable map between Banach spaces, $U \subset X$ is convex, and $\sup_{u \in U} ||Df(u)|| \leq M$, then $f$ is Lipschitz on $U$ with constant $M$. We proved this result for subsets of $\R^n$; the proof for the more general case is identical.
+\item Next, we show that $G: \overline{U_0} \times V_0 \rightarrow \overline{U_0}$. To do this we will use the following result. If $f: X \rightarrow Y$ is continuously differentiable map between Banach spaces, $U \subset X$ is convex, and $\sup_{u \in U} \|Df(u)\| \leq M$, then $f$ is Lipschitz on $U$ with constant $M$. We proved this result for subsets of $\R^n$; the proof for the more general case is identical.
 
 Using this and the triangle inequality, for $x \in \overline{U_0}$ and $y \in V_0$,
 \begin{align*}
 |G(x, y) - x_0| &\leq |G(x, y) - G(x_0, y)| + |G(x_0, y) - x_0| \\
-&\leq \sup_{x\in \overline{U_0}}||DG_x(x, y)||\:|x - x_0| + |x_0 - L F(x_0, y) - x_0 | \\
+&\leq \sup_{x\in \overline{U_0}}\|DG_x(x, y)\|\:|x - x_0| + |x_0 - L F(x_0, y) - x_0 | \\
 &< \frac{1}{2} |x - x_0| + |L F(x_0, y)| \\
-&\leq \frac{\delta}{2} + ||L|| \frac{\delta}{2 ||L||} \\
+&\leq \frac{\delta}{2} + \|L\| \frac{\delta}{2 \|L\|} \\
 &\leq \delta
 \end{align*} 
 thus we conclude
@@ -1715,7 +1705,7 @@ for all $x \in \overline{U_0}$ and $y \in V_0$.
 
 \item Finally, we show that $G$ is a uniform contraction. For $x_1, x_2 \in \overline{U_0}$ and any $y \in V_0$,
 \[
-|G(x_1, y) - G(x_2, y)| \leq \sup_{x\in \overline{U_0}}||DG_x(x, y)||\:|x_1 - x_2| \leq \frac{1}{2}|x_1 - x_2|
+|G(x_1, y) - G(x_2, y)| \leq \sup_{x\in \overline{U_0}}\|DG_x(x, y)\|\:|x_1 - x_2| \leq \frac{1}{2}|x_1 - x_2|
 \]
 
 \item By the Uniform Contraction Mapping Principle, there is a unique $C^k$ function $f: V_0 \rightarrow \overline{U_0}$ which maps $y \in V_0$ to the unique fixed point $x$ of $G(\cdot, y)$. In other words, $G(f(y),y) = f(y)$ for all $y \in V_0$. For all $y \in V_0$, since $f(y) \in \overline{U_0}$, using the result from step 5,
@@ -1867,14 +1857,14 @@ Where did we get this from? One way to see it is by Taylor expanding $F(u(t) + h
 
 By the properties of integration, $L$ is a linear operator, and it is bounded since $f$ is $C^1$. Using the definition of the Fr\'{e}chet derivative,
 \begin{align*}
-\frac{||F(u + h) - F(u) - L(h) ||}{||h||} 
-&\leq \frac{1}{||h||}
+\frac{\|F(u + h) - F(u) - L(h) \|}{\|h\|} 
+&\leq \frac{1}{\|h\|}
 \sup_{|t| \leq r} \left| \int_0^t [ f(u(\tau) + h(\tau)) - f(u(\tau))] d\tau - \int_0^t Df(u(\tau)) h(\tau) d \tau \right| \\
-&= \frac{1}{||h||}
+&= \frac{1}{\|h\|}
 \sup_{|t| \leq r} \left| \int_0^t [ f(u(\tau) + h(\tau)) - f(u(\tau)) - Df(u(\tau))h(\tau)] d\tau\right| \\
 &\leq \int_0^r \frac{ | f(u(\tau) + h(\tau)) - f(u(\tau)) - Df(u(\tau))h(\tau)|}{|h(\tau)|} d\tau
 \end{align*}
-as $||h|| \rightarrow 0$, $|h(\tau)| \rightarrow 0$, thus the RHS of this goes to 0 since $f$ is continuously differentiable and we are on a closed interval $[0, r]$. We can repeat this to conclude that $F$ is $C^k$.
+as $\|h\| \rightarrow 0$, $|h(\tau)| \rightarrow 0$, thus the RHS of this goes to 0 since $f$ is continuously differentiable and we are on a closed interval $[0, r]$. We can repeat this to conclude that $F$ is $C^k$.
 
 \item We have now satisfied the hypotheses of the Uniform Contraction Mapping Principle. Thus there exists a $C^k$ map $G: B \rightarrow D$ which associates maps each initial condition $u_0$ to the unique fixed point of $F(\cdot; u_0)$, which is the unique solution $u(t; u_0)$ on $[-r, r]$ to \eqref{IVPp}. Note that this is a local existence result, but the interval of existence $[-r, r]$ is the same for all initial conditions $u_0 \in B$.
 
@@ -1943,12 +1933,12 @@ u(t) &= u_0 + \int_0^t A(\tau)u(\tau)d\tau && t \in [s, t_0)
 \end{align*}
 Taking absolute values and using the matrix/operator norm of $A(t)$, this becomes
 \begin{align*}
-|u(t)| &= |u_0| + \int_0^t ||A(\tau)||\:|u(\tau)|d\tau && t \in [0, t_0)
+|u(t)| &= |u_0| + \int_0^t \|A(\tau)\|\:|u(\tau)|d\tau && t \in [0, t_0)
 \end{align*}
 \item This satisfies the hypotheses of Gronwall's Inequality. Thus, for $t \in [0, t_0)$
 \begin{align*}
-|u(t)| &\leq |u_0| \exp \left( \int_s^t ||A(\tau)|| d\tau \right) \\
-&\leq |u_0| \exp \left( \int_s^{t_0} ||A(\tau)|| d\tau \right) \\
+|u(t)| &\leq |u_0| \exp \left( \int_s^t \|A(\tau)\| d\tau \right) \\
+&\leq |u_0| \exp \left( \int_s^{t_0} \|A(\tau)\| d\tau \right) \\
 &\leq C |u_0|
 \end{align*}
 where the bound holds uniformly for $t \in [0, t_0)$ since it does not depend on $t$.
