@@ -843,62 +843,77 @@ We have successfully found a subsequence $\{g_n\}$ of $\{f_n(x)\}$ which converg
 \end{proof}
 \end{theorem}
 
-We also have a converse to the Arzela-Ascoli theorem.
-\begin{theorem} Let $K \subset (X, d)$ be compact. Then if $A \subset C(K)$ is totally bounded, it is bounded and equicontinuous.
-\begin{proof}
+We also have a partial converse to the Arzela-Ascoli theorem.
+\begin{theorem} Let $K \subset (X, d)$ be compact. Then if $A \subset C(K)$ is totally bounded, it is uniformly bounded and equicontinuous.
+\begin{proof}The idea behind the proof is to take an arbitrary function $f \in A$ and show that $f$ is bounded by a constant which is independent of $f$, and $f$ is uniformly continuous with $\delta$ depending on $\epsilon$ only, i.e. independent of $f$. We proceed as follows.
 \begin{enumerate}
-\item Let $\epsilon > 0$. Then using the definition of totally bounded, there exists a finite collection of functions $f_1^{\epsilon}, \dots, f_{n(\epsilon)}^{\epsilon} \in A$ such that 
+\item Let $\epsilon > 0$. Using the definition of totally bounded, there exists a finite collection of functions $f_1^{\epsilon}, \dots, f_{n(\epsilon)}^{\epsilon} \in A$, where the number of functions $n(\epsilon)$ depends on $\epsilon$, such that 
 \[
-A \subset \bigcup_{k=1}^{n(\epsilon)} B_{\epsilon}(f_k^{\epsilon})
+A \subset \bigcup_{k=1}^{n(\epsilon)} B_{\epsilon}(f_k^{\epsilon}).
 \]
-where the open balls are defined using the maximum/supremum metric
-\item Let $f \in A$. Then $f \in B_{\epsilon} (f_k^\epsilon)$ for some $k \in \{1, \dots, n(\epsilon)\}$. 
+The open balls $B_{\epsilon}(f_k^{\epsilon})$ are defined using the maximum (supremum) metric.
+\item Choose any $f \in A$. Then $f \in B_{\epsilon} (f_k^\epsilon)$ for some $k \in \{1, \dots, n(\epsilon)\}$. In particular, this means that $\sup_{x \in K}|f(x) - f_k^\epsilon(x)| < \epsilon$.
 \item First, we show uniform boundedness. By the triangle inequality
 \begin{align*}
 \sup_{x \in K}|f(x)| &\leq \sup_{x \in K}|f(x) - f_k^\epsilon(x)| +  \sup_{x \in K}|f_k^\epsilon(x)| \\
-&\leq \underbrace{ \epsilon + \max_{j = 1, \dots, n(\epsilon)} \sup_{x \in K}|f_j^\epsilon(x)| }_{=M\text{, independent of $f$}} \\
-&= M < \infty
+&\leq \underbrace{ \epsilon + \max_{j = 1, \dots, n(\epsilon)} \sup_{x \in K}|f_j^\epsilon(x)| }_{\text{define this to be $M$, which is independent of $f$}} \\
+&= M < \infty,
 \end{align*}
-where $\sup_{x \in K}|f_j^\epsilon(x)|$ is finite by the extreme value theorem.
+where $\sup_{x \in K}|f_j^\epsilon(x)|$ is finite by the extreme value theorem, and we are taking the maximum over a finite set. Since $M$ is independent of $f$, we conclude that $A$ is uniformly bounded.
 \item Next, we show equicontinuity. Using the triangle inequality again,
 \begin{align*}
-|f(x) - f(y)| &\leq |f(x) - f_k^\epsilon(x)| + |f_k^\epsilon(x) - f_k^\epsilon(y)| + f_k^\epsilon(y) - f(y)| \\
-&\leq 2 \epsilon + \max_{j = 1, \dots, n(\epsilon)}|f_j^\epsilon(x) - f_j^\epsilon(y)|
+|f(x) - f(y)| &\leq |f(x) - f_k^\epsilon(x)| + |f_k^\epsilon(x) - f_k^\epsilon(y)| + |f_k^\epsilon(y) - f(y)| \\
+&\leq 2 \epsilon + \max_{j = 1, \dots, n(\epsilon)}|f_j^\epsilon(x) - f_j^\epsilon(y)|.
 \end{align*}
-\item By the uniform continuity theorem, each function $f_j^\epsilon(x)$ is uniformly continuous on $K$. Since we only have to consider a finite collection of these functions, by uniform continuity we can find $\delta > 0$ such that whenever $|x - y| < \delta$,
+\item By the uniform continuity theorem, each function $f_j^\epsilon(x)$ is uniformly continuous on $K$. This means that for all $j = 1, \dots, n(\epsilon)$, we can find $\delta_j > 0$ such that if $|x - y|<\delta_j$, $|f_j^\epsilon(x) - f_j^\epsilon(y)| < \epsilon$. Let $\delta = \min\{ \delta_1, \dots, \delta_{n(\epsilon)} \}$, which is positive since we are taking the minimum of a finite set of positive real numbers. Thus, whenever $|x - y| < \delta$,
 \[
-\max_{j = 1, \dots, n(\epsilon)}|f_j^\epsilon(x) - f_j^\epsilon(y)| < \epsilon
+\max_{j = 1, \dots, n(\epsilon)}|f_j^\epsilon(x) - f_j^\epsilon(y)| < \epsilon.
 \]
-\item Combining everything, for $|x - y| < \delta$, we have
+\item Combining the previous two steps, if $|x - y| < \delta$, then
 \[
-|f(x) - f(y)| < 3 \epsilon
+|f(x) - f(y)| < 3 \epsilon.
 \]
+Since $\delta$ is independent of $f$, we conclude that $A$ is equicontinuous.
 \end{enumerate}
 \end{proof}
 \end{theorem}
 
-We would like criteria which are easier to check than uniform boundedness and equicontinuity. Here are some results of that nature. First, we define Lipschitz continuity, which shows up in many contexts including uniqueness of solutions to ODEs. Again, we define this for real-valued functions, but the definition extends to any metric space.
+We would like criteria which are easier to check than uniform boundedness and equicontinuity. Here are some results of that nature. First, we define Lipschitz continuity, which shows up in many contexts, including existence and uniqueness of solutions to ODEs. Again, we define this for real-valued functions, but the definition extends to any metric space.
 
 \begin{definition}
-A function $f: (X, d) \rightarrow \R$ is \emph{Lipschitz continuous} if there exists a positive constant $L > 0$ (the Lipschitz constant) such that for all $x, y \in X$,
+A function $f: (X, d) \rightarrow \R$ is \textbf{Lipschitz continuous} (or just Lipschitz) if there exists a positive constant $L > 0$ (the Lipschitz constant) such that for all $x, y \in X$,
 \[
-|f(x) - f(y)| \leq L d(x, y)
+|f(x) - f(y)| \leq L d(x, y).
 \]
 \end{definition}
-It is not difficult to show that Lipschitz continuity implies uniform continuity.
-
-For function on the real line, the Lipschitz condition reduces to $|f(x) - f(y)| \leq L|x-y|$. This is trivially true for $x = y$, thus for $x \neq y$ we can divide by $|x - y|$ to get the condition
+It is not difficult to show that Lipschitz continuity implies uniform continuity. For function from $\R$ to $\R$, the Lipschitz condition reduces to $|f(x) - f(y)| \leq L|x-y|$. This is trivially true for $x = y$, thus for $x \neq y$ we can divide both sides by $|x - y|$ to obtain the condition
 \[
-\frac{|f(x) - f(y)|}{|x-y|} \leq L
+\frac{|f(x) - f(y)|}{|x-y|} \leq L.
 \]
-The Lipschitz constant $L$ puts a bound on the slope of all of the possible secant lines of $f$, thus a Lipschitz function is one which is ``nice'' in the sense that it ``does not change too fast''. If $f: \R \rightarrow \R$ is continuously differentiable and $f'(x)$ is bounded by $L$, it follows from the mean value theorem that $f$ is Lipschitz with constant $L$. In particular, this is the case when $f'(x)$ is continuous and we restrict ourselves to a closed interval $[a, b]$. 
+Intuitively, the Lipschitz constant $L$ puts a bound on the slopes of all of the possible secant lines of $f$. A Lipschitz function is ``nice'' in the sense that it ``does not change too fast''. If $f: \R \rightarrow \R$ is continuously differentiable (which is denoted $C^1$) and $f'(x)$ is bounded by $L$, it follows from the mean value theorem that $f$ is Lipschitz continuous with constant $L$. 
+
+\begin{lemma}Suppose $f: \R\subset \R \rightarrow \R$ is continuously differentiable, and $|f'(x)| \leq L$. Then $f$ is Lipschitz continuous, with Lipschitz constant $L$. 
+\end{lemma}
+\begin{proof}
+Choose any distinct points $x$ and $y$ in $\R$. Then by the mean value theorem, there exists a point $c$ between $x$ and $y$ such that
+\[
+\frac{f(x)-f(y)}{x-y} = f'(c).
+\]
+Taking absolute values and rearranging, this becomes
+\[
+|f(x)-f(y)| = |f'(c)||x-y| \leq L |x-y|,
+\]
+which is the desired result.
+\end{proof}
+
+In particular, this holds when $f'(x)$ is continuous and we restrict ourselves to a closed interval $[a, b]$, in which case the Lipschitz constant is $L = \max_{x\in[a,b]} |f'(x)|$. In the next lemma, we give a criterion for equicontinuity in terms of Lipschitz continuity.
 
 \begin{lemma}
-Let $K \subset \R^d$ be compact and $A \subset C(K)$. If every function in $A$ is Lipschitz with the same Lipschitz constant $L$, then $A$ is equicontinuous.
+Let $K \subset \R^d$ be compact and $A \subset C(K)$. If every function in $A$ is Lipschitz continuous with the same Lipschitz constant $L$, then $A$ is equicontinuous.
 \begin{proof}
 Let $\epsilon > 0$, and choose $\delta = \epsilon/2L$. Then for all $x, y \in K$ with $|x-y| < \delta$ and for all $f \in A$,
 \[
-|f(x) - f(y)| \leq L|x-y| \leq L\delta = \frac{epsilon}{2} < \epsilon
+|f(x) - f(y)| \leq L|x-y| \leq L\delta = \frac{\epsilon}{2} < \epsilon.
 \]
 \end{proof}
 \end{lemma}
@@ -906,46 +921,46 @@ Let $\epsilon > 0$, and choose $\delta = \epsilon/2L$. Then for all $x, y \in K$
 The same result holds for H\"{o}lder continuous functions. H\"{o}lder continuity is a weaker condition than Lipschitz continuity, and it shows up in the study of PDEs.
 
 \begin{definition}
-A function $f: \R^d \rightarrow \R$ is \emph{H\"{o}lder continuous} with exponent $\alpha \in (0, 1]$ (sometimes this is called $\alpha$-H\"{o}lder continuous) if there exists a positive constant $C > 0$ such that for all $x, y \in X$,
+A function $f: \R^d \rightarrow \R$ is \textbf{H\"{o}lder continuous} with exponent $\alpha \in (0, 1]$ (sometimes this is called $\alpha$-H\"{o}lder continuous) if there exists a positive constant $C > 0$ such that for all $x, y \in X$,
 \[
-|f(x) - f(y)| \leq L |x - y|^\alpha
+|f(x) - f(y)| \leq L |x - y|^\alpha.
 \]
 \end{definition}
 
-The case $\alpha = 1$ is Lipschitz continuity. We exclude $\alpha > 1$ because it can be shown that any function on an interval $[a, b]$ satisfying the H\"{o}lder condition with $\alpha > 1$ is constant. H\"{o}lder continuity also implies uniform continuity, and the result of the previous lemma holds if every function in $A$ is H\"{o}lder continuous with the same $\alpha$ and $C$.
-
-We mentioned above that the mean value theorem implies that if $f: [a, b] \rightarrow \R$ is continuously differentiable, $f$ is Lipschitz with Lipschitz constant $\max_{x\in [a,b]}|f'(x)|$.  Unfortunately, this does not work in higher dimensions, since there is no $n-$dimensional analogue to the mean value theorem.  We can obtain a similar result, however, if $f$ is continuously differentiable on a compact, convex set.
+The case $\alpha = 1$ is Lipschitz continuity. We exclude $\alpha > 1$, because it can be shown that any function on an interval $[a, b]$ satisfying the H\"{o}lder condition with $\alpha > 1$ is constant. H\"{o}lder continuity also implies uniform continuity, and the result of the previous lemma holds if every function in $A$ is H\"{o}lder continuous with the same $\alpha$ and $C$. We mentioned above that the mean value theorem implies that if $f: [a, b] \rightarrow \R$ is continuously differentiable, $f$ is Lipschitz with Lipschitz constant $\max_{x\in [a,b]}|f'(x)|$.  Unfortunately, this does not work in higher dimensions, since there is no $n-$dimensional analogue to the mean value theorem.  We can obtain a similar result, however, if $f$ is continuously differentiable on a compact, convex set. We recall that since $f'$ is continuous, it is bounded on all compact sets. First, we define a convex set.
 
 \begin{definition}
-A set $E$ in $\R^d$ is convex if for all $x, y \in E$, the line segment joining them is also in $E$. In other words, for all $x, y \in E$,
+A set $E$ in $\R^d$ is \textbf{convex} if for all $x, y \in E$, the line segment joining them is also in $E$. In other words, for all $x, y \in E$,
 \begin{align*}
-tx + (1 - t)y &\in E && t \in [0, 1]
+tx + (1 - t)y &\in E && t \in [0, 1].
 \end{align*}
 \end{definition}
 
+We then have the following lemma.
+
 \begin{lemma}
-Let $K \subset \R^d$ convex and compact, and $K \subset U \subset \R^d$, where $U$ is open. Let $f: U \rightarrow \R$ be continuously differentiable  with $\max_{x \in K} ||Df(x)|| \leq L$. Then $f: K \rightarrow \R$ is Lipschitz with constant $L$.
+Let $K \subset \R^d$ convex and compact, and $K \subset U \subset \R^d$, where $U$ is open. Let $f: U \rightarrow \R$ be continuously differentiable, and let $\sup_{x \in K} ||Df(x)|| = L$. Then $f: K \rightarrow \R$ is Lipschitz with constant $L$.
 \end{lemma}
 
 \begin{proof}
 Let $x,y \in K$. Since $K$ is convex, $tx + (1 - t)y \in K$ for all 
-$t \in [0,1]$. Next, we use the fundamental theorem of calculus to write $f(x)- f(y)$ in the following form.
+$t \in [0,1]$. Next, we use the fundamental theorem of calculus to write $f(x)- f(y)$ in the following integrated form:
 \begin{align*}
-f(x)- f(y) &= \int_0^1 \frac{d}{dt} f(tx + (1-t)y) dt \\
+f(x)- f(y) &= \int_0^1 \frac{d}{dt} f\left(tx + (1-t)y\right) dt \\
 &= \int_0^1 Df(tx + (1-t)y) \cdot (x-y) dt \\
-&= \left( \int_0^1 Df(tx + (1-t)y) dt \right) \cdot (x-y) \\
+&= \left( \int_0^1 Df(tx + (1-t)y) dt \right) \cdot (x-y),
 \end{align*}
-where the second line follows from the multivariable chain rule. Taking absolute values, we have
+where the second line follows from the multivariable chain rule, and the dot represents the dot product in $\R^d$. Taking absolute values, we have
 
 \begin{align*}        
 |f(x)- f(y)| &\leq \left| \int_0^1 Df(tx + (1-t)y) dt \right| |x-y| \\
-&\leq \left( \int_0^1 \underbrace{ || Df(tx + (1-t)y) || }_{\leq L \text{ since } tx + (1 - t)y \in K } dt \right) |x-y| \\
-&\leq L |x-y|
+&\leq \left( \int_0^1 \underbrace{ || Df(tx + (1-t)y) || }_{\leq\:L \text{ since } tx + (1 - t)y\:\in\:K } dt \right) |x-y| \\
+&\leq L |x-y|.
 \end{align*}
     
 \end{proof}
 
-\section{Application to Existence of Solutions to ODEs}
+\subsection{Application to Existence of Solutions to ODEs}
 
 In this section, we will use the Arzela-Ascoli theorem to prove the existence of solution to ODEs. Before we get too theoretical, let's look at several examples of ODEs on $\R$.
 
