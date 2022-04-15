@@ -531,7 +531,7 @@ In the late 19th century, a similar idea was applied to spaces of functions, in 
 \begin{theorem}[Arzela-Ascoli]Every sequence in $C([a,b])$ which is uniformly bounded and equicontinuous has a convergence subsequence.
 \end{theorem}
 
-The term compactness was first used by Frechet in 1905 to describe a set for which every sequence has a convergent subsequence. Today, this property is usually called sequential compactness.
+The term compactness was first used by Fr\'echet in 1905 to describe a set for which every sequence has a convergent subsequence. Today, this property is usually called sequential compactness.
 
 \begin{definition}
 A subset $K$ of $X$ is \textbf{sequentially compact} if every sequence in $K$ contains subsequence which converges to an element of $K$.
@@ -1312,7 +1312,7 @@ provided the limit exists. We can rearrange this to get
 \[
 \lim_{h \rightarrow 0}\frac{f(a + h) - f(a) - f'(a) h }{h} = 0.
 \]
-Note that $f'(a)$ is a real number, and as such is (trivally) a linear operator on $\R$. The term $f'(a) h$ can be thought of as applying this linear operator to $h$. The original definition of the derivative makes no sense in higher dimensions (unless we are taking a directional derivative, in which case $h$ is still a real number). The second definition, however, is easily extended to higher dimensions.
+Note that $f'(a)$ is a real number, and as such is (trivially) a linear operator on $\R$. The term $f'(a) h$ can be thought of as applying this linear operator to $h$. The original definition of the derivative makes no sense in higher dimensions (unless we are taking a directional derivative, in which case $h$ is still a real number). The second definition, however, is easily extended to higher dimensions.
 
 \begin{definition}
 A function $f:\R^n \rightarrow \R^m$ is \textbf{differentiable} at a point $a \in R^n$ if there exists a linear transformation $L: \R^n \rightarrow \R^m$ such that
@@ -1478,7 +1478,7 @@ Another consequence of the Banach fixed point theorem is the inverse function th
 (f^{-1})'(b) = \frac{1}{f'(a)}
 \]
 
-The inverse function theorem extends this to higher dimensions. We will prove this later as a corollary of the Implicit Function Theorem (this is much asier to do!), but we will state the theorem here and outline how the proof uses the Banach fixed point theorem.
+The inverse function theorem extends this to higher dimensions. We will prove this later as a corollary of the Implicit Function Theorem (this is much easier to do!), but we will state the theorem here and outline how the proof uses the Banach fixed point theorem.
 
 \begin{theorem}[Inverse Function Theorem]
 Let $F: \R^n \rightarrow \R^n$ be continuously differentiable, and suppose the derivative $DF(x_0)$ is invertible at $x_0$. Then $F$ is invertible in a neighborhood of $x_0$. Precisely,
@@ -1925,7 +1925,7 @@ where the bound holds uniformly for $t \in [0, t_0)$ since it does not depend on
 
 \subsection{Riemann Integral}
 
-We start with a review of the Riemann integral. In particular, we will discuss its strengths and weaknesses. Let $f: [a, b] \rightarrow \R$ be a bounded function. (It is important that the domain be a closed, bounded interval and the function is bounded). The Riemann integral is defined as follows.
+We start with a review of the Riemann integral. In particular, we will discuss its strengths and weaknesses. Let $f: [a, b] \rightarrow \R$ be a bounded function. (It is important that the domain is a closed, bounded interval, and that the function is bounded). The Riemann integral is defined as follows.
 \begin{enumerate}
     \item First, partition the domain $[a,b]$. Let $P$ be the partition
     \[
@@ -1943,39 +1943,39 @@ We start with a review of the Riemann integral. In particular, we will discuss i
     \inf_P U_P(f) = \sup_P L_P(f).
     \]
     If this holds, we denote the Riemann integral by $\int_a^b f(x) dx$.
-    \item A convenient integrability criterion is the following: $f$ is Riemann integrable on $[a, b]$ if for every $\epsilon > 0$ we can find a partition $P$ such that
+    \item A convenient integrability criterion is the following: $f$ is Riemann integrable on $[a, b]$ if, for every $\epsilon > 0$, we can find a partition $P$ such that
     \[
     U_P(f) - L_P(f) < \epsilon.
     \]
 \end{enumerate}
-Technically, what we just defined is known as the Riemann-Darboux integral, which is equivalent to the Riemann integral, and is often more convenient for theoretical usage. The standard Riemann integral involves the Riemann sums you learned in calculus. We can define that as follows.
+Technically, what we just defined is known as the Riemann-Darboux integral, which is equivalent to the Riemann integral, and is often more convenient for analysis. The standard Riemann integral involves the Riemann sums you learned in calculus. We can define that as follows.
 \begin{enumerate}
     \item Choose a tagged partition $(P, t)$ of $[a, b]$. This is a partition $P$, given by
     \[
     P: a = x_0 < x_1 < \dots < x_{n-1} < x_n = b,
     \]
-    together with $n$ points $\{ t_0, t_1, \dots, t_{n-1} \}$, one selected from each subinterval of the partition, i.e. $t_j \in [x_j, x_{j+1}]$. Common choices for the tags $t_i$ are the left endpoint, right endpoint, and midpoints of the partition intervals, although the choice of tags does not matter from a theoretical standpoint. The mesh size of the partition is the maximum length of the partition subintervals, i.e.
+    together with $n$ points $\{ t_0, t_1, \dots, t_{n-1} \}$, with one selected from each subinterval of the partition, i.e. $t_j \in [x_j, x_{j+1}]$. Common choices for the tags $t_i$ are the left endpoints, the right endpoint, and the midpoints of the partition intervals, although the choice of tags does not matter from a theoretical standpoint. The mesh size of the partition is the maximum length of the partition subintervals, i.e.
     \[
-    \Delta P = \max_{j = 0, \dots, n-1}(x_{j+1} - x_j)
+    \Delta P = \max_{j = 0, \dots, n-1}(x_{j+1} - x_j).
     \]
-    In general, each partition subinterval is chosen to be the same size, although this need not be the case.
+    Typically, each partition subinterval is chosen to be the same size, although this need not be the case.
     \item The Riemann sum corresponding to $(P, t)$ is    
     \begin{align*}
-        R_{P,t}(f) = \sum_{j = 0}^{n-1} (x_{j+1} - x_j) t_j.
+        R_{P,t}(f) = \sum_{j = 0}^{n-1} (x_{j+1} - x_j) f(t_j).
     \end{align*}
-    \item $f$ is Riemann integrable with integral $S$ if for all $\epsilon > 0$ there exists $\delta > 0$ such that
+    \item The function $f$ is Riemann integrable with integral $S$ if, for all $\epsilon > 0$, there exists $\delta > 0$ such that
     \[
     |R_{P, t}(f) - S| < \epsilon
     \]
     for all tagged partitions $(P, t)$ with mesh size $\Delta P < \delta$. 
 \end{enumerate}
 
-The main advantages of the Riemann integral are:
+The main advantages of the Riemann integral are as follows:
 
 \begin{itemize}
     \item You can compute them exactly with the fundamental theorem of calculus (as long as you can find an antiderivative!)
     \item The definition is intuitive, and captures the idea of finding the area under a curve by successive approximation.
-    \item The approximating Riemanns sums are easy to compute numerically.
+    \item The approximating Riemann sums are easy to compute numerically.
     \item Many useful classes of functions are Riemann integrable:
     \begin{enumerate}
         \item Continuous functions on $[a, b]$.
@@ -1988,11 +1988,11 @@ There are, however, several disadvantages to the Riemann integral.
 
 \begin{itemize}
     \item It is difficult to extend to domains that are not open subsets of $\R^n$.
-    \item It is difficult to extend to unbounded domains such as $\R$. As in calculus class, you can define an ``improper integral'' as the limit of integrals on bounded intervals, although the best way to do this is not always clear.
+    \item It is difficult to extend to unbounded domains, such as all of $\R$. As in calculus class, you can define an ``improper integral'' as the limit of integrals on bounded intervals, although the best way to do this is not always clear.
     \item It can be difficult to figure out which functions are and are not Riemann integrable.
     Consider the following two examples.
     \begin{enumerate}
-        \item Since the rational numbers are countable, write the set of rational numbers in $[0, 1]$ as the sequence $\{ r_k \}$, i.e.
+        \item Since the rational numbers are countable, enumerate the set of rational numbers in $[0, 1]$ as the sequence $\{ r_k \}$, i.e.
         \[
         \Q \cap [0, 1] = \{ r_k \}_{k \in \N}.
         \]
@@ -2007,7 +2007,7 @@ There are, however, several disadvantages to the Riemann integral.
         1 & x \geq 0.
         \end{cases}
         \]
-        $f(x)$ is well-defined since the sum $\sum_{k=1}^\infty 1/k^2$ is convergent. Here's one way to think about this function. Imagine you are taking a walk from 0 to 1 on the number line, and you are keeping a ``running total'' as you do this. (Maybe this should be called a ``walking total''?) You start a 0, and every time you pass a rational number $r_k$ you add $1/k^2$ to the total. Although $f(x)$ is discontinuous at every rational number, $f(x)$ is Riemann integrable on $[0, 1]$ since it is bounded and monotonic (increasing).
+        The function $f(x)$ is well-defined, since the sum $\sum_{k=1}^\infty \frac{1}{k^2}$ is convergent. How can we picture this function? Imagine you are taking a walk from $x=0$ to $x=1$ on the number line, and you are keeping a ``running total'' as you do this. (Maybe this should be called a ``walking total''?) The total starts at 0 at $x=0$, and every time you pass a rational number $r_k$, you add $1/k^2$ to the total. Although $f(x)$ is discontinuous at every rational number, $f(x)$ is Riemann integrable on $[0, 1]$, since it is bounded and monotonic (increasing).
         \item Let $\chi_\Q(x)$ be the characteristic function of the set of rational numbers on $[0, 1]$, defined by
         \[
         \chi_\Q(x) = 
@@ -2031,60 +2031,62 @@ There are, however, several disadvantages to the Riemann integral.
     \int_0^1 f_n(x) dx = 0.
     \]
     For every $x \in [0, 1]$, $f_n(x) \rightarrow \chi_\Q(x)$, but $\chi_\Q(x)$ is not Riemann integrable on $[0, 1]$.
-    \item It is hard to find good criteria that allow us to exchange limits and integration. We would like to find conditions for which
-    \[
-    \lim_{n\rightarrow\infty}\int_a^b f_n(x) dx = \int_a^b \lim_{n\rightarrow\infty} f_n(x) dx,
-    \]
-    i.e. the limit of the integrals is the integral of the limit. The best we can do, in general, is if we have a uniformly convergent sequence.
-
-    \begin{theorem}
-    For all $n \in \N$, let $f_n: [a, b] \rightarrow \R$ be a Riemann integrable functions, and suppose the sequence of functions $\{f_n\}$ converges uniformly to $f$. Then $f$ is Riemann integrable, and
-     \[
-    \lim_{n\rightarrow\infty}\int_a^b f_n(x) dx = \int_a^b f(x) dx.
-    \]
-    \begin{proof}
-    Let $\epsilon_n = \sup_{x \in [a, b]}|f_n(x) - f(x)|$, so that $f_n(x) - \epsilon_n \leq f(x) \leq f_n(x) + \epsilon_n$ on $[a, b]$. Since $\{f_n\}$ converges to $f$ uniformly, $\epsilon_n \rightarrow 0$. Then we have
-    \begin{align*}
-    \int_a^b f_n(x) dx &- (b-a)\epsilon_n = 
-    \int_a^b (f_n(x) - \epsilon_n) dx = \sup_P L_P(f_n(x) -\epsilon_n) \\
-    &= \sup_P \sum_{j = 0}^{n-1} (x_{j+1} - x_j) \inf_{x \in [x_j, x_{j+1}]} (f(x) - \epsilon_n) \\
-    &\leq \sup_P \sum_{j = 0}^{n-1} (x_{j+1} - x_j) \inf_{x \in [x_j, x_{j+1}]} f(x) \\
-    &= \sup_P L_P(f),
-    \end{align*}
-    where $P$ is an arbitrary partition of $[a,b]$. Similarly,
-    \[
-    \inf_P U_p(f) \leq \int_a^b f_n(x) dx - (b-a)\epsilon_n.
-    \]
-    Putting these together
-    \begin{align*}
-    \int_a^b f_n(x) dx - (b-a)\epsilon_n \leq \sup_P L_p(f) \leq \inf_P U_p(f) \leq \int_a^b f_n(x) dx - (b-a)\epsilon_n.
-    \end{align*}
-    This rearranges to
-    \[
-    0 \leq \inf_P U_P(f) - \sup_P L_P(f) \leq 2(b-a)\epsilon_n \rightarrow 0,
-    \]
-    from which it follows that $f$ is Riemann integrable on $[a,b]$.
-    \end{proof}
-    \end{theorem}
-    It is important to note that for this theorem to hold, it was essential that we were on a bounded interval $[a,b]$. The issue at hand is that uniform convergence is, in a sense, too strong condition. As an example, consider the sequence of functions $f_n(x) = x^n$ on $[0, 1]$. For the limit, $f_n(x) \rightarrow f(x)$, where
-    \[
-    f(x) = \begin{cases}
-    0 & x \in [0, 1) \\
-    1 & x = 1,
-    \end{cases}
-    \]
-    but this convergence is not uniform. (Either we can show that directly, or use the fact that if it were uniform, the limit would be continuous, which it is not in this case). However, it is still the case that
-    \[
-    \lim_{n \rightarrow \infty} \int_0^1 f(x) dx = \lim_{n \rightarrow \infty} \frac{1}{1+n} = 0 = \int_0^1 f(x) dx
-    \]
-    Even though we do not have uniform convergence, the limit of the integrals is equal to the integral of the limit. Something else must be going on, and we would like to have a theory which explains this case.
 \end{itemize}
+
+A final disadvantage (and perhaps the most important one), is that it is hard to find good criteria that allow us to exchange limits and integration. We would like to find conditions for which
+\[
+\lim_{n\rightarrow\infty}\int_a^b f_n(x) dx = \int_a^b \lim_{n\rightarrow\infty} f_n(x) dx,
+\]
+i.e. the limit of the integrals is the integral of the limit. The best we can do, in general, is if we have a uniformly convergent sequence of functions on a bounded interval.
+
+\begin{theorem}
+For all $n \in \N$, let $f_n: [a, b] \rightarrow \R$ be a Riemann integrable functions, and suppose the sequence of functions $\{f_n\}$ converges uniformly to $f$. Then $f$ is Riemann integrable, and
+ \[
+\lim_{n\rightarrow\infty}\int_a^b f_n(x) dx = \int_a^b f(x) dx.
+\]
+\begin{proof}
+Let $\epsilon_n = \sup_{x \in [a, b]}|f_n(x) - f(x)|$, so that $f_n(x) - \epsilon_n \leq f(x) \leq f_n(x) + \epsilon_n$ on $[a, b]$. Since $\{f_n\}$ converges to $f$ uniformly, $\epsilon_n \rightarrow 0$. Then we have
+\begin{align*}
+\int_a^b f_n(x) dx &- (b-a)\epsilon_n = 
+\int_a^b (f_n(x) - \epsilon_n) dx = \sup_P L_P(f_n(x) -\epsilon_n) \\
+&= \sup_P \sum_{j = 0}^{n-1} (x_{j+1} - x_j) \inf_{x \in [x_j, x_{j+1}]} (f(x) - \epsilon_n) \\
+&\leq \sup_P \sum_{j = 0}^{n-1} (x_{j+1} - x_j) \inf_{x \in [x_j, x_{j+1}]} f(x) \\
+&= \sup_P L_P(f),
+\end{align*}
+where $P$ is an arbitrary partition of $[a,b]$. Similarly,
+\[
+\inf_P U_p(f) \leq \int_a^b f_n(x) dx - (b-a)\epsilon_n.
+\]
+Putting these together
+\begin{align*}
+\int_a^b f_n(x) dx - (b-a)\epsilon_n \leq \sup_P L_p(f) \leq \inf_P U_p(f) \leq \int_a^b f_n(x) dx - (b-a)\epsilon_n.
+\end{align*}
+This rearranges to
+\[
+0 \leq \inf_P U_P(f) - \sup_P L_P(f) \leq 2(b-a)\epsilon_n \rightarrow 0,
+\]
+from which it follows that $f$ is Riemann integrable on $[a,b]$.
+\end{proof}
+\end{theorem}
+
+The main issue is that uniform convergence is, in a sense, too strong condition. As an example, consider the sequence of functions $f_n(x) = x^n$ on $[0, 1]$. For the limit, $f_n(x) \rightarrow f(x)$, where
+\[
+f(x) = \begin{cases}
+0 & x \in [0, 1) \\
+1 & x = 1,
+\end{cases}
+\]
+but this convergence is not uniform. (Either we can show that directly, or use the fact that if the convergence were uniform, the limit would be continuous by the uniform limit theorem, which it is not in this case). However, we still have
+\[
+\lim_{n \rightarrow \infty} \int_0^1 f_n(x) dx = \lim_{n \rightarrow \infty} \frac{1}{1+n} = 0 = \int_0^1 f(x) dx.
+\]
+Even though the convergence is not uniform, the limit of the integrals is equal to the integral of the limit. Something else must be going on, and we would like to have a theory which explains this case.
 
 \subsection{Lebesgue Integral}
 
-The Lebesgue integral is a complete different way of defining the integral. For this discussion (and for comparison purposes), we will only consider nonnegative, bounded, real-valued functions defined on a closed interval $[a, b]$, although we will soon see that the theory is more general than this. The secret sauce here is that instead of partitioning the domain, we will partition the range.
+The Lebesgue integral is a complete different way of defining the integral. For this discussion (and for comparison purposes), we will only consider nonnegative, bounded, real-valued functions defined on a closed interval $[a, b]$, although we will see that the theory is more general than this. The secret sauce here is that instead of partitioning the domain, we will partition the range.
 
-Assume $f:[a,b] \rightarrow \R$ is bounded and nonnegative, and let $M = \sup_{x \in [a,b]} f(x)$. For now, we define the Lebesgue integral as follows. (Note that this is an intuitive construction; ultimately this is not the definition we will use.)
+Assume $f:[a,b] \rightarrow \R$ is bounded and nonnegative, and let $M = \sup_{x \in [a,b]} f(x)$. For now, we define the Lebesgue integral as follows. (Note that this is an intuitive construction; ultimately this is not the definition we will use).
 \begin{enumerate}
 \item Let $P$ be a partition the range of $f$, i.e.
 \[
@@ -2092,39 +2094,38 @@ P : 0 = y_0 < y_1 < y_2 < \dots < y_{n-1} < y_n = M
 \]
 \item For $j = 0, dots, n-1$, define the set $I_j$ by
 \[
-I_j = f^{-1}([y_{j+1}, \infty))
+I_j = f^{-1}([y_{j+1}, \infty)) = \{ x : f(x) \geq y_{j+1} \}.
 \]
 This set is all values of $x$ for which $f(x) \geq y_{j+1}$.
 \item Define the sum
 \[
-I_P(f) = \sum_{j=0}^{n}(b_{j+1}-b_{j})m(I_j)
+I_P(f) = \sum_{j=0}^{n}(y_{j+1}-y_{j})m(I_j)
 \]
-where $m(I_j)$ is the ``measure'' of the set $I_j$. We have not defined this yet (this is what measure theory is all about!), but think of it as the ``length'' of $I_j$.  We can think of this as constructing layers of a cake. 
+where $m(I_j)$ is the ``measure'' of the set $I_j$. We have not defined this yet (this is what measure theory is all about!), but think of it as the ``length'' of $I_j$.  We can think of this as constructing layers of a cake. The first layer has height $y_1 - y_0$. Since we want this layer to include all values of $x$ corresponding to values of $f(x)$ which are $y_1$ or more, the total ``length'' of this layer is $m(I_0)$; we note that this layer may consist of many disconnected pieces. The subsequent layers are similarly constructed, and each layer stacks neatly on top of the previous one.
+
 \item Then we define the Lebesgue integral as
 \[
-\int_{a}^{b}f(x)dx = \sup_P I_P(f)
+\int_{a}^{b}f(x)dx = \sup_P I_P(f),
 \]
 if the supremum exists.
 \end{enumerate}
 
-The Lebesgue integral resolves most of the weaknesses of Riemann integral. The main drawback is that in most cases you cannot actually compute an integral using the Lebesgue formulation and have to fall back on the fundamental theorem of calculus from Riemann integration theory. Luckily, if a function is Riemann integrable, it is also Lebesgue integrable, and the two integrals are the same! In fact, we can use Lebesgue integration theory to tell us what are the ``worst'' functions which are still Riemann integrable.
-
-In order to use the Lebesgue integral, we need to understand the ``measure'' term $m(I_j)$ in the definition of $I_p(f)$. The field of mesaure theory is devoted to exactly this.
+The Lebesgue integral resolves most of the weaknesses of Riemann integral. The main drawback is that, in most cases you cannot actually compute an integral using the Lebesgue formulation, and you have to fall back on the fundamental theorem of calculus from Riemann integration theory. Luckily, if a function is Riemann integrable, it is also Lebesgue integrable, and the two integrals are the same! In fact, we can use Lebesgue integration theory to tell us what are the ``worst'' functions which are still Riemann integrable. In order to use the Lebesgue integral, we need to understand the ``measure'' term $m(I_j)$ in the definition of $I_p(f)$. The field of measure theory is devoted to exactly this.
 
 \section{Measure Theory}
 
-What is measure theory, and why should we care? Consider the following two sets: $[0, 1]$ and $\Q$. There are (at least) two different notions of the ``size'' of these sets.
+What is measure theory, and why should we care? Consider the following two sets: $[0, 1]$ and $\Q \cap [0, 1]$. There are (at least) two different notions of the ``size'' of these sets.
 \begin{enumerate}
-    \item ``Number of elements'' (cardinality). Set theorists would say that $[0, 1]$ is countable and $\Q$ is uncountable. 
-    \item ``Length'' (measure). Intuitively, the interval $[0, 1]$ has length 1. If the empty set has 0 length and $\R$ has infinite length, then the ``length'' of $\Q$ (whatever that means) should be somewhere in the middle, although where in the middle is not clear.
+    \item ``Number of elements'' (cardinality). Although they both contain an infinite number of elements, set theorists would say that $[0, 1]$ is uncountable and $\Q \cap [0, 1]$ is countable. 
+    \item ``Length'' (measure). Intuitively, the interval $[0, 1]$ has a length of 1. If the empty set has a length of 0 (which makes sense), then the ``length'' of $\Q \cap [0, 1]$ (whatever that means) should be somewhere between 0 and 1, although where in the middle is not clear.
 \end{enumerate}
 
-The central goal of measure theory is to generalize our intuitive ideas of length, area, and volume to subsets of arbitrary sets. This will be applied to familiar settings like the line $\R$ and the plane $\R^2$, and we will see that our new theory not only encompasses our commonsense notions of length and area but also allows us to ``measure'' subsets which we would not be able to do with a ruler.
+The central goal of measure theory is to generalize our intuitive ideas of length, area, and volume to subsets of arbitrary sets. This will be applied to familiar settings like the line $\R$ and the plane $\R^2$, and we will see that our new theory not only encompasses our commonsense notions of length and area but also allows us to ``measure'' subsets which we would not be able to do with a ruler. Here are some applications.
 
 \begin{enumerate}
-	\item Probability. Take any sample spaces you want, and declare that the measure of the entire sample space is 1. Then the measure of any subset of the sample space is the probability that an event in that subset occurs. Probabilists put measures on all sorts of spaces, including function spaces. As an example, if the sample space is $C([0, 1])$, we could ask ourselves what is the measure of the subset of differentiable functions.
+	\item Probability. Take any sample spaces you want, and declare that the measure of the entire sample space to be 1. Then the measure of any subset of the sample space is the probability that an event in that subset occurs. Probabilists put measures on all sorts of spaces, including function spaces. As an example, if the sample space is $C([0, 1])$, we could ask ourselves what is the measure of the subset of differentiable functions.
 
-	\item Intergration theory. Measure theory lets us define the Lebesgue integral, which allows us to integrate more functions and gives us more general theorems for when we can exchange limits and integration.
+	\item Integration theory. Measure theory lets us define the Lebesgue integral, which allows us to integrate more functions, and gives us more general theorems for when we can exchange limits and integration.
 \end{enumerate}
 
 \subsection{Measures}
@@ -2134,110 +2135,104 @@ With this motivation in mind, let us define a measure on an arbitrary set $X$.
 \begin{definition}A \emph{measure} on a set $X$ is a function $\mu$ on subsets of $X$ with the following properties:
 \begin{enumerate}[(i)]
 \item $\mu(E) \in [0, \infty]$ ($\infty$ is allowed!)
-\item $\mu(\varnothing) = 0$
-\item If the sets $\{E_k\}_{k \in \N}$ are disjoint, then 
-	\begin{equation}
-	\mu \left( \bigcup_{k=1}^\infty E_k \right) = \sum_{k=1}^\infty \mu(E_k)
-	\end{equation}
+\item $\mu(\varnothing) = 0$.
+\item If the sets $\{E_k\}_{k \in \N}$ are disjoint subsets of $X$, then 
+	\begin{equation*}
+	\mu \left( \bigcup_{k=1}^\infty E_k \right) = \sum_{k=1}^\infty \mu(E_k).
+	\end{equation*}
 	This last property is called \emph{countable additivity}
 \end{enumerate}
 \end{definition}
 
 Other properties we might like $\mu$ to have are the following
 \begin{enumerate}[(i)]\setcounter{enumi}{3}
-\item $\mu$ is invariant under symmetries such as translations, rotations, and reflfections.
-\item $\mu$ agrees with our common notion of length, area, and volume. For example, $\mu([0,1]) = 1$.
+\item $\mu$ is invariant under symmetries such as translations, rotations, and reflections.
+\item $\mu$ agrees with our common notion of length, area, and volume. For example, we would like $\mu([0,1]) = 1$.
 \end{enumerate}
 
-Notice that I intentionally left the domain of $\mu$ vague. We would like the domain of $\mu$ to be as large as possible. Ideally, we would like it to be all subsets of $X$. However, as you will see in the beginning of your analysis course, it is impossible to construct a measure on all subsets of $\R$ with these five properties. The good news is that the construction involves a ``nasty'' subset of $\R$, so if we restrict ourselves to a collection of ``nice'' subsets, we should be able to make this work. Our goal is to find a collection of subsets of on which we can define a measure which is as large as possible and contains everything we care about. The collection we will need is called a $\sigma$-algebra.
+Notice that I intentionally left the domain of $\mu$ vague. We would like the domain of $\mu$ to be as large as possible. Ideally, we would like it to be all subsets of $X$. However, as you will see in the beginning of your analysis course, it is impossible to construct a measure on all subsets of $\R$ that has these five properties. The good news is that the construction involves a ``nasty'' subset of $\R$ (and requires invoking the axiom of choice), so if we restrict ourselves to a collection of ``nice'' subsets, we should be able to make this work. Our goal is to find a collection of subsets of on which we can define a measure which is as large as possible and contains everything we care about. The collection we will need is called a $\sigma$-algebra.
 
-\begin{definition}A collection $\mathcal{M}$ of subsets of $X$ is a \emph{$\sigma$-algebra} if 
+\begin{definition}A collection $\mathcal{M}$ of subsets of $X$ is a \textbf{$\sigma$-algebra} if 
 \begin{enumerate}[(i)]
-	\item $\varnothing \in \mathcal{M}$ 
-	\item $\mathcal{M}$ is closed under complement, i.e. $E \in \mathcal{M} \implies X\setminus E \in \mathcal{M}$
-	\item $\mathcal{M}$ is closed under countable unions, i.e. 
-	\[
-	\{E_k\}_{k \in \N} \subset \mathcal{M} \implies \bigcup_{k=1}^\infty E_k \in \mathcal{M} 
-	\]
+	\item $\varnothing \in \mathcal{M}$.
+	\item $\mathcal{M}$ is closed under complement, i.e. if $E \in \mathcal{M}$ then $X\setminus E \in \mathcal{M}$.
+	\item $\mathcal{M}$ is closed under countable unions, i.e. if 
+    $\{E_k\}_{k \in \N} \subset \mathcal{M}$, then $\bigcup_{k=1}^\infty E_k \in \mathcal{M}$.
 \end{enumerate}
-An \emph{algebra} is the same thing except it is only closed under finite unions.
+An \textbf{algebra} is the same thing, except it is only closed under finite unions.
 \end{definition}
 
 If we want to define a measure on a $\sigma-$algebra, the fact that it is closed under countable unions is crucial for the countable additivity property of a measure to make sense. Other properties of $\sigma-$algebras which follow from the definition and basic set theory include
 \begin{enumerate}[(i)]\setcounter{enumi}{3}
-	\item $X \in \mathcal{M}$ 
-	\item $\mathcal{M}$ is closed under countable intersection. This follows from the De Morgan's laws.
-	\item $\mathcal{M}$ is closed under relative complement, i.e. $E, F \in \mathcal{M} \implies E \setminus F \in \mathcal{M}$
+	\item $X \in \mathcal{M}$.
+	\item $\mathcal{M}$ is closed under countable intersection. This follows from De Morgan's laws.
+	\item $\mathcal{M}$ is closed under relative complement, i.e. if $E, F \in \mathcal{M}$, then $E \setminus F \in \mathcal{M}$.
 \end{enumerate}
 
-Here are some easy examples of $\sigma$-algebras on $X$.
+Here are some simple examples of $\sigma$-algebras on $X$.
 \begin{enumerate}
-    \item $M = \{ \varnothing, X \}$ (smallest $\sigma$-algebra)
-    \item $M = \{ A, A^c, \varnothing, X\}$ ($\sigma$-algebra generated by subset $A$)
-    \item $M = \{ \text{all subsets of X} \}$ (largest $\sigma$-algebra, also called the power set of $X$)
+    \item $M = \{ \varnothing, X \}$ (the smallest $\sigma$-algebra).
+    \item $M = \{ A, A^c, \varnothing, X\}$ (the $\sigma$-algebra generated by the subset $A$).
+    \item $M = \{ \text{all subsets of X} \}$ (the largest $\sigma$-algebra, also called the power set of $X$).
 \end{enumerate}
 
-The first two are not very interesting. The power set of $X$ is typically too large to define a measure on. An exception is if $X$ is a countable or finite set. Let $X$ be a countable set and let $\mu$ be a measure. As long as we know $\mu(\{x\})$ for all single-point sets $\{x\}$, then for any subset $S$ of $X$,
+The first two are not very interesting. The power set of $X$ is typically too large to define a measure on. An exception is if $X$ is a countable or finite set. In this case, let $X$ be a countable set, and let $\mu$ be a measure. As long as we know $\mu(\{x\})$ for all single-point sets $\{x\}$, then, for any subset $S$ of $X$,
 \[
-\mu(S) = \sum_{x \in S} \mu(\{x\})
+\mu(S) = \sum_{x \in S} \mu(\{x\}),
 \]
-where the sum is countable or finite.
+where the sum is countable or finite (and can be infinite). The first $\sigma$-algebra which is of interest is the $\sigma$-algebra generated by a collection of subsets.
 
-The first $\sigma$-algebra which is actually of interest is the $\sigma$-algebra generated by a collection of subsets.
-
-\begin{definition}Let $\mathcal{E}$ be a collection of subsets of $X$. Then the \emph{$\sigma$-algebra generated by $\mathcal{E}$}, denoted $\mathcal{M}(\mathcal{E})$, is the unique smallest $\sigma$-algebra containing $\mathcal{E}$. To be precise, we can define $\mathcal{E}$ in one of these two equivalent ways.
+\begin{definition}Let $\mathcal{E}$ be a collection of subsets of $X$. Then the \textbf{$\sigma$-algebra generated by $\mathcal{E}$}, denoted $\mathcal{M}(\mathcal{E})$, is the unique smallest $\sigma$-algebra containing $\mathcal{E}$. We can define $\mathcal{M}(\mathcal{E})$ in one of two equivalent ways.
 \begin{enumerate}[(i)]
 \item $\mathcal{M}(\mathcal{E})$ is the intersection of all $\sigma-$algebras containing $\mathcal{E}$.
 \item If $\mathcal{N}$ is another $\sigma$-algebra containing $\mathcal{E}$, then $\mathcal{M}(\mathcal{E}) \subset \mathcal{N}$.
 \end{enumerate}
 \end{definition}
 
-It is worth noting that $\sigma-$algebras are huge and unwieldy enough that there is essentially no way of writing down an arbitrary element of $\mathcal{M}(\mathcal{E})$ in terms of elements of $\mathcal{E}$. The most important of these $\sigma$-algebras is the Borel $\sigma$-algebra.
+For (i), we can show that the intersection of $\sigma$-algebras is a $\sigma-$algebra. It is worth noting that $\sigma-$algebras are huge and unwieldy. There is essentially no way of writing down an arbitrary element of $\mathcal{M}(\mathcal{E})$ in terms of the elements of $\mathcal{E}$. The most important of these $\sigma$-algebras is the Borel $\sigma$-algebra, which is generated by the open sets.
 
 \begin{definition}
-The \emph{Borel $\sigma$-algebra} on $X$, denoted $\mathcal{B}_X$, is the $\sigma$-algebra generated by the collection of open sets of $X$.
+The \textbf{Borel $\sigma$-algebra} on $X$, denoted $\mathcal{B}_X$, is the $\sigma$-algebra generated by the collection of open sets of $X$.
 \end{definition}
 
-The Borel $\sigma-$algebra contains all open sets, all closed sets, all countable unions and intersections of open and closed sets (some of which may be neither open nor closed), etc. There is no nice way to write down a generic element of $\mathcal{B}_X$. For the special case of the Borel $\sigma-$algebra on $\R$, we have a nice result.
+The Borel $\sigma-$algebra contains all open sets, all closed sets, all countable unions and countable intersections of open and closed sets (some of which may be neither open nor closed), etc. There is no nice way to write down a generic element of $\mathcal{B}_X$. For the special case of the Borel $\sigma-$algebra on $\R$, we have a nice result.
 
-\begin{proposition}The Borel $\sigma-$algebra on $\R$ is generated by 
+\begin{proposition}The Borel $\sigma-$algebra on $\R$ is generated by any of the following:
 \begin{enumerate}
-	\item All open intervals, i.e. all intervals of the form $(a, b)$
+	\item All open intervals, i.e. all intervals of the form $(a, b)$.
 	\item All intervals of one of the following forms: $[a, b], (a, b], [a, b)$.
-	\item All rays of one of the following forms $(a, \infty), [a, \infty), (-\infty, b), (-\infty, b]$
+	\item All rays of one of the following forms $(a, \infty), [a, \infty), (-\infty, b), (-\infty, b]$.
 \end{enumerate}
 \begin{proof}
-Let $\mathcal{E}$ be one of these collections. Since $\mathcal{E} \in \mathcal{B}_\R$, $\mathcal{M}(\mathcal{E}) \in \mathcal{B}_\R$. All we have do now is show that $\mathcal{M}(\mathcal{E})$ contains all open sets. For (i), we showed earlier that every open set in $\R$ is the countable union of disjoint open intervals. For (ii) and (iii), all we have to do is show we can construct an open interval $(a, b)$ using countably many set theory operators. For example,
+Let $\mathcal{E}$ be one of these collections. Since $\mathcal{E} \in \mathcal{B}_\R$, $\mathcal{M}(\mathcal{E}) \in \mathcal{B}_\R$. All we have do now is show that $\mathcal{M}(\mathcal{E})$ contains all open sets. For (i), we showed earlier that every open set in $\R$ is the countable union of disjoint open intervals. For (ii) and (iii), we need to show we can construct an open interval $(a, b)$ using countably many set operations. For example, for the closed intervals in (ii),
 \[
-(a, b) = \bigcap_{n=1}^\infty \left[ a - \frac{1}{n}, b + \frac{1}{n}  \right]
+(a, b) = \bigcap_{n=1}^\infty \left[ a - \frac{1}{n}, b + \frac{1}{n}  \right].
 \]
 \end{proof}
 \end{proposition}
 
-Now that we have discussed $\sigma$-algebras, we will return to measures, which, after all, is the whole point of all of this. From now on, let $X$ be a set and $\mu$ a measure defined on a sigma algebra $\mathcal{M}$. Sometimes, this set of three related objects is written $(X, \mu, \mathcal{M})$ or $(X, \mathcal{M}, \mu)$ and is called a measure space. For now, we assume that $\mu$ is defined on all of $\mathcal{M}$. In applications, we will generally construct $\mu$ and $\mathcal{M}$ together so that everyone plays together nicely.
-
-A measure $\mu$ has many nice properties, which we summarize in the following proposition.
+Now that we have discussed $\sigma$-algebras, we will return to measures, which, after all, is the whole point of all of this. From now on, let $X$ be a set and $\mu$ a measure defined on a $\sigma$-algebra $\mathcal{M}$. This set of three related objects is sometimes written as $(X, \mu, \mathcal{M})$ or $(X, \mathcal{M}, \mu)$, and is called a measure space. For now, we assume that $\mu$ is in fact defined on all of $\mathcal{M}$. In applications, we will generally construct $\mu$ and $\mathcal{M}$ at the same time, so that everyone plays together nicely. A measure $\mu$ has many nice properties, which we summarize in the following proposition. You will prove these in your analysis class.
 
 \begin{proposition}
-Let $X$ be a set and $\mu$ a measure defined on a sigma algebra $\mathcal{M}$. Then $\mu$ has the following properties.
+Let $X$ be a set, and $\mu$ a measure defined on a $\sigma$-algebra $\mathcal{M}$. Then $\mu$ has the following properties.
 \begin{enumerate}
-    \item (Monotonicity) If $E \subset F$, $\mu(E) \leq \mu(F)$. If in addition $\mu(E) < \infty$, then $\mu(F\setminus E) = \mu(F) - \mu(E)$
-    \item (Countable Subadditivity) For any sets $E_n$ (not necessarily disjoint), 
+    \item (Monotonicity) If $E \subset F$, $\mu(E) \leq \mu(F)$. In addition, if $\mu(E) < \infty$, then $\mu(F\setminus E) = \mu(F) - \mu(E)$.
+    \item (Countable Subadditivity) For any sequence of sets $\{E_n\}$ (not necessarily disjoint), 
     \[
-    \mu\left( \bigcup_{n=1}^\infty E_n \right) \leq \sum_{n=1}^\infty \mu(E_n)
+    \mu\left( \bigcup_{n=1}^\infty E_n \right) \leq \sum_{n=1}^\infty \mu(E_n).
     \]
-    \item (Continuity from Below) If $E_n$ is an increasing sequence of nested sets, i.e. $E_n \subset E_{n+1}$, then
+    \item (Continuity from Below) If $\{E_n\}$ is an increasing sequence of nested sets, i.e. $E_n \subset E_{n+1}$, then
     \[
-    \mu\left( \bigcup_{n=1}^\infty E_n \right) = \lim_{n\rightarrow\infty} \mu(E_n)
+    \mu\left( \bigcup_{n=1}^\infty E_n \right) = \lim_{n\rightarrow\infty} \mu(E_n).
     \]
-    \item (Continuity from Above) If $E_n$ is an decreasing sequence of nested sets, i.e. $E_n \supset E_{n+1}$ and $\mu(E_1) < \infty$, then
+    \item (Continuity from Above) If $\{E_n\}$ is an decreasing sequence of nested sets, i.e. $E_n \supset E_{n+1}$, and $\mu(E_1) < \infty$, then
     \[
-    \mu\left( \bigcap_{n=1}^\infty E_n \right) = \lim_{n\rightarrow\infty} \mu(E_n)
+    \mu\left( \bigcap_{n=1}^\infty E_n \right) = \lim_{n\rightarrow\infty} \mu(E_n).
     \]
 \end{enumerate}
 \end{proposition}
 
-With that taken care of, it is time to construct our first measure. We will construct the Lebesgue measure, often denoted $m$, which measures length of subsets of $\R$. It gives the ``correct'' measure for intervals, but will in addition allow us to measure many other sets. The contruction we will use is one I find intuitive. You will probably do this a little differently in analysis class. That version has the advantage of letting you construct a whole class of measures for which the Lebesgue measure is a special case; however, it requires more definitions and theorems, and is one more step removed from what is actually going on. We will do our construction in the following steps.
+With that taken care of, it is time to construct our first measure. We will construct the Lebesgue measure, often denoted $m$, which measures length of subsets of $\R$. It gives the ``correct'' measure for intervals, but will in addition allow us to measure many other sets. The construction we will use is one I find intuitive. You will probably do this a little differently in analysis class. That version has the advantage of letting you construct a whole class of measures for which the Lebesgue measure is a special case; however, it requires more definitions and theorems, and is one more step removed from what is actually going on. We will do our construction in the following steps. Proofs will be either outlined, or omitted entirely.
 
 \begin{enumerate}
     \item Construct something which is roughly what we want, but which we can use on all subsets of $\R$. This is called the Lebesgue outer measure, denoted $m^*$. 
@@ -2245,68 +2240,61 @@ With that taken care of, it is time to construct our first measure. We will cons
     \item Find a $\sigma$-algebra $\mathcal{L}$ on which $m^*$ is actually a measure. This is the Lebesgue $\sigma$-algebra.
     \item Show that this $\sigma$-algebra contains:
     \begin{enumerate}
-        \item All subsets $E$ of $X$ with $m^*(E) = 0$, i.e. all null sets.
-        \item The Borel $\sigma-$algebra
+        \item All subsets $E$ of $X$ with $m^*(E) = 0$. These are called null sets.
+        \item The Borel $\sigma-$algebra.
     \end{enumerate}
 \end{enumerate}
 
 First, we define the Lebesgue outer measure. Consider any subset $E$ of $\R$. We can find always find a countable collection of open intervals $\{ (a_n, b_n) \}$ such that 
 \[
-E \subset \bigcup_{n=1}^\infty (a_n, b_n)
+E \subset \bigcup_{n=1}^\infty (a_n, b_n).
 \]
-It makes intuitive sense that we should have
+In addition, it makes intuitive sense that we should have
 \[
-\text{length of }E \leq \sum_{n = 1}^\infty (b_n - a_n)
+\text{length of }E \leq \sum_{n = 1}^\infty (b_n - a_n),
 \]
-
-With this in mind, we define the Lebesgue outer measure.
+since $E$ is contained in the union of these intervals. With this in mind, we define the Lebesgue outer measure as follows.
 
 \begin{definition}
-For any subset $E$ of $\R$, the Lebesgue outer measure is the function $m^*$ taking values in $[0, \infty]$ ($\infty$ is allowed!) defined by
+For any subset $E$ of $\R$, the \textbf{Lebesgue outer measure} is the function $m^*$, taking values in $[0, \infty]$ ($\infty$ is allowed!) defined by
 \[
-m^*(E) = \inf\left\{ \sum_{n = 1}^\infty (b_n - a_n) : E \subset \bigcup_{n=1}^\infty (a_n, b_n) \right\}
+m^*(E) = \inf\left\{ \sum_{n = 1}^\infty (b_n - a_n) : E \subset \bigcup_{n=1}^\infty (a_n, b_n) \right\}.
 \]
 \end{definition}
-Essentially, we are ``approximating $E$ from the outside'' by open intervals, which is why we call this outer measure. The idea is that we cover $E$ with a countable collection of open intervals and add up their lengths; the outer measure is the infimum over all such covers (which may still be infinite!)
+Essentially, we are ``approximating $E$ from the outside'' by open intervals, which is why we call this outer measure. The idea is that we cover $E$ with a countable collection of open intervals and add up their lengths; the outer measure is the infimum over all such covers (which may still be infinite!) Formally, an outer measure is defined as follows.
 
-Formally, an outer measure is defined as follows.
-
-\begin{definition}An \emph{outer measure} on a set $X$ is a function $\mu^*$ on \emph{all} subsets of $X$ with the following properties:
+\begin{definition}An \textbf{outer measure} on a set $X$ is a function $\mu^*$ defined on \emph{all} subsets of $X$ with the following properties:
 \begin{enumerate}[(i)]
 \item $\mu^*(E) \in [0, \infty]$ ($\infty$ is allowed!)
-\item $\mu(\varnothing) = 0$
+\item $\mu(\varnothing) = 0$.
 \item (Monotonicity) If $E \subset F$ then $\mu^*(E) \leq \mu^*(F)$
 \item (Countable subadditivity)
-	\begin{equation}
-	\mu \left( \bigcup_{k=1}^\infty E_k \right) \leq \sum_{k=1}^\infty \mu(E_k)
-	\end{equation}
+	$ \mu \left( \bigcup_{k=1}^\infty E_k \right) \leq \sum_{k=1}^\infty \mu(E_k)$.
 \end{enumerate}
 \end{definition}
-
-Going back to the Lebesgue outer measure, we can show the following.
+It is important to note that the outer measure $\mu^*$ is defined on all subsets of $X$. Going back to the Lebesgue outer measure, we can show the following.
 \begin{enumerate}
     \item $m^*$ is an outer measure
-    \item $m^*$ of any interval (open, closed, half-open) is equal to its length.
+    \item The $m^*$ outer measure of any interval (open, closed, half-open) is equal to its length.
 \end{enumerate}
 
-We can also show that the Lebesgue outer measure of any countable set is 0.
-
+Next, we show that the Lebesgue outer measure of any countable set is 0.
 \begin{proposition}
 Let $E \subset \R$ be a countable set. Then $m^*(E) = 0$.
 \begin{proof}
-Since $E$ is countable, write it as the sequence $\{x_n\}$. We now use the ``countable epsilon trick''. Let $\epsilon > 0$. Then cover each $x_n$ with the open interval $I_n = (x_n - r_n, x_n + r_n)$, where
+Since $E$ is countable, we can write it as the sequence $\{x_n\}$. We now use the ``countable epsilon trick''. Let $\epsilon > 0$. Cover each $x_n$ with the open interval $I_n = (x_n - r_n, x_n + r_n)$, where
 \[
 r_n = \frac{1}{2} \frac{\epsilon}{2^n}
 \]
-Thus each $I_n$ has length $2 r^n = \epsilon/2^n$. Then since the outer measure is the infimum of the total length of all such covers,
+By construction, each interval $I_n$ has length $2 r^n = \epsilon/2^n$. Since the outer measure is the infimum of the total length of all such covers,
 \[
-m^*(E) \leq \sum_{n=1}^{\infty} \frac{\epsilon}{2^n} = \epsilon
+m^*(E) \leq \sum_{n=1}^{\infty} \frac{\epsilon}{2^n} = \epsilon,
 \]
-Since $\epsilon$ is arbitrary, $m^*(E) = 0$.
+where we used the infinite sum of the geometric series. Since $\epsilon$ is arbitrary, $m^*(E) = 0$.
 \end{proof}
 \end{proposition}
 
-In particular, this implies that $m^*(\Q) = 0$. Next, for any outer measure $\mu^*$, we define the concept of $\mu^*$-measurability. A set $A$ is $\mu^*$-measurable if it behaves nicely. What we mean by that is that it splits any ``test set'' $E$ into two nice pieces. The formal definition is as follows, and is due to Carath\'{e}adory.
+In particular, this implies that $m^*(\Q) = 0$ (which is kind of crazy, if you think about it!) Next, for any outer measure $\mu^*$, we define the concept of $\mu^*$-measurability. Inituitively, a set $A$ is $\mu^*$-measurable if it ``behaves nicely'' by splitting any arbitrary ``test set'' $E$ into two ``nice pieces''. The formal definition is as follows, and is due to Carath\'{e}adory.
 
 \begin{definition}
 Let $\mu^*$ be an outer measure on $X$. Then a subset $A \subset X$ is \emph{$\mu^*$-measurable} if for every test set $E \subset X$,
@@ -2314,9 +2302,10 @@ Let $\mu^*$ be an outer measure on $X$. Then a subset $A \subset X$ is \emph{$\m
 \mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c)
 \]
 \end{definition}
-In other words, $A$ splits any set $E$ into a part which overlaps $A$ and a part which does not. $A$ is ``nice'' if whenever we do this, the outer measure of $E$ is the sum of the outer measure of those two pieces. You will sometimes see the criterion written
+
+A set $A$ splits any set $E$ into a part which overlaps $A$ and a part which does not. $A$ is ``nice'' if, whenever we do this, the outer measure of $E$ is the sum of the outer measures of these two pieces. You will sometimes see the criterion written
 \[
-\mu^*(E) = \mu^*(E \cap A) + \mu^*(E \setminus A)
+\mu^*(E) = \mu^*(E \cap A) + \mu^*(E \setminus A).
 \]
 
 To complete the construction of the Lebesgue measure, we will use the Carath\'{e}adory Extension Theorem, which we will not prove here but will be proved (hopefully!) in your analysis class.
@@ -2325,65 +2314,64 @@ To complete the construction of the Lebesgue measure, we will use the Carath\'{e
 Let $\mu^*$ be an outer measure on $X$, and let $\mathcal{M}$ be the collection of $\mu^*$-measurable sets. Then
 \begin{enumerate}
     \item $\mathcal{M}$ is a $\sigma$-algebra.
-    \item $\mu^*$ when restricted to $\mathcal{M}$ is a measure, which we designate $\mu$.
+    \item $\mu^*$ ,when restricted to $\mathcal{M}$, is a measure, which we designate $\mu$.
     \item $\mathcal{M}$ contains all $\mu^*$-null sets, i.e. all sets $N$ with $\mu^*(N) = 0$.
 \end{enumerate}
 \begin{proof}
-The proof will not be presented here, but it may be useful later to have an outline of the proof. The basic tool you use is the definition of $\mu^*$ measurability, which is used over and over. Here is the order in which you show things.
+Here is an outline of the proof, which you may find useful. The basic tool you use is the definition of $\mu^*$ measurability, which is used over and over. Here is the order in which you show things.
 \begin{enumerate}
-    \item Show $\mathcal{M}$ is closed under complement and finite unions, thus is an algebra. (It suffices to show $A, B \in \mathcal{M} \implies A \cup B \in \mathcal{M}$).
-    \item Show $\mu^*$ is finitely additive on $\mathcal{M}$. (It suffices to show for $A, B$ disjoint sets in $\mathcal{M}$ that $\mu^*(A \cup B( = \mu^*(A) + \mu^*(B)$).
-    \item Show $\mathcal{M}$ is closed under countable disjoint unions This implies it is closed under countable unions, thus is a $\sigma$-algebra. (To see this take any sequence of set $E_n$. Construct $F_n$ from $E_n$ by deleting anything which overlaps with $E_1, \dots, E_{n-1}$. We can get from $E_n$ to $F_n$ or the other way with a finite number of set operations. Then $\cup E_n = \cup F_n$.)
+    \item Show $\mathcal{M}$ is closed under complement and finite unions, thus is an algebra. (It suffices to show if $A, B \in \mathcal{M}$ then $A \cup B \in \mathcal{M}$).
+    \item Show $\mu^*$ is finitely additive on $\mathcal{M}$. (It suffices to show if $A$ and $B$ are disjoint sets in $\mathcal{M}$, then $\mu^*(A \cup B) = \mu^*(A) + \mu^*(B)$).
+    \item Show $\mathcal{M}$ is closed under countable disjoint unions. This implies it is closed under countable unions, and thus is a $\sigma$-algebra. (To see why this works, take any sequence of sets $\{E_n\}$. Construct $F_n$ from $E_n$ by deleting anything which overlaps with $E_1, \dots, E_{n-1}$. We can get from $E_n$ to $F_n$, or vice versa, by using a finite number of set operations. In addition, by construction, $\cup E_n = \cup F_n$).
     \item Show $\mu^*$ is countably additive on $\mathcal{M}$, thus is a measure on $\mathcal{M}$.
     \item Show if $\mu^*(N) = 0$ then $N \in \mathcal{M}$.
 \end{enumerate}
 \end{proof}
 \end{theorem}
 
-The last property is particularly important. If a set has measure 0, in general we can ignore it. (You could argue that the entire point of measure theory is figuring out which sets are null sets so you can ignore them.) This property guarantees that if we construct a measure this way, all $\mu^*$-null sets are actually in the $\sigma$-algebra.
+The last property is particularly important. If a set has measure 0, we can, in general, ignore it. (You could argue that the entire point of measure theory is figuring out which sets are null sets so you can ignore them!) This property guarantees that if we construct a measure this way, all $\mu^*$-null sets are actually in the $\sigma$-algebra.
 
-We are almost done. Use the Carath\'{e}adory Extension Theorem on the Lebesgue outer measure $m^*$. Let $\mathcal{L}$ be the resulting $\sigma-$algebra of $m^*$-measurable sets, and let $m$ be the measure we obtain by restricting $m^*$ to $\mathcal{L}$. (We use a different letter here since the Lebesgue measure is the most important one and we want to distinguish it from generic $\sigma$-algebras). All that is left is to show that $\mathcal{L}$ contains the entire Borel $\sigma-$algebra. To do this, it is sufficient to show that $\mathcal{L}$ contains any set which generates the $\sigma-$algebra. Since $\mathcal{L}$ is a $\sigma-$algebra, it must then contain the entire Borel $\sigma-$algebra. 
-The easiest way to do this is to show that all open intervals are $\mu^*$-measurable (although we will not actually do this here.) We can also show that the Lebesgue measure $m$ is translation-invariant.
+We are almost done. First, we use the Carath\'{e}adory Extension Theorem on the Lebesgue outer measure $m^*$. Let $\mathcal{L}$ be the resulting $\sigma-$algebra of $m^*$-measurable sets, and let $m$ be the measure we obtain by restricting $m^*$ to $\mathcal{L}$. (We use a different letter for the Lebesgue $\sigma$-algebra, since the Lebesgue measure is the one of the most important measures, and we want to distinguish it from generic $\sigma$-algebras). All that is left is to show that $\mathcal{L}$ contains the entire Borel $\sigma-$algebra. To do this, it suffices to show that $\mathcal{L}$ contains any collection of sets which generates the $\sigma-$algebra. Since $\mathcal{L}$ is a $\sigma-$algebra, it must then contain the entire Borel $\sigma-$algebra. 
+The easiest way to do this is to show that all open intervals are $\mu^*$-measurable (although we will not actually do this here). We can also show that the Lebesgue measure $m$ is translation-invariant.
 
 \subsection{Measurable Functions and Integration}
 
-One of the advantages of the Lebesgue integral is that we can use it on a large class of functions as long as we have defined a measure. In order to do make that work, we need to define a measurable function between to measure spaces. Essentially, a measurable function is nice enough that we can deal with it.
+One of the advantages of the Lebesgue formulation of the integral is that we can use it on a large class of functions, as long as we have defined a measure. In order to do make this work, we need to define a measurable function between two measure spaces.
 
 \begin{definition}
-Let $(X,\mathcal{M})$, $(Y,\mathcal{N})$ be sets together with $\sigma-$algebras. Then $f: X \to Y$ is \emph{$(\mathcal{M},\mathcal{N})$-measurable} (or just \emph{measurable}) if for all $F \in \mathcal{N}$, $f^{-1}(F) \in \mathcal{M}$. 
+Let $(X,\mathcal{M})$ and $(Y,\mathcal{N})$ be sets together with $\sigma-$algebras. Then $f: X \to Y$ is \textbf{$(\mathcal{M},\mathcal{N})$-measurable} (or just \textbf{measurable}) if, for all $F \in \mathcal{N}$, $f^{-1}(F) \in \mathcal{M}$. 
 \end{definition}
 
-This is analogous to our definition of continuous functions. If you define a ``measurable'' set to be one in the $\sigma$-algebra, a measurable function is one where pre-images of measurable sets are measurable. Note that although both of these spaces likely have measures associated with their $\sigma$-algebras, the measures themselves to not figure into this definition. Also, as long as the $\sigma-$algebras of the sets involved ``line up'', compositions of measurable functions are measurable.
+This is analogous to our definition of continuous functions. If you define a ``measurable'' set to be a set in the appropriate $\sigma$-algebra, a measurable function is one where preimages of measurable sets are measurable. Note that although both of these spaces likely have measures associated with their $\sigma$-algebras, the measures themselves do not figure into this definition. In addition, we note that as long as the $\sigma-$algebras of the sets involved ``line up'' appropriately, compositions of measurable functions are measurable.
 
-Next, consider a function $f: (X,\mathcal{M}) \rightarrow \R$. Unless otherwise specified, we always use the Borel $\sigma$-algebra on the codomain $\R$. Thus we say a function $f: (X,\mathcal{M}) \rightarrow \R$ is $\mathcal{M}$-measurable (of just measurable) if it is $(\mathcal{M},\mathcal{B})$-measurable. Finally, consider functions on $\R$. You will see the following terms.
+Although the definition of measurability can be applied to functions between any two arbitrary measure spaces, we will only consider real-valued functions from now on. Let $f: (X,\mathcal{M}) \rightarrow \R$ be a real-valued function. Unless otherwise specified, we always use the Borel $\sigma$-algebra on the codomain $\R$. Thus we say that  $f: (X,\mathcal{M}) \rightarrow \R$ is $\mathcal{M}$-measurable (or just measurable) if it is $(\mathcal{M},\mathcal{B})$-measurable. For functions on $\R$, you will see the following terms.
 \begin{enumerate}
     \item $f: \R \rightarrow \R$ is Borel measurable if $f$ is $(\mathcal{B}_\R,\mathcal{B}_\R)$-measurable.
     \item $f: \R \rightarrow \R$ is Lebesgue measurable if $f$ is $(\mathcal{L},\mathcal{B}_\R)$-measurable, where $\mathcal{L}$ is the Lebesgue $\sigma$-algebra on $\R$.
 \end{enumerate}
 Since $\mathcal{B}_\R \subset \mathcal{L}$, every Borel measurable function is Lebesgue measurable, but the converse is not true.
-
-The problem with the definition of measurability is that it is hard to verify since we don't have a good way to characterize what sets belong to a given $\sigma$-algebra. Luckily, it suffices to check the measurability criterion on a set which generates a $\sigma$-algebra
+The main issue with the definition of measurability is that it is hard to verify, since we don't have a good way to characterize what sets belong to a given $\sigma$-algebra. Luckily, it suffices to check the measurability criterion on a set which generates a $\sigma$-algebra
 
 \begin{proposition}
-$(X,\mathcal{M})$, $(Y,\mathcal{N})$ be measure spaces, and suppose $\mathcal{N}$ is the $\sigma$-algebra generated by the collection of sets $\mathcal{E}$. Then $f: X \to Y$ is measurable if and only if $f^{-1}(E) \subset \mathcal{M}$ for all $E \in \mathcal{E}$.
+Let $(X,\mathcal{M})$ and $(Y,\mathcal{N})$ be measure spaces, and suppose $\mathcal{N}$ is the $\sigma$-algebra generated by the collection of sets $\mathcal{E}$. Then $f: X \to Y$ is measurable if and only if $f^{-1}(E) \subset \mathcal{M}$ for all $E \in \mathcal{E}$.
 
-\begin{proof}An outline of the proof is as follows.\\
-"$\Rightarrow$" This follows from the definition of measurability, since $\mathcal{E} \subset \mathcal{N}$.\\
-"$\Leftarrow$" Define the set
+\begin{proof}An outline of the proof is as follows.
+($\implies$) This follows from the definition of measurability, since $\mathcal{E} \subset \mathcal{N}$.\\
+($\impliedby$) Define the set
 \[
-\mathcal{H}=\{A \in \mathcal{N}: f^{-1}(A) \in \mathcal{M}\}
+\mathcal{H}=\{A \in \mathcal{N}: f^{-1}(A) \in \mathcal{M}\}.
 \]
-We want to show that $\mathcal{H}$ contains $\mathcal{N}$. From our initial assumption, $\mathcal{H}$ contains $\mathcal{E}$. Next, we show that $\mathcal{H}$ is a $\sigma$-algebra using the definition of a $\sigma$-algebra, set-theory operations, and the fact the the inverse image operator $f^{-1}$ commutes with set theory operations. Since $\mathcal{H}$ is a $\sigma$-algebra containing $\mathcal{E}$, it must also contain $\mathcal{N}$, since $\mathcal{N}$ is the $\sigma$-algebra generated by $\mathcal{E}$.
+We want to show that $\mathcal{H}$ contains $\mathcal{N}$. From our initial assumption, $\mathcal{H}$ contains $\mathcal{E}$. Next, we show that $\mathcal{H}$ is a $\sigma$-algebra, by using the definition of a $\sigma$-algebra and the fact the the inverse image operator $f^{-1}$ commutes with set operations. Since $\mathcal{H}$ is a $\sigma$-algebra containing $\mathcal{E}$, it must also contain $\mathcal{N}$, since $\mathcal{N}$ is the $\sigma$-algebra generated by $\mathcal{E}$.
 \end{proof}
 \end{proposition}
 
-We have the following corollary.
+We have the following important corollary.
 
 \begin{corollary}
 Every continuous function $f: (X,\mathcal{B}_X) \rightarrow (Y,\mathcal{B}_Y)$ is measurable.
 \end{corollary}
 
-We can also define measurability in terms of our generators of the Borel $\sigma$-algebra on $\R$. The infinite rays are more useful than the intervals in this case.
+We can also define measurability in terms of the generators of the Borel $\sigma$-algebra on $\R$. The infinite rays are more useful than the intervals in this case.
 
 \begin{corollary}
 A function $(X,\mathcal{M}) \rightarrow \R$ is measurable if and only if one of the following is true.
@@ -2395,240 +2383,236 @@ A function $(X,\mathcal{M}) \rightarrow \R$ is measurable if and only if one of 
 \end{enumerate}
 \end{corollary}
 
-I find the fourth one to be the most useful. If we call the set $f^{-1}(a)$ the level set of $a$, the set 
+I find the fourth one to be the most useful. If we call the set $f^{-1}(a)$ the level set of $a$, then the set 
 \[
 f^{-1}((-\infty,a]) = \{ x : f(x) \leq a \}
 \]
-is the sublevel set of $a$. Thus for measurability of real-valued functions, we only have to check the sublevel sets.
+can be called the sublevel set of $a$. Thus, for measurability of real-valued functions, we only have to check the sublevel sets.
 
 Finally, the set of measurable functions is nice, in that pretty much however we slice and dice them, we wind up with a measurable function.
 
 \begin{proposition}
-Let $f, g$ and $\{ f_n \}$ measurable functions from $(X, \mathcal{M})$ to $\R$. Then the following are measurable.
+Let $f, g$ and $\{ f_n \}_{n \in \mathbb{N}}$ be measurable functions from $(X, \mathcal{M})$ to $\R$. Then the following are measurable.
 \begin{enumerate}
-\item $f + g$ and $fg$
-\item $\max(f, g)$ and $\min(f, g)$
-\item $\sup_n f_n(x)$ and $\inf_n f_n(x)$
-\item $\limsup_{n\rightarrow\infty} f_n(x)$ and $\liminf_{n\rightarrow\infty} f_n(x)$
+\item $f + g$ and $fg$.
+\item $\max(f, g)$ and $\min(f, g)$.
+\item $\sup_n f_n(x)$ and $\inf_n f_n(x)$.
+\item $\limsup_{n\rightarrow\infty} f_n(x)$ and $\liminf_{n\rightarrow\infty} f_n(x)$.
 \item $\lim_{n\rightarrow\infty} f_n(x)$, provided the limit exists.
 \end{enumerate}
 \end{proposition}
 
-Recall that the limit superior and limit inferior of a real-valued sequence $\{ x_n \}$ are defined by
+The limit superior and limit inferior of a real-valued sequence $\{ x_n \}$ are defined by
 \begin{align*}
-\limsup_{n\rightarrow\infty} x_n &= \lim_{n \rightarrow \infty} \left( \sup_{k \geq n} x_k \right) \\
-\limsup_{n\rightarrow\infty} x_n &= \lim_{n \rightarrow \infty} \left( \inf_{k \geq n} x_k \right) 
+\limsup_{n\rightarrow\infty} x_n &= \lim_{n \rightarrow \infty} \left( \sup_{k \geq n} x_k \right) \qquad\qquad
+\limsup_{n\rightarrow\infty} x_n = \lim_{n \rightarrow \infty} \left( \inf_{k \geq n} x_k \right).
 \end{align*}
 We can think of the limit superior as the limit of the sequence $\{ y_n \} $, given by
 \[
-y_n = \sup_{k \geq n} x_k
+y_n = \sup_{k \geq n} x_k.
 \]
-This is a decreasing sequence, since we is taking the supremum over fewer and fewer terms. The limit superior of $\{x_n \}$ is the limit of this sequence, which is the infimum since the sequence is decreasing. Similarly, the limit inferior is the limit of an increasing sequence. As long as we allow the values $\pm \infty$, the $\limsup_{n\rightarrow\infty} x_n$ and $\liminf_{n\rightarrow\infty} x_n$ exist for all real-valued sequences and
+This is a decreasing sequence, since we are taking the supremum over fewer and fewer terms. The limit superior of $\{x_n \}$ is the limit of this sequence, which is the infimum since the sequence is decreasing. Similarly, the limit inferior is the limit of an increasing sequence. As long as we allow the values $\pm \infty$, $\limsup_{n\rightarrow\infty} x_n$ and $\liminf_{n\rightarrow\infty} x_n$ exist for all real-valued sequences, and
 \[
 \liminf_{n\rightarrow\infty} x_n 
-\leq \limsup_{n\rightarrow\infty} x_n
+\leq \limsup_{n\rightarrow\infty} x_n.
 \]
-For the actual limit of a sequence, we have
-\[
-\lim_{n \rightarrow \infty} x_n \text{ exists} \iff
-\limsup_{n\rightarrow\infty} x_n = \liminf_{n\rightarrow\infty} x_n
-\]
+The limit of a sequence $\lim_{n \rightarrow \infty} x_n$ exists if and only if $\limsup_{n\rightarrow\infty} x_n = \liminf_{n\rightarrow\infty} x_n$.
 
-\subsection{Lebesgue Integral for Measure Spaces}
+\subsection{Lebesgue Integral}
 
-From now on, we will assume all functions are measurable. This is not an unreasonable assumption, because measurable functions are nice, and we like nice things! Probabilists often deal with nonmeasurable functions, but the rest of us can safely use the heuristic ``every reasonable function is measurable''.
+From now on, we will assume all functions are measurable. This is not an unreasonable assumption, because measurable functions are nice, and we like nice things! (In general, a function which is merely measurable is the ``least nice'' function we are willing to deal with).
+Probabilists often deal with nonmeasurable functions, but the rest of us can safely use the heuristic that ``every reasonable function is measurable''.
 
 We will now define the Lebesgue integral of real-valued functions on an arbitrary measure space $(X, \mathcal{M}, \mu)$. This is done in three steps. These same three steps recur in many contexts.
 \begin{enumerate}
-    \item Define the integral for simple functions.
-    \item Extend to nonnegative functions (take supremum).
-    \item Extend to all real-valued functions (split into positive and negative part).
+    \item Define the integral for nonnegative, simple functions.
+    \item Extend this to nonnegative functions (by taking the supremum).
+    \item Extend this to all real-valued functions (by splitting into positive and negative parts).
 \end{enumerate}
 
 First, we define a simple function.
 
 \begin{definition}
-A \emph{simple function} is a function whose range is a finite set. Let $\phi: (X,\mathcal{M}) \rightarrow \R$ be simple. Then we can write $\phi$ in \emph{standard form} as 
+A \textbf{simple function} is a function whose range is a finite set. Let $\phi: (X,\mathcal{M}) \rightarrow \R$ be simple. Then we can write $\phi$ in standard form as 
 \[
 \phi(x) = \sum_{k = 1}^n
-y_k \chi_{E_k}(x)
+y_k \chi_{E_k}(x),
 \]
-where $y_k \in \R$ (the range of the function is this finite set), $E_k \in \mathcal{M}$ are disjoint, and $\chi_{E_k}(x)$ is the \emph{characteristic function}
+where the sets $E_k \in \mathcal{M}$ are disjoint, and $\chi_{E_k}(x)$ is the \textbf{characteristic function}
 \[
 \chi_{E_k}(x) = \begin{cases}
     1 & x \in E_k \\
     0 & x \notin E_k
 \end{cases}
 \]
-We can also see that $E_k = f^{-1}(\{ y_k \})$.
+The range of $\phi$ is the finite set $\{y_1, \dots, y_n\}$, and we can also see that $E_k = f^{-1}(\{ y_k \})$.
 \end{definition}
 
-We can show that $\chi_{E_k}(x)$ is a measurable function if and only if $E_k \in \mathcal{M}$. Thus the simple function $\phi(x)$ is measurable since it is the sum of measurable functions. 
-
-We can define the Lebesgue integral of a simple function as follows.
+We can show that the characteristic function $\chi_{E_k}(x)$ is a measurable function if and only if $E_k \in \mathcal{M}$ (using the sublevel sets criterion). Thus the simple function $\phi(x)$ is measurable, since it is the sum of measurable functions. We the define the Lebesgue integral of a nonnegative, simple function as follows.
 
 \begin{definition}
-Let $\phi(x): (X, \mathcal{M}, \mu) \rightarrow \R$ be a simple function written in standard form as 
+Let $\phi: (X, \mathcal{M}, \mu) \rightarrow \R$ be a simple function written in standard form as 
 \[
 \phi(x) = \sum_{k = 1}^n
-y_k \chi_{E_k}(x)
+y_k \chi_{E_k}(x),
 \]
-Then the integral of $\phi(x)$ is defined by
+with $y_k \geq 0$. Then the integral of $\phi$ is defined by
 \[
-\int_X \phi d\mu = \sum\limits_{k=1}^n y_k \mu(E_k).
+\int_X \phi d\mu = \sum\limits_{k=1}^n y_k \mu(E_k),
 \]
-where we always take $0 \cdot \infty = 0$. We note that this integral can take a value of $\infty$. We sometimes just write this as $\int \phi$ for shorthand. 
+where we always take $0 \cdot \infty = 0$. We note that this integral can take a value of $\infty$. We sometimes write this as $\int \phi$ for shorthand. 
 \end{definition}
 
-We can show that this definition is well-defined, i.e. if we have two different representations of the same simple function, the integral is the same. We can also integrate over a set $A \in \mathcal{M}$ instead of the whole space $X$ (this is analogous to integrating over a bounded interval $[a,b]$ instead of all of $\R$.
+We can show that this definition is well-defined, i.e. if we have two different representations of the same simple function, the integral is the same. We can also integrate over a set $A \in \mathcal{M}$ instead of the whole space $X$ (this is analogous to integrating over a bounded interval $[a,b]$ instead of all of $\R$).
 
 \begin{definition}
-Let $A \in \mathcal{M}$ and $\phi(x): (X, \mathcal{M}, \mu) \rightarrow \R$ simple. Then we define
+Let $A \in \mathcal{M}$ and $\phi: (X, \mathcal{M}, \mu) \rightarrow \R$ a simple function written in standard form. Then we define the integral over the set $A$ as
 \[
 \int_A \phi d\mu = \int_X \phi \: \chi_A d \mu
-= \sum\limits_{k=1}^n y_k \mu(E_k \cap A)
+= \sum\limits_{k=1}^n y_k \mu(E_k \cap A).
 \]
 \end{definition}
 
-The integral has the following nice properties. 
+This integral has the following nice properties. 
 
 \begin{proposition}
 Let $\phi$ and $\psi$ be simple functions $(X, \mathcal{M}, \mu) \rightarrow \R$. Then
 \begin{enumerate}
-\item $\int (\phi + \psi) = \int \phi + \int \psi$
-\item If $c \geq 0$, then $\int c \phi = c \int \phi$
-\item If $0 \leq \phi \leq \psi$, then $\int \phi \leq \int \psi$
-\item Define $\rho$ on $\mathcal{M}$ by 
+\item $\int (\phi + \psi) = \int \phi + \int \psi$.
+\item If $c \geq 0$, then $\int c \phi = c \int \phi$.
+\item If $0 \leq \phi \leq \psi$, then $\int \phi \leq \int \psi$.
+\item Define the real-valued function $\rho$ on $\mathcal{M}$ by 
 \[
-\rho(E) = \int_E \phi d\mu
+\rho(E) = \int_E \phi d\mu.
 \]
 Then $\rho$ is a measure on $\mathcal{M}$.
 \end{enumerate}
 \end{proposition}
 
-The first three are familiar from calculus. The last one is a little strange, but is really useful for proving things (especially the monotone convergence theorem). It also gives us a second way of constructing a measure.
-
-Now that we have define the integral for simple functions, the next step is to extend it to nonnegative functions. First, we show that we can approximate nonnegative real-valued function with simple functions.
+The first three are familiar from calculus. The last one may seem a little strange, but is really useful for proving things (especially the monotone convergence theorem). It also gives us another way of constructing a measure. Now that we have defined the integral for simple functions, the next step is to extend it to nonnegative functions. First, we show that we can approximate nonnegative real-valued functions with simple functions.
 
 \begin{lemma}[Simple Approximation Lemma]
-Let $f: (X,\mathcal{M}) \rightarrow \R$ measurable with $f \geq 0$. Then there is an increasing sequence of nonnegative simple function $\{ \phi_n(x) \} $, i.e. $0 \leq \phi_1 \leq \phi_2 \leq \dots \leq f$ such that $\phi_n \rightarrow f$ pointwise. This convergence is uniform if $f$ is bounded.
+Let $f: (X,\mathcal{M}) \rightarrow \R$ be measurable with $f \geq 0$. Then there is an increasing sequence of nonnegative simple functions $\{ \phi_n(x) \} $, i.e. $0 \leq \phi_1 \leq \phi_2 \leq \dots \leq f$ such that $\phi_n \rightarrow f$ pointwise. This convergence is uniform if $f$ is bounded.
 \begin{proof}
-If the range of $f$ is bounded, partition the range into finitely many points and make cake layers; refine the partition mesh at each step. If the range is unbounded, for each $n$, partition $[0, n]$ with a finer mesh at each step.
+The rough idea is as follows. If the range of $f$ is bounded, partition the range into finitely many points and make ``cake layers'', refining the partition mesh at each step. If the range is unbounded, for each $n$, partition $[0, n]$ using a finer mesh at each step.
 \end{proof}
 \end{lemma}
 
-Thus it makes sense to define the integral of a nonnegative function in the following way.
+We then define the integral of a nonnegative function in the following way.
 
 \begin{definition}
 Let $f:(X, \mathcal{M}, \mu) \rightarrow \R$ be a measurable, nonnegative function. Then we define the integral of $f$ by
 \[
 \int_X fd\mu =\sup\left\{ \int_X \phi d\mu : \phi \text{  simple}, 0\leq\phi\leq f \right\}.
 \]
-Note that this can be infinite. We say that a nonnegative function $f$ is integrable if this integral is finite.
+Note that this can be infinite. We say that a nonnegative function $f$ is \textbf{integrable} if this integral is finite.
 \end{definition}
-The same properties for the integral of simple functions hold for the integral of nonnegative functions.
-
-Finally, we define the integral of real-valued functions. First, define the positive and negative parts of a function $f$ as 
+The same properties for the integral of simple functions hold for the integral of nonnegative functions. Finally, we define the integral of real-valued functions. First, define the positive and negative parts of a function $f$ as 
 \begin{align*}
-f^+ &= \max\{f,0\} \\
-f^- &= \max\{-f,0\}
+f^+ &= \max\{f,0\} \qquad \qquad
+f^- = \max\{-f,0\}.
 \end{align*}
-Note that $f = f^+ - f^-$ and $|f| = f^+ + f^-$. We now have the following definition 
+Note that $f = f^+ - f^-$ and $|f| = f^+ + f^-$. We then have the following definition 
 
 \begin{definition}
-Let $f:(X, \mathcal{M}, \mu) \rightarrow \R$ be a measurable function. Then we say $f$ is integrable if $|f|$ is integrable, i.e. $\int_X |f| d\mu < \infty$. In that case, we define
+Let $f:(X, \mathcal{M}, \mu) \rightarrow \R$ be a measurable function. Then we say $f$ is \textbf{integrable} if $|f|$ is integrable, i.e. $\int_X |f| d\mu < \infty$. In that case, we define the integral of $f$ by
 \[
-\int_X f d\mu=\int_Xf^{+}d\mu-\int_Xf^-d\mu
+\int_X f d\mu=\int_Xf^{+}d\mu-\int_Xf^-d\mu.
 \]
 \end{definition}
 
-The integral now has all of the familiar properties.
+The integral has all of the familiar properties, which we summarize in the following proposition.
 
 \begin{proposition}
 Let $f, g:(X, \mathcal{M}, \mu) \rightarrow \R$ be integrable. Then the integral has the following properties
 \begin{enumerate}
-\item Linearity: $\int(c f + g) = c \int f + \int g$
-\item Comparison: If $f\leq g$, then $\int f \leq \int g$
-\item Monotonicity: If $f\geq 0$ and $A\subset B$, then $\int_A f \leq\int_B f$, where $\int_A f = \int f \chi_A$
+\item Linearity: $\int(c f + g) = c \int f + \int g$.
+\item Comparison: If $f\leq g$, then $\int f \leq \int g$.
+\item Monotonicity: If $f\geq 0$ and $A\subset B$, then $\int_A f \leq\int_B f$, where $\int_A f = \int f \chi_A$.
 \item $|\int f| \leq \int |f| $.
 \end{enumerate}
 \end{proposition}
 
-Before we conclude this section, we note the special role played by sets of measure 0, which are also known as null sets. We say that a particular property holds ``almost everywhere'' (abbreviated ``a.e.'') if it holds everywhere except a set of measure zero. Examples include: a function which is continuous almost everywhere; a function which is 0 almost everywhere; a function which is bounded almost everywhere; two functions which are equal almost everywhere; and a sequence of functions which converges almost everywhere.
-
-We have the following proposition which gives us a way to characterize functions which are 0 almost everywhere.
+Before we conclude this section, we note the special role played by sets of measure 0, which are known as null sets. We say that a particular property holds ``almost everywhere'' (abbreviated ``a.e.'') if it holds everywhere except a set of measure zero. Examples include: a function which is continuous almost everywhere; a function which is 0 almost everywhere; a function which is bounded almost everywhere; two functions which are equal almost everywhere; and a sequence of functions which converges almost everywhere. The following proposition gives us a way to characterize functions which are 0 almost everywhere.
 
 \begin{proposition}
 Let $f: X \rightarrow \R$ be a nonnegative function. Then $f = 0$ almost everywhere if and only if $\int f = 0$.
-\begin{proof}
-"$\Rightarrow$" We first prove this for a simple function $\phi$. Write $\phi$ in standard form as 
+\begin{proof}$ $\newline
+($\implies$) We first prove this for a simple function $\phi$. Write $\phi$ in standard form as 
 \[
 \phi(x) = \sum_{k = 1}^n
-y_k \chi_{E_k}(x)
+y_k \chi_{E_k}(x).
 \]
-If $\phi = 0$ almost everywhere, either $y_k = 0$ or $\mu(E_k) = 0$ (or both!) for $k = 1, \dots, n$. Thus, using the definition of the integral of a simple function, $\int \phi = 0$. Now take any nonnegative function $f$ with $f = 0$ almost everywhere. For any simple function $\phi$ with $0 \leq \phi \leq f$, $\phi = 0$ almost everywhere as well. Thus by the definition of the integral of nonnegative functions,
+If $\phi = 0$ almost everywhere, either $y_k = 0$ or $\mu(E_k) = 0$ (or both!) for all $k$. Using the definition of the integral of a simple function, $\int \phi = 0$. Now take any nonnegative function $f$ with $f = 0$ almost everywhere. For any simple function $\phi$ with $0 \leq \phi \leq f$, $\phi = 0$ almost everywhere as well. Thus, by the definition of the integral of nonnegative functions,
 \[
-\int f = \sup\left\{ \int \phi \text{ simple with }0 \leq \phi \leq f \right\} = 0
+\int f = \sup\left\{ \int \phi \text{ simple with }0 \leq \phi \leq f \right\} = 0.
 \]
-"$\Leftarrow$" Let $E = \{ x \in X : f(x) > 0 \}$. Then 
+($\impliedby$) Here we prove the contrapositive, i.e. we will show that if $f$ is not 0 almost everywhere, the integral of $f$ must be positive. Let $E = \{ x \in X : f(x) > 0 \}$ be the set on which $f$ is nonzero. We then employ the following useful decomposition
 \[
-E = \bigcup_{n=1}^\infty E_n
-\]
-where
-\[
-E = \left\{ x \in X : f(x) > \frac{1}{n} \right\}
+E = \bigcup_{n=1}^\infty E_n \qquad \qquad
+E_n = \left\{ x \in X : f(x) > \frac{1}{n} \right\}.
 \]
 If $f$ is not 0 almost everywhere, then one of the sets $E_n$ has positive measure, i.e. $\mu(E_n) = r > 0$ for some $n$. But then we have
 \[
-f \geq \frac{1}{n}\chi_{E_n}
+f \geq \frac{1}{n}\chi_{E_n},
 \]
-and so
+from which it follows that
 \[
-\int f \geq \int \frac{1}{n}\chi_{E_n} = \frac{1}{n} \mu(E)n = \frac{r}{n} > 0
+\int f \geq \int \frac{1}{n}\chi_{E_n} = \frac{1}{n} \mu(E)n = \frac{r}{n} > 0.
 \]
 \end{proof}
 \end{proposition}
 
-Similarly, for a real-valued function $f:X \rightarrow \R$ we have $f = 0$ almost everywhere if and only if $\int |f| = 0$.
+Similarly, for a real-valued function $f:X \rightarrow \R$, we have $f = 0$ almost everywhere if and only if $\int |f| = 0$.
 
-Recall that a say a function $f:X \rightarrow \R$ is integrable if $\int |f| < \infty$. From the integration properties, the set of integrable, real-valued functions is closed under addition and scalar multiplication, thus is a vector space. We will call this vector space $L^1$ or $L^1(X)$. We would like to define a natural norm on this vector space by
+Recall that a function $f:X \rightarrow \R$ is integrable if $\int |f| d\mu < \infty$. From the integration properties, the set of integrable, real-valued functions is closed under addition and scalar multiplication, thus is a vector space. We call this vector space $L^1$ or $L^1(X)$ (if we wish to indicate the domain of the functions in the space). We would like to define a natural norm on this vector space by
 \[
-\|f\| = \int_X |f|
+\|f\| = \int_X |f| d\mu.
 \]
-We call this the $L^1$ norm, sometimes written $\|f\|_{L^1}$
-Since we are integrating $|f|$, this is nonnegative, and is finite since we restrict ourselves to integrable functions. The triangle inequality follows from the triangle inequality on $\R$ together with the linearity of the integral. Similarly, we can pull constants out by the linearity of the integral. If $f = 0$, then $\int |f| = 0$. However, $\|f\| = 0$ does not imply $f = 0$, only $f = 0$ almost everywhere. Thus we do not have a norm on this vector space of integrable functions.
+We call this the $L^1$ norm, which is sometimes notated $\|f\|_{L^1}$
+Since we are integrating $|f|$, this is nonnegative, and is finite since we are restricting ourselves to integrable functions. The triangle inequality follows from the triangle inequality on $\R$, together with the linearity of the integral. Similarly, we can pull constants out by the linearity of the integral. If $f = 0$, then $\int |f|d\mu = 0$. However, $\|f\| = 0$ does not imply $f = 0$, only the weaker result that $f = 0$ almost everywhere. Thus this is not a norm on the vector space of integrable functions.
 
-It seems like we are in a bit of a bind here. However, we can cheat our way out of it. If two functions $f$ and $g$ are equal almost everywhere, they are ``basically the same''; they may differ on a null set, but for most purposes we don't care about that. In our particular case, if $f$ and $g$ are integrable and are equal almost everywhere $\int f = \int g$. Thus, instead of talking about functions, we will talk about equivalence classes of functions, where $f \sim g$ if $f = g$ almost everywhere. In this sense, the $L^1$ norm becomes a true norm on the vector space of these equivalence classes of integrable functions. 
-
-Since we can basically ignore null sets, most of the time we can ignore this equivalence class stuff as well. When we write $f \in L^1$, what we are saying is that $f$ is an integrable function which is defined almost everywhere, which is good enough for most purposes.
+It seems like we are in a bit of a bind here. However, we can ``cheat'' our way out of it. If two functions $f$ and $g$ are equal almost everywhere, then they are ``essentially the same''. They may differ on a null set, but for most purposes we don't care about that. In this particular case, if $f$ and $g$ are integrable and are equal almost everywhere $\int f d \mu= \int g d \mu$. Thus, we shift our discussion from functions to equivalence classes of functions, where we define the equivalence relation $f \sim g$ if $f = g$ almost everywhere. If we consider $L_1$ to be the vector space of these equivalence classes of integrable functions, the $L^1$ norm becomes a true norm on this space. Since we can essentially ignore null sets, most of the time we can ignore this equivalence class mumbo jumbo as well. When we write $f \in L^1$, what we are saying is that $f$ is an integrable function which is uniquely defined up to null sets, which is good enough for most purposes.
 
 \subsection{Convergence Theorems}
 
-Finally, we present the three big convergence theorems, which are perhaps the main advantage of the Lebesgue integration theory. You will prove them in the analysis course.
+Finally, we present the three big convergence theorems, which are perhaps the main advantage of the Lebesgue integration theory. You will prove them in the analysis course. The first result is the Monotone Convergence Theorem, which states that limits and integration can be exchanged for increasing sequences of nonnegative functions.
 
-\begin{theorem}[Monotone Convergence Theorem]
+\begin{theorem}[Monotone Convergence Theorem (MCT)]
 Let $f_n: (X,\mathcal{M},\mu) \rightarrow \R$ measurable with $f_n \geq 0$. If $f_n \uparrow f$ pointwise, then
 \[
 \lim_{n\rightarrow \infty} \int_X f_n d\mu = \int_X \left(\lim_{n\rightarrow \infty} f_n\right) d\mu= 
-\int_X f d\mu 
+\int_X f d\mu.
 \]
 where this can be infinite.
 \end{theorem}
 
+The next result is Fatou's Lemma. While it is mainly used to prove the Dominated Convergence Theorem, it is a useful result in its own right. 
+
 \begin{theorem}[Fatou's Lemma]
 Let $f_n: (X,\mathcal{M},\mu) \rightarrow \R$ measurable with $f_n \geq 0$. Then
 \begin{align*}
-\int \liminf_{n\rightarrow \infty} f_n \leq \liminf_{n\rightarrow \infty} \int f_n
+\int \liminf_{n\rightarrow \infty} f_n \leq \liminf_{n\rightarrow \infty} \int f_n.
 \end{align*}
 \end{theorem}
 
-\begin{theorem}[Lebesgue Dominated Convergence Theorem]
+Finally, the Dominated Convergence Theorem gives a criterion for when limits and integration can be exchanged for a sequence of measurable functions (which do not have to be nonnegative).
+
+\begin{theorem}[Lebesgue Dominated Convergence Theorem (DCT)]
 Let $f_n: (X,\mathcal{M},\mu) \rightarrow \R$ measurable with $f_n(x) \rightarrow f(x)$ pointwise. If there exists an integrable function $g$ such that $|f_n| \leq g$ for all $n$, then $f$ is integrable and
 \begin{align*}
 \lim_{n\rightarrow \infty} \int_X f_n d\mu = \int_X \left(\lim_{n\rightarrow \infty} f_n\right) d\mu = \int_X f d\mu.
 \end{align*}
 \end{theorem}
 
+We can use this theorem to explain what occurs with the sequence of functions $f_n(x) = x^n$ on $[0,1]$. Recall that $f_n(x) \rightarrow f(x)$ pointwise, where 
+\[
+f(x) = \begin{cases}
+0 & x \in [0, 1) \\
+1 & x = 1,
+\end{cases}
+\]
+but this convergence is not uniform. Let $g(x) = 1$, i.e. the constant function at 1. Then $g$ is integrable on $[0,1]$, since $\int_0^1 g(x) dx = 1$, and $|f_n(x)| \leq g(x)$ on $[0,1]$ for all $n$. Since the conditions of the Dominated Convergence Theorem are satisfied, we conclude that $\lim_{n\rightarrow \infty} \int_0^1 f_n(x) dx = \int_0^1 f(x) dx$, which explains the convergence result we obtained above!
 
 
 \end{document}
